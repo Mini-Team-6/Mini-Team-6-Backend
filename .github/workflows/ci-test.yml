@@ -29,7 +29,7 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run:
-          java -Dspring.profiles.active=test
+          java -Dspring.profiles.active=test;
           chmod +x ./gradlew
 #      - name: Set secret yaml
 #        env:
