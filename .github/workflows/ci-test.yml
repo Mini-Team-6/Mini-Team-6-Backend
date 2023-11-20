@@ -25,18 +25,18 @@ jobs:
           java-version: '17'
           distribution: 'oracle'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Set secret yaml
-        env:
-          SECRET_YAML: ${{ secrets.SECRET_YAML }}
-        run: echo $SECRET_YAML | base64 --decode > src/main/resources/application.yaml &&
-          echo $SECRET_YAML | base64 --decode > src/test/resources/application.yaml
 
 
       - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
+        run:
+          java -Dspring.profiles.active=test
+          chmod +x ./gradlew
+#      - name: Set secret yaml
+#        env:
+#          SECRET_YAML: ${{ secrets.SECRET_YAML }}
+#        run: echo $SECRET_YAML | base64 --decode > src/main/resources/application-test.yaml &&
+#          echo $SECRET_YAML | base64 --decode > src/test/resources/application-test.yaml
+#          java -Dspring.profiles.active=test
 
       # 빌드 진행
       - name: Test with Gradle
