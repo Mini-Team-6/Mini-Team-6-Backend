@@ -19,7 +19,7 @@ public class SecurityConfig {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
 
         http.authorizeHttpRequests(httpRequests -> httpRequests
-                .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
                 .anyRequest().authenticated()
         );
 
