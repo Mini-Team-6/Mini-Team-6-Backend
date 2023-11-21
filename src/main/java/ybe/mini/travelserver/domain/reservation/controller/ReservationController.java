@@ -20,11 +20,11 @@ import static ybe.mini.travelserver.domain.reservation.entity.ReservationStatus.
 import static ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatus.RESERVED;
 
 @Slf4j
-@RestController
+@RestController("/reservation")
 @RequiredArgsConstructor
 public class ReservationController {
 
-    @PostMapping("/reservations")
+    @PostMapping
     public ResponseDto<Integer> tryReservation(
             @RequestBody List<ReservationRoomCreateRequest> reservationRoomDTOs, //To-do : Validation ++
             Principal principal
@@ -33,7 +33,7 @@ public class ReservationController {
         return new ResponseDto<>(HttpStatus.OK.value(), 1);         //@Return : status, <생성된 ReservationId>
     }
 
-    @PostMapping("/reservations-pay/{reservationId}")
+    @PostMapping("/pay/{reservationId}")
     public ResponseDto<Integer> payReservation(
             @PathVariable Long reservationId,
             Principal principal
@@ -42,7 +42,7 @@ public class ReservationController {
         return new ResponseDto<>(HttpStatus.OK.value(), 1);         //@Return : status, <생성된 ReservationId>
     }
 
-    @GetMapping("/reservations/myAll")
+    @GetMapping("/myAll")
     public ResponseDto<List<ReservationGetResponse>> getMyReservations(Principal principal) {
 
         ReservationRoomGetResponse reservationRoomDto1 =
@@ -80,12 +80,11 @@ public class ReservationController {
         return new ResponseDto<>(HttpStatus.OK.value(), List.of(reservationGetResponse1, reservationGetResponse2));
     }
 
-    @PostMapping("/reservations/{reservationId}")
+    @PostMapping("/{reservationId}")
     public ResponseDto<Integer> deleteReservation(
             @PathVariable Long reservationId,
             Principal principal
     ) {
-        //To-do : Service에서 Reservation, List<ReservationRoom> 생성 후 매핑
         return new ResponseDto<>(HttpStatus.OK.value(), 1);         //@Return : status, <생성된 ReservationId>
     }
 
