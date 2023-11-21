@@ -35,3 +35,12 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### docker-compse ###
+.docker-compose.yml
+
+### application developer config ###
+/src/main/resources/application-dev.yml
+
+# QueryDsl
+/src/main/generated/
