@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
-import ybe.mini.travelserver.domain.member.dto.MypageUpdateRequest;
 import ybe.mini.travelserver.global.entity.BaseTimeEntity;
 
 import java.io.Serializable;
@@ -33,10 +32,4 @@ public class Member extends BaseTimeEntity implements Serializable {
 
     @Comment("회원 이름")
     private String name;
-
-    public void updateProfile(MypageUpdateRequest mypageUpdateRequest) {
-        this.email = mypageUpdateRequest.email();
-        this.password = mypageUpdateRequest.password();
-        this.name = mypageUpdateRequest.name();
-    }
 }
