@@ -21,8 +21,9 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> signin(@RequestBody @Valid SigninRequest signinRequest) {
+    public ResponseEntity<SigninResponse> signin(@RequestBody @Valid SigninRequest signinRequest) {
         SigninResponse signinResponse = memberService.loginMember(signinRequest);
+
         return ResponseEntity.ok(signinResponse);
     }
 
@@ -52,9 +53,9 @@ public class MemberController {
     @DeleteMapping("/mypage")
     public ResponseEntity<?> deleteMember(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
-            @RequestBody @Valid DeleteRequest deleteRequest
+            @RequestBody @Valid MypageDeleteRequest mypageDeleteRequest
     ) {
-        memberService.deleteMemberProfile(principalDetails, deleteRequest);
+        memberService.deleteMemberProfile(mypageDeleteRequest);
 
         return ResponseEntity.noContent().build();
     }
