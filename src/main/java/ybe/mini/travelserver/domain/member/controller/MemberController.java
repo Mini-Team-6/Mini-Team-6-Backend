@@ -55,8 +55,10 @@ public class MemberController {
             @AuthenticationPrincipal PrincipalDetails principalDetails,
             @RequestBody @Valid MypageDeleteRequest mypageDeleteRequest
     ) {
-        memberService.deleteMemberProfile(mypageDeleteRequest);
+        if (memberService.deleteMemberProfile(principalDetails, mypageDeleteRequest)) {
+            return ResponseEntity.ok().build();
+        }
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.badRequest().build();
     }
 }
