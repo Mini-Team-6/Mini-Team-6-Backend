@@ -1,0 +1,22 @@
+### 회원 가입
+POST http://localhost:8080/members/signup
+Content-Type: application/json
+
+{
+"email": "okjaeook98@gmail.com",
+"name": "okjaeook",
+"password": "123456"
+}
+
+### 회원 로그인
+POST http://localhost:8080/members/signin
+Content-Type: application/json
+
+{
+  "email": "okjaeook98@gmail.com",
+  "password": "123456"
+}
+
+### 회원 조회
+GET http://localhost:8080/members/mypage
+Authorization: Bearer #로그인 성공시 토큰 발급됨. 값 넣어주면 동작함
