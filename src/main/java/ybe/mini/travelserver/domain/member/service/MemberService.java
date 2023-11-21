@@ -1,17 +1,87 @@
 package ybe.mini.travelserver.domain.member.service;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.member.dto.*;
+import ybe.mini.travelserver.domain.member.entity.Member;
+import ybe.mini.travelserver.domain.member.repository.MemberRepository;
+import ybe.mini.travelserver.global.security.JwtIssuer;
 import ybe.mini.travelserver.global.security.PrincipalDetails;
 
-public interface MemberService {
+@Slf4j
+@RequiredArgsConstructor
+@Service
+public class MemberService {
+    private final MemberRepository memberRepository;
+    private final JwtIssuer jwtIssuer;
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
 
-    SigninResponse loginMember(SigninRequest signinRequest);
 
-    SignupResponse createMember(SignupRequest signupRequest);
+    @Transactional(readOnly = true)
+    public SigninResponse loginMember(SigninRequest signinRequest) {
+        var authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(signinRequest.email(), signinRequest.password())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
 
-    MypageResponse getMemberProfile(PrincipalDetails principalDetails);
+        final String token = jwtIssuer.issue(JwtIssuer.Request.builder()
+                .memberId(principal.getMemberId())
+                .email(principal.getEmail())
+                .build());
 
-    MypageUpdateResponse updateMemberProfile(MypageUpdateRequest mypageUpdateRequest);
+        return new SigninResponse(token);
+    }
 
-    DeleteResponse deleteMemberProfile(PrincipalDetails principalDetails, DeleteRequest deleteRequest);
+    @Transactional
+    public SignupResponse createMember(SignupRequest signupRequest) {
+        return SignupResponse.fromEntity(memberRepository.save(
+                new SignupRequest(
+                        signupRequest.email(),
+                        passwordEncoder.encode(signupRequest.password()),
+                        signupRequest.name()
+                ).toEntity()
+        ));
+    }
+
+
+    @Transactional(readOnly = true)
+    public MypageResponse getMemberProfile(PrincipalDetails principalDetails) {
+        String email = principalDetails.getUsername();
+
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(NullPointerException::new);
+
+        return MypageResponse.fromEntity(member);
+    }
+
+
+    @Transactional
+    public MypageUpdateResponse updateMemberProfile(MypageUpdateRequest mypageUpdateRequest) {
+        Member member = memberRepository.save(mypageUpdateRequest.toEntity());
+
+        return MypageUpdateResponse.fromEntity(member);
+    }
+
+
+    @Transactional
+    public MypageDeleteResponse deleteMemberProfile(
+            MypageDeleteRequest mypageDeleteRequest
+    ) {
+        Member member = memberRepository.findByEmailAndPassword(
+                mypageDeleteRequest.email(),
+                passwordEncoder.encode(mypageDeleteRequest.password())
+        ).orElseThrow(NullPointerException::new);
+
+        memberRepository.delete(member);
+
+        return MypageDeleteResponse.fromEntity(member);
+    }
 }
