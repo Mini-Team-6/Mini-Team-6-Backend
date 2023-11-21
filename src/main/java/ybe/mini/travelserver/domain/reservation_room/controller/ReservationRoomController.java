@@ -14,7 +14,7 @@ import java.util.List;
 import static ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatus.RESERVED;
 
 @Slf4j
-@RequestMapping("/reservation_rooms")
+@RequestMapping("/reservation-rooms")
 @RestController
 @RequiredArgsConstructor
 public class ReservationRoomController {
