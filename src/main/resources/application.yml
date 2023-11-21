@@ -1,5 +1,5 @@
 spring:
   profiles:
     include:
-      core
+      core, jwt
     active: ${APP_PROFILE}
