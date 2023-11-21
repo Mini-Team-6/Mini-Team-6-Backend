@@ -6,10 +6,10 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
 import ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatus;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Builder
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record ReservationRoomGetResponse(
         Long id,
         Long roomId,    //To-do : Room room 으로 변경 논의
@@ -19,5 +19,5 @@ public record ReservationRoomGetResponse(
         LocalDateTime checkOut,
         Long guestNumber,
         ReservationRoomStatus status
-) {
+) implements Serializable {
 }

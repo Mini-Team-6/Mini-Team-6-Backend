@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record SigninResponse(
         @NotBlank

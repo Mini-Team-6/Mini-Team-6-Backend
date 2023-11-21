@@ -7,11 +7,11 @@ import lombok.Builder;
 import ybe.mini.travelserver.domain.reservation.entity.ReservationStatus;
 import ybe.mini.travelserver.domain.reservation_room.dto.ReservationRoomGetResponse;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record ReservationGetResponse(
         Long id,
         List<ReservationRoomGetResponse> reservationRooms,
@@ -19,5 +19,5 @@ public record ReservationGetResponse(
         LocalDateTime createdAt,
         ReservationStatus status
 
-) {
+) implements Serializable {
 }

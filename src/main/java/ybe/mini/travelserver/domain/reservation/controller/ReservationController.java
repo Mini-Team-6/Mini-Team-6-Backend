@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateRequest;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationGetResponse;
 import ybe.mini.travelserver.domain.reservation.entity.ReservationStatus;
 import ybe.mini.travelserver.domain.reservation_room.dto.ReservationRoomCreateRequest;
@@ -20,13 +21,14 @@ import static ybe.mini.travelserver.domain.reservation.entity.ReservationStatus.
 import static ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatus.RESERVED;
 
 @Slf4j
-@RestController("/reservation")
+@RequestMapping("/reservations")
+@RestController
 @RequiredArgsConstructor
 public class ReservationController {
 
     @PostMapping
-    public ResponseDto<Integer> tryReservation(
-            @RequestBody List<ReservationRoomCreateRequest> reservationRoomDTOs, //To-do : Validation ++
+    public ResponseDto<Integer> tryReservation (
+            @RequestBody ReservationCreateRequest createRequest, //To-do : Validation ++
             Principal principal
     ) {
         //To-do : Service에서 Reservation, List<ReservationRoom> 생성 후 매핑
@@ -80,7 +82,7 @@ public class ReservationController {
         return new ResponseDto<>(HttpStatus.OK.value(), List.of(reservationGetResponse1, reservationGetResponse2));
     }
 
-    @PostMapping("/{reservationId}")
+    @DeleteMapping("/{reservationId}")
     public ResponseDto<Integer> deleteReservation(
             @PathVariable Long reservationId,
             Principal principal
