@@ -4,13 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ybe.mini.travelserver.domain.accommodation.Accommodation;
+import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 import ybe.mini.travelserver.domain.accommodation.AccommodationType;
 import ybe.mini.travelserver.domain.accommodation.Location;
 import ybe.mini.travelserver.domain.cart.Cart;
 import ybe.mini.travelserver.domain.cart.dto.request.CartCreateRequest;
 import ybe.mini.travelserver.domain.cart.dto.response.CartGetResponse;
-import ybe.mini.travelserver.domain.room.Room;
+import ybe.mini.travelserver.domain.room.entity.Room;
 import ybe.mini.travelserver.global.common.ResponseDto;
 import ybe.mini.travelserver.global.security.PrincipalDetails;
 

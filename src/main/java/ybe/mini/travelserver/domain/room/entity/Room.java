@@ -1,4 +1,4 @@
-package ybe.mini.travelserver.domain.room;
+package ybe.mini.travelserver.domain.room.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
-import ybe.mini.travelserver.domain.accommodation.Accommodation;
+import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

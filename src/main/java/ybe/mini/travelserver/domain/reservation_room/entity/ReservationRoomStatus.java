@@ -1,4 +1,4 @@
-package ybe.mini.travelserver.domain.reservation_room;
+package ybe.mini.travelserver.domain.reservation_room.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

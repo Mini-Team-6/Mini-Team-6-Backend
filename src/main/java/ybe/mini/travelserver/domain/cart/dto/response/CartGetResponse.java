@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
-import ybe.mini.travelserver.domain.accommodation.Accommodation;
+import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 import ybe.mini.travelserver.domain.cart.Cart;
-import ybe.mini.travelserver.domain.room.Room;
+import ybe.mini.travelserver.domain.room.entity.Room;
 
 import java.time.LocalDateTime;
 
