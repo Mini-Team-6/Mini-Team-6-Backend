@@ -57,8 +57,10 @@ public class MemberController {
             @AuthenticationPrincipal PrincipalDetails principalDetails,
             @RequestBody @Valid MypageDeleteRequest mypageDeleteRequest
     ) {
-        memberService.deleteMemberProfile(mypageDeleteRequest);
+        if (memberService.deleteMemberProfile(principalDetails, mypageDeleteRequest)) {
+            return new ResponseDto<>(HttpStatus.OK.value(), 1); //To do : 1대신 삭제된 ID를 반환해주면 좋을거 같습니다.
+        }
 
-        return new ResponseDto<>(HttpStatus.OK.value(), 1); //To do : 1대신 삭제된 ID를 반환해주면 좋을거 같습니다.
+        return new ResponseDto<>(HttpStatus.BAD_REQUEST.value(), null);
     }
 }
