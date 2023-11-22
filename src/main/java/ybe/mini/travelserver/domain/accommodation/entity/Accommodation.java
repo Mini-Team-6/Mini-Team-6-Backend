@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
-import ybe.mini.travelserver.domain.accommodation.AccommodationType;
 import ybe.mini.travelserver.domain.accommodation.Location;
 
 @Getter
