@@ -17,10 +17,11 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/accomodations")
+@RequestMapping("/accommodations")
 public class AccommodationController {
 
-    @GetMapping("/keyword") //TODO : url 수정 예정
+
+    @GetMapping("/keyword")
     public ResponseDto<List<AccommodationGetResponse>> getAccommodationByKeyword(
             @RequestParam String keyword
     ) {
@@ -71,9 +72,10 @@ public class AccommodationController {
         return new ResponseDto<>(HttpStatus.OK.value(), responseList);
     }
 
-    @GetMapping("")
+    @GetMapping("/city")
     public ResponseDto<List<AccommodationGetResponse>> getAccommodationByCityAndDistrict(
-            @RequestParam String city, @RequestParam String district
+            @RequestParam String city,
+            @RequestParam String district
     ) {
         Location location = Location.builder()
                 .address("강원특별자치도 강릉시 창해로 307 ")
