@@ -65,23 +65,33 @@ public class MemberService {
 
     @Transactional
     public MypageUpdateResponse updateMemberProfile(MypageUpdateRequest mypageUpdateRequest) {
-        Member member = memberRepository.save(mypageUpdateRequest.toEntity());
+        Member existingMember = memberRepository.findByEmail(mypageUpdateRequest.email())
+                .orElseThrow(() -> new IllegalArgumentException("Member not found"));
 
-        return MypageUpdateResponse.fromEntity(member);
+        return MypageUpdateResponse.fromEntity(
+                existingMember.updateProfile(
+                        mypageUpdateRequest.email(),
+                        passwordEncoder.encode(mypageUpdateRequest.password()),
+                        mypageUpdateRequest.name()
+                )
+        );
     }
 
 
     @Transactional
-    public MypageDeleteResponse deleteMemberProfile(
+    public boolean deleteMemberProfile(
+            PrincipalDetails principalDetails,
             MypageDeleteRequest mypageDeleteRequest
     ) {
-        Member member = memberRepository.findByEmailAndPassword(
-                mypageDeleteRequest.email(),
-                passwordEncoder.encode(mypageDeleteRequest.password())
-        ).orElseThrow(NullPointerException::new);
+        if (!principalDetails.getUsername().equals(mypageDeleteRequest.email())) {
+            throw new IllegalArgumentException("Member not found");
+        }
 
-        memberRepository.delete(member);
+        Member existingMember = memberRepository.findByEmail(mypageDeleteRequest.email())
+                .orElseThrow(() -> new IllegalArgumentException("Member not found"));
 
-        return MypageDeleteResponse.fromEntity(member);
+        memberRepository.delete(existingMember);
+
+        return true;
     }
 }
