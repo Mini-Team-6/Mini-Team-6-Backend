@@ -2,6 +2,7 @@ package ybe.mini.travelserver.domain.reservation.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -33,10 +34,11 @@ public class Reservation extends BaseTimeEntity {
     private Member member;
 
     @OneToMany(
-            mappedBy = "reservationRooms",
+            mappedBy = "reservation",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @Builder.Default
     private List<ReservationRoom> reservationRooms = new ArrayList<>();
 
     @Comment("예약 상태")
