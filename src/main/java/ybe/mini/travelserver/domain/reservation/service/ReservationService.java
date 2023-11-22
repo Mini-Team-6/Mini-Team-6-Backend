@@ -31,7 +31,19 @@ public class ReservationService {
 
         Reservation reservation = Reservation.createReservation(member, reservationRooms);
         return reservationRepository.save(reservation);
+    }
 
+    @Transactional
+    public Long updateReservationStatusToPay(Long reservationId) {
+        Reservation reservation = getReservationById(reservationId);
+        reservation.updateStatusToPaySuccess();
+        return reservation.getId();
+    }
+
+
+    public Reservation getReservationById(Long id) {
+        return reservationRepository.findById(id)
+                .orElseThrow(RuntimeException::new);    //To-do : Custom Exception Handle
     }
 
     public Member getMemberByEmail(String email) {

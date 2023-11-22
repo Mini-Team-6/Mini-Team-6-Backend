@@ -53,16 +53,14 @@ public class Reservation extends BaseTimeEntity {
         reservationRoom.setReservation(this);
     }
 
+    public void updateStatusToPaySuccess() {
+        status = PAYED_SUCCESS;
+    }
+
     public static Reservation createReservation(
             Member member,
             List<ReservationRoom> reservationRooms
     ) {
-//        Reservation reservation = new Reservation();
-//        reservation.setMember(member);
-//        reservationRooms.forEach(reservation::addReservationRoom);
-//        reservation.setStatus(PAYED_BEFORE);
-//
-//        return reservation;
 
         Reservation reservation = Reservation.builder()
                 .member(member)

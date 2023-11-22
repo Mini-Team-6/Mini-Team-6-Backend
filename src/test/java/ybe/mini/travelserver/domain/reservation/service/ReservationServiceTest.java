@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static ybe.mini.travelserver.domain.reservation.entity.ReservationStatus.PAYED_BEFORE;
+import static ybe.mini.travelserver.domain.reservation.entity.ReservationStatus.PAYED_SUCCESS;
 import static ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatus.RESERVED;
 
 @SpringBootTest
@@ -44,13 +46,32 @@ class ReservationServiceTest {
         //then
         Reservation findReservation = reservationRepository.findById(createdReservation.getId())
                 .orElseThrow(RuntimeException::new);
-        assertThat(findReservation.getStatus()).isEqualTo(ReservationStatus.PAYED_BEFORE);
+        assertThat(findReservation.getStatus()).isEqualTo(PAYED_BEFORE);
         assertThat(findReservation.getReservationRooms().get(0).getCheckIn()).isEqualTo(LocalDateTime.of(2022,1,1,1,1));
         assertThat(findReservation.getReservationRooms().get(0).getCheckOut()).isEqualTo(LocalDateTime.of(2022,1,3,1,1));
         assertThat(findReservation.getReservationRooms().get(0).getStatus()).isEqualTo(RESERVED);
+
         assertThat(findReservation.getReservationRooms().get(1).getCheckIn()).isEqualTo(LocalDateTime.of(2023,1,1,1,1));
         assertThat(findReservation.getReservationRooms().get(1).getCheckOut()).isEqualTo(LocalDateTime.of(2023,1,3,1,1));
         assertThat(findReservation.getReservationRooms().get(1).getStatus()).isEqualTo(RESERVED);
+
+    }
+
+    @Test
+    void updateReservationStatusToPay_success() {
+        //given
+        Member member = createMember();
+        ReservationCreateRequest reservationCreateRequest = createReservationCreateRequest();
+        Reservation createdReservation =
+                reservationService.createReservation(member.getEmail(), reservationCreateRequest);
+
+        //when
+        reservationService.updateReservationStatusToPay(createdReservation.getId());
+
+        //then
+        Reservation findReservation = reservationRepository.findById(createdReservation.getId())
+                .orElseThrow(RuntimeException::new);
+        assertThat(findReservation.getStatus()).isEqualTo(PAYED_SUCCESS);
 
     }
 
@@ -75,8 +96,5 @@ class ReservationServiceTest {
                 .name("test")
                 .build());
     }
-
-
-
 
 }
