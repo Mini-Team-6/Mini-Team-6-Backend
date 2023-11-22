@@ -40,6 +40,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(httpRequests -> httpRequests
                 .requestMatchers(new AntPathRequestMatcher("/members/signin")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/members/signup")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/test")).permitAll()
                 .anyRequest().authenticated()
         );
 

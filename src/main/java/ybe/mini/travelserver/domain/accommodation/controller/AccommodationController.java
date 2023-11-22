@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/accomodations")
 public class AccommodationController {
 
-    @GetMapping("")
+    @GetMapping("/keyword") //TODO : url 수정 예정
     public ResponseDto<List<AccommodationGetResponse>> getAccommodationByKeyword(
             @RequestParam String keyword
     ) {
