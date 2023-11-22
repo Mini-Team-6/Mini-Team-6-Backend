@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface AccommodationRepository extends JpaRepository<Accommodation, Long> {
     List<AccommodationGetResponse> findAllByNameContaining(String keyword);
+    List<Accommodation> findByLocationAddressContaining(String address);
 }
 

@@ -6,14 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ybe.mini.travelserver.domain.accommodation.entity.AccommodationType;
-import ybe.mini.travelserver.domain.accommodation.Location;
 import ybe.mini.travelserver.domain.accommodation.dto.AccommodationGetResponse;
-import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 import ybe.mini.travelserver.domain.accommodation.service.AccommodationService;
 import ybe.mini.travelserver.global.common.ResponseDto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -37,7 +33,9 @@ public class AccommodationController {
             @RequestParam String city,
             @RequestParam String district
     ) {
-        return null;
+        List<AccommodationGetResponse> accommodations =
+                accommodationService.getAccommodationsByCityAndDistrict(city, district);
+        return new ResponseDto<>(HttpStatus.OK.value(), accommodations);
     }
 
 
