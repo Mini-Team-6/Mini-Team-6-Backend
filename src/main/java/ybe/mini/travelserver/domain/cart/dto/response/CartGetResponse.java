@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
+import ybe.mini.travelserver.domain.accommodation.Accommodation;
 import ybe.mini.travelserver.domain.cart.Cart;
 import ybe.mini.travelserver.domain.room.Room;
 
@@ -16,16 +17,18 @@ public record CartGetResponse (
     int guestNumber,
     LocalDateTime checkIn,
     LocalDateTime checkOut,
-    Room room
+    Room room,
+    Accommodation accommodation
 ) {
     @Builder
-    public static CartGetResponse fromEntity(Cart cart) {
+    public static CartGetResponse fromEntity(Cart cart, Accommodation accommodation) {
         return new CartGetResponse(
                 cart.getId(),
                 cart.getGuestNumber(),
                 cart.getCheckIn(),
                 cart.getCheckOut(),
-                cart.getRoom()
+                cart.getRoom(),
+                accommodation
         );
     }
 }
