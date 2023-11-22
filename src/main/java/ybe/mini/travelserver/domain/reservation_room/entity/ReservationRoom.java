@@ -8,9 +8,11 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 import org.springframework.format.annotation.DateTimeFormat;
 import ybe.mini.travelserver.domain.reservation.entity.Reservation;
-import ybe.mini.travelserver.domain.room.Room;
+import ybe.mini.travelserver.domain.room.entity.Room;
 
 import java.time.LocalDateTime;
+
+import static ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatus.RESERVED;
 
 @SuperBuilder
 @Getter
@@ -23,12 +25,12 @@ public class ReservationRoom {
     @Comment("예약 번호")
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     @Comment("객실 번호")
     private Room room;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
     @Comment("예약 번호 FK")
     private Reservation reservation;
@@ -42,8 +44,30 @@ public class ReservationRoom {
     private LocalDateTime checkOut;
 
     @Comment("에약 상태")
-    private ReservationRoomStatus reservationRoomStatus;
+    private ReservationRoomStatus status;
 
     @Comment("숙박 인원")
     private Integer guestNumber;
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
+    }
+
+    public void setStatus(ReservationRoomStatus status) {
+        this.status = status;
+    }
+
+    public static ReservationRoom createReservationRoom(
+            Room room, LocalDateTime checkIn, LocalDateTime checkOut, Integer guestNumber
+    ) {
+        return ReservationRoom.builder()
+                .room(room)
+                .checkIn(checkIn)
+                .checkOut(checkOut)
+                .status(RESERVED)
+                .guestNumber(guestNumber)
+                .build();
+
+    }
+
 }
