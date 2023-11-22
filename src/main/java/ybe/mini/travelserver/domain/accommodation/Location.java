@@ -3,11 +3,13 @@ package ybe.mini.travelserver.domain.accommodation;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 
 @Getter
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 @Embeddable
+@SuperBuilder
 public class Location {
     @Comment("숙박 시설 주소")
     private String address;
