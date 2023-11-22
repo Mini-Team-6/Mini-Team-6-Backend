@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 import org.springframework.format.annotation.DateTimeFormat;
 import ybe.mini.travelserver.domain.reservation.entity.Reservation;
-import ybe.mini.travelserver.domain.room.Room;
+import ybe.mini.travelserver.domain.room.entity.Room;
 
 import java.time.LocalDateTime;
 
