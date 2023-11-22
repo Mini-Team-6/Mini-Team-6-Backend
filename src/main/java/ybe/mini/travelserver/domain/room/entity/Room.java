@@ -1,9 +1,10 @@
-package ybe.mini.travelserver.domain.room;
+package ybe.mini.travelserver.domain.room.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 import ybe.mini.travelserver.domain.accommodation.Accommodation;
 
@@ -11,6 +12,7 @@ import ybe.mini.travelserver.domain.accommodation.Accommodation;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Comment("객실")
+@SuperBuilder
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
