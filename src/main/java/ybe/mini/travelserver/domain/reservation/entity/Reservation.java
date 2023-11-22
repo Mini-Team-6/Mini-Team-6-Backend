@@ -71,15 +71,6 @@ public class Reservation extends BaseTimeEntity {
         return reservation;
     }
 
-    public void cancelReservation() {
-        if(status.equals(PAYED_BEFORE)) {
-            this.setStatus(CANCELED);
-        } else if(status.equals(PAYED_SUCCESS)) {
-            this.setStatus(REFUND);
-        }
-        reservationRooms.forEach(room -> room.setStatus(ReservationRoomStatus.CANCELED));
-    }
-
     public Integer getTotalPrice() {
         return reservationRooms.stream().mapToInt(room -> room.getRoom().getPrice()).sum();
     }

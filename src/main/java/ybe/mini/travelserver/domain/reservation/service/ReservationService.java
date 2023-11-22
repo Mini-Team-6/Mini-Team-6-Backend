@@ -33,6 +33,12 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
+    @Transactional(readOnly = true)
+    public List<Reservation> getMyReservations(String userEmail) {
+        Member member = getMemberByEmail(userEmail);
+        return reservationRepository.findByMember(member);
+    }
+
     @Transactional
     public Long updateReservationStatusToPay(Long reservationId) {
         Reservation reservation = getReservationById(reservationId);
@@ -40,6 +46,11 @@ public class ReservationService {
         return reservation.getId();
     }
 
+    @Transactional
+    public Long deleteReservation(Long reservationId) {
+        reservationRepository.deleteById(reservationId);
+        return reservationId;
+    }
 
     public Reservation getReservationById(Long id) {
         return reservationRepository.findById(id)

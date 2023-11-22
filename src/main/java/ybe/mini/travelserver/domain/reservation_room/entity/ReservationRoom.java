@@ -53,10 +53,6 @@ public class ReservationRoom {
         this.reservation = reservation;
     }
 
-    public void setStatus(ReservationRoomStatus status) {
-        this.status = status;
-    }
-
     public static ReservationRoom createReservationRoom(
             Room room, LocalDateTime checkIn, LocalDateTime checkOut, Integer guestNumber
     ) {
