@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.member.entity.Member;
 import ybe.mini.travelserver.domain.member.repository.MemberRepository;
-import ybe.mini.travelserver.domain.reservation.Repository.ReservationRepository;
+import ybe.mini.travelserver.domain.reservation.repository.ReservationRepository;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateRequest;
 import ybe.mini.travelserver.domain.reservation.entity.Reservation;
 import ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoom;
@@ -36,7 +36,7 @@ public class ReservationService {
     @Transactional(readOnly = true)
     public List<Reservation> getMyReservations(String userEmail) {
         Member member = getMemberByEmail(userEmail);
-        return reservationRepository.findByMember(member);
+        return reservationRepository.findAllByMember(member);
     }
 
     @Transactional

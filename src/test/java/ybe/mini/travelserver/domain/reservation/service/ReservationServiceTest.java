@@ -8,7 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.member.entity.Member;
 import ybe.mini.travelserver.domain.member.repository.MemberRepository;
-import ybe.mini.travelserver.domain.reservation.Repository.ReservationRepository;
+import ybe.mini.travelserver.domain.reservation.repository.ReservationRepository;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateRequest;
 import ybe.mini.travelserver.domain.reservation.entity.Reservation;
 import ybe.mini.travelserver.domain.reservation_room.dto.ReservationRoomCreateRequest;
