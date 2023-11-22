@@ -13,9 +13,9 @@ import ybe.mini.travelserver.domain.accommodation.Location;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SuperBuilder
 @Entity
 @Comment("숙소")
+@SuperBuilder
 public class Accommodation {
     @Id
     @Comment("숙소 아이디(api 숙소키와 동일)")

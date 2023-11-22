@@ -11,8 +11,8 @@ import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@SuperBuilder
 @Comment("객실")
+@SuperBuilder
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

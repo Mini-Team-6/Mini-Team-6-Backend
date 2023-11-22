@@ -9,7 +9,6 @@ import ybe.mini.travelserver.domain.member.entity.Member;
 
 import java.io.Serializable;
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record MypageUpdateResponse(
         @Email
