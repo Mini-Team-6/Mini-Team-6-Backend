@@ -1,6 +1,7 @@
 package ybe.mini.travelserver.domain.accommodation.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/temp/accommodations")
+@Slf4j
 public class AccommodationController {
 
     private final AccommodationService accommodationService;
@@ -32,8 +34,11 @@ public class AccommodationController {
     public ResponseDto<List<AccommodationGetResponse>> bringAccommodationsByCity(
             @RequestParam String areacode
     ) {
+        log.info("areacode: {}", areacode);
+//        String areaCode = String.valueOf(areacode);
+//        log.info("areaCode: {}", areaCode);
         List<AccommodationGetResponse> accommodations =
-                accommodationService.bringAccommodations(areacode);
+                accommodationService.bringAccommodationsByAreaCode(areacode);
         return new ResponseDto<>(HttpStatus.OK.value(), accommodations);
     }
 
