@@ -23,4 +23,10 @@ public class RoomService {
                 .map(RoomGetResponse::fromEntity)
                 .collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
+    public Room getRoom(Long roomId) {
+        Room room = roomRepository.findById(roomId).orElseThrow(RuntimeException::new);
+        return room;
+    }
 }
