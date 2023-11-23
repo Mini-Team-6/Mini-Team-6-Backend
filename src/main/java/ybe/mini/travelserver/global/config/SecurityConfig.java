@@ -42,6 +42,8 @@ public class SecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/members/signup")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/test/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/tour-api/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/rooms/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/accommodations/**")).permitAll()
                 .anyRequest().authenticated()
         );
 
