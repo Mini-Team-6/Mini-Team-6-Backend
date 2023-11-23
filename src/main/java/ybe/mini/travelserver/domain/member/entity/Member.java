@@ -19,6 +19,7 @@ import java.io.Serializable;
 @Entity
 @Comment("회원")
 public class Member extends BaseTimeEntity implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Comment("회원 아이디")
