@@ -1,0 +1,16 @@
+## 숙소
+
+### 키워드로 숙소 간단 조회
+GET http://localhost:8080/tour-api/search?keyword=프레이저
+
+### 숙소 간단 부분 조회(page)
+GET http://localhost:8080/tour-api/page/2
+
+### 숙소 하나 상세 정보 제공
+GET http://localhost:8080/tour-api/accommodation/3013312
+
+### 하나의 숙소 내 모든 종류의 객실 세부 조회
+GET http://localhost:8080/tour-api/accommodation/3013312/rooms
+
+### API 동기화
+GET http://localhost:8080/tour-api/save
