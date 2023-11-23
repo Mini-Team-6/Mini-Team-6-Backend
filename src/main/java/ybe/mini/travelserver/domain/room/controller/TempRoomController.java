@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/rooms")
 public class TempRoomController {
 
-    @GetMapping("")
+    @GetMapping("/")
     public ResponseDto<List<RoomGetResponse>> bringRooms(
             @RequestParam Long accommodationId
     ) {
