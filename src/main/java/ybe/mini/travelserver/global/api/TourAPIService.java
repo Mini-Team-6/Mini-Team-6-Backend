@@ -8,7 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ybe.mini.travelserver.domain.accommodation.Location;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
+import ybe.mini.travelserver.domain.accommodation.repository.AccommodationRepository;
 import ybe.mini.travelserver.domain.room.entity.Room;
+import ybe.mini.travelserver.domain.room.repository.RoomRepository;
 
 import java.io.File;
 import java.io.IOException;
