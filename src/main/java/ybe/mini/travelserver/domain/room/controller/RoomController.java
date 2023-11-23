@@ -19,7 +19,7 @@ public class RoomController {
 
     private final RoomService roomService;
 
-    @GetMapping("/{accommodationId}")
+    @GetMapping("")
     public ResponseDto<List<RoomGetResponse>> bringRooms(
             @PathVariable Long accommodationId
     ) {
