@@ -6,7 +6,6 @@ import ybe.mini.travelserver.domain.room.entity.Room;
 
 public class DummyObjectForController implements DummyObjectForRoom{
 
-    @Override
     public Room dummyRoom(Accommodation accommodation) {
         return Room.builder()
                 .capacity(2)
