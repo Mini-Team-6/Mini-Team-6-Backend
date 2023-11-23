@@ -8,7 +8,7 @@ import ybe.mini.travelserver.domain.room.entity.Room;
 
 import java.util.List;
 
-@Component("customRoomRepository")
+
 public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> findByAccommodationId(Long accommodationId);
 }
