@@ -14,34 +14,28 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/accommodations")
+@RequestMapping("/temp/accommodations")
 public class AccommodationController {
 
     private final AccommodationService accommodationService;
 
     @GetMapping("/keyword")
-    public ResponseDto<List<AccommodationGetResponse>> getAllAccommodationsByKeyword(
+    public ResponseDto<List<AccommodationGetResponse>> bringAccommodations(
             @RequestParam String keyword
     ) {
         List<AccommodationGetResponse> accommodations =
-                accommodationService.getAllAccommodationsByKeyword(keyword);
+                accommodationService.bringAccommodations(keyword);
         return new ResponseDto<>(HttpStatus.OK.value(), accommodations);
     }
 
-    @GetMapping("/city")
-    public ResponseDto<List<AccommodationGetResponse>> getAllAccommodationsByCityAndDistrict(
-            @RequestParam String city,
-            @RequestParam String district
+    @GetMapping("/areacode")
+    public ResponseDto<List<AccommodationGetResponse>> bringAccommodationsByCity(
+            @RequestParam String areacode
     ) {
         List<AccommodationGetResponse> accommodations =
-                accommodationService.getAccommodationsByCityAndDistrict(city, district);
+                accommodationService.bringAccommodations(areacode);
         return new ResponseDto<>(HttpStatus.OK.value(), accommodations);
     }
 
-
-    @GetMapping("/search")
-    public ResponseDto<List<AccommodationGetResponse>> searchAccommodation() {
-        return null;
-    }
 
 }
