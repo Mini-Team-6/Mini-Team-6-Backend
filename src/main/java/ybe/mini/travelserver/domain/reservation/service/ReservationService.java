@@ -48,16 +48,16 @@ public class ReservationService {
 
     @Transactional
     public Long deleteReservation(Long reservationId) {
-        reservationRepository.deleteById(reservationId);
+        reservationRepository.deleteById(getReservationById(reservationId).getId());
         return reservationId;
     }
 
-    public Reservation getReservationById(Long id) {
+    private Reservation getReservationById(Long id) {
         return reservationRepository.findById(id)
                 .orElseThrow(RuntimeException::new);    //To-do : Custom Exception Handle
     }
 
-    public Member getMemberByEmail(String email) {
+    private Member getMemberByEmail(String email) {
         return memberRepository.findByEmail(email)
                 .orElseThrow(RuntimeException::new);    //To-do : Custom Exception Handle
     }

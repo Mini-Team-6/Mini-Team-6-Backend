@@ -19,16 +19,28 @@ public class ReservationRoomService {
     private final ReservationRoomRepository reservationRoomRepository;
     private final ReservationRepository reservationRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ReservationRoom> getReservationRoomsFromReservation(Long reservationId) {
         Reservation reservation = getReservationById(reservationId);
 
         return reservationRoomRepository.findAllByReservation(reservation);
-
     }
 
-    public Reservation getReservationById(Long id) {
+    @Transactional
+    public Long deleteReservationRoom(Long reservationId, Long reservationRoomId) {
+        reservationRoomRepository.deleteById(getReservationRoomById(reservationRoomId).getId());
+        Reservation reservation = getReservationById(reservationId);
+        reservation.deleteReservationRoom(reservationRoomId);
+        return reservationRoomId;
+    }
+
+    private Reservation getReservationById(Long id) {
         return reservationRepository.findById(id)
+                .orElseThrow(RuntimeException::new);
+    }
+
+    private ReservationRoom getReservationRoomById(Long id) {
+        return reservationRoomRepository.findById(id)
                 .orElseThrow(RuntimeException::new);
     }
 }

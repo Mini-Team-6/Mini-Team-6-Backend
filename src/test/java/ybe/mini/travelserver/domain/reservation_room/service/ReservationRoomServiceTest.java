@@ -1,6 +1,8 @@
 package ybe.mini.travelserver.domain.reservation_room.service;
 
+import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +20,7 @@ import ybe.mini.travelserver.domain.reservation_room.repository.ReservationRoomR
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,15 +45,18 @@ class ReservationRoomServiceTest {
     @Autowired
     ReservationRoomRepository reservationRoomRepository;
 
+    @Autowired
+    EntityManager em;
+
     @Test
     void getReservationRoomsFromReservation_success() {
         //given
         Member member = createMember("test@test.com");
         ReservationCreateRequest reservationCreateRequest = createReservationCreateRequest();
-
-        //when
         Reservation createdReservation =
                 reservationService.createReservation(member.getEmail(), reservationCreateRequest);
+
+        //when
         List<ReservationRoom> getRooms =
                 reservationRoomService.getReservationRoomsFromReservation(createdReservation.getId());
 
@@ -61,6 +67,31 @@ class ReservationRoomServiceTest {
             assertThat(createdRooms.get(i).getId()).isEqualTo(getRooms.get(i).getId());
         }
     }
+
+    @Test
+    void deleteReservationRoom_success() {
+        //given
+        Member member = createMember("test2@test.com");
+        ReservationCreateRequest reservationCreateRequest = createReservationCreateRequest();
+        Reservation createdReservation =
+                reservationService.createReservation(member.getEmail(), reservationCreateRequest);
+        Long deleteRoomId = createdReservation.getReservationRooms().get(0).getId();
+
+        //when
+        reservationRoomService.deleteReservationRoom(createdReservation.getId(), deleteRoomId);
+
+        //then
+        assertThrows(RuntimeException.class,
+                () -> reservationRoomRepository.findById(deleteRoomId).orElseThrow(RuntimeException::new));
+        Reservation findReservation = reservationRepository.findById(createdReservation.getId())
+                .orElseThrow(RuntimeException::new);
+        assertThat(findReservation.getReservationRooms().size()).isEqualTo(1);
+        for(ReservationRoom room : findReservation.getReservationRooms()) {
+            System.out.println("TAG : " + room.getCheckIn());
+        }
+
+    }
+
     private ReservationCreateRequest createReservationCreateRequest() {
         ReservationRoomCreateRequest roomRequest1 =
                 new ReservationRoomCreateRequest(

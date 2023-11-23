@@ -14,6 +14,7 @@ import ybe.mini.travelserver.global.entity.BaseTimeEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static ybe.mini.travelserver.domain.reservation.entity.ReservationStatus.*;
 
@@ -69,6 +70,12 @@ public class Reservation extends BaseTimeEntity {
         reservationRooms.forEach(reservation::addReservationRoom);
 
         return reservation;
+    }
+
+    public void deleteReservationRoom(Long reservationRoomId) {
+        for(ReservationRoom room : reservationRooms) {
+            if(Objects.equals(room.getId(), reservationRoomId)) reservationRooms.remove(room);
+        }
     }
 
     public Integer getTotalPrice() {
