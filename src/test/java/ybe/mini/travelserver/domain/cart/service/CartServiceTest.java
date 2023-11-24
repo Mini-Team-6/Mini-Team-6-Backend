@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.accommodation.Location;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
-import ybe.mini.travelserver.domain.accommodation.entity.AccommodationType;
 import ybe.mini.travelserver.domain.accommodation.repository.AccommodationRepository;
 import ybe.mini.travelserver.domain.cart.dto.request.CartCreateRequest;
 import ybe.mini.travelserver.domain.cart.dto.response.CartCreateResponse;
@@ -158,7 +157,6 @@ class CartServiceTest {
                         .location(location)
                         .description("숙소설명")
                         .image("이미지")
-                        .accommodationType(AccommodationType.TOURIST_HOTEL)
                         .build());
     }
 
