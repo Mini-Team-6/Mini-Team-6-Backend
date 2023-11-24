@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
-import ybe.mini.travelserver.domain.accommodation.AccommodationType;
 import ybe.mini.travelserver.domain.accommodation.Location;
 import ybe.mini.travelserver.domain.cart.Cart;
 import ybe.mini.travelserver.domain.cart.dto.request.CartCreateRequest;
@@ -35,7 +34,6 @@ public class CartController {
                 .build();
 
         Accommodation accommodation1 = Accommodation.builder()
-                .accommodationType(AccommodationType.TOURIST_HOTEL)
                 .name("세인트존스 호텔")
                 .location(location1)
                 .image("http://tong.visitkorea.or.kr/cms/resource/54/2603354_image2_1.jpg")
@@ -52,7 +50,6 @@ public class CartController {
                 .build();
 
         Accommodation accommodation2 = Accommodation.builder()
-                .accommodationType(AccommodationType.TOURIST_HOTEL)
                 .name("신라 호텔")
                 .location(location2)
                 .image("image1.jpg")
@@ -112,7 +109,6 @@ public class CartController {
                 .build();
 
         Accommodation accommodation1 = Accommodation.builder()
-                .accommodationType(AccommodationType.TOURIST_HOTEL)
                 .name("세인트존스 호텔")
                 .location(location1)
                 .image("http://tong.visitkorea.or.kr/cms/resource/54/2603354_image2_1.jpg")
