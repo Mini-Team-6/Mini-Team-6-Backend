@@ -1,30 +1,29 @@
 package ybe.mini.travelserver.domain.room.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
 import ybe.mini.travelserver.domain.room.entity.Room;
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record RoomGetResponse(
+        Long Id,
         Integer capacity,
         String description,
+        Integer price,
         String image,
         String name,
-        Integer price,
         Long roomTypeId,
         Integer stock
 ) {
     @Builder
     public static RoomGetResponse fromEntity(Room room) {
         return new RoomGetResponse(
+                room.getId(),
                 room.getCapacity(),
                 room.getDescription(),
+                room.getPrice(),
                 room.getImage(),
                 room.getName(),
-                room.getPrice(),
                 room.getRoomTypeId(),
                 room.getStock()
         );
