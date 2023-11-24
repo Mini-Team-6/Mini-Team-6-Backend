@@ -15,19 +15,23 @@ public class AccommodationService {
 
     private final AccommodationRepository accommodationRepository;
 
-    public List<AccommodationGetResponse> getAllAccommodationsByKeyword(String keyword) {
-        return accommodationRepository.findAllByNameContaining(keyword);
+    public List<AccommodationGetResponse> bringAccommodations(String keyword) {
+        List<Accommodation> accommodations = accommodationRepository.findByNameContaining(keyword);
+
+        return getResponseList(accommodations);
     }
 
-    public List<AccommodationGetResponse> getAccommodationsByCityAndDistrict(String city, String district) {
-        List<Accommodation> accommodations =
-                accommodationRepository.findByLocationAddressContaining(city + " " + district);
+    public List<AccommodationGetResponse> bringAccommodationsByAreaCode(String areaCode) {
+        List<Accommodation> accommodations = accommodationRepository.findByLocationAreaCode(areaCode);
 
-        List<AccommodationGetResponse> responses = accommodations.stream()
+        return getResponseList(accommodations);
+    }
+
+    private static List<AccommodationGetResponse> getResponseList(List<Accommodation> accommodations) {
+        return accommodations.stream()
                 .map(AccommodationGetResponse::fromEntity)
                 .collect(Collectors.toList());
-
-        return responses;
     }
+
 }
 
