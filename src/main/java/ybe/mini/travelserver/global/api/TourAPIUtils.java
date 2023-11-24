@@ -1,19 +1,21 @@
 package ybe.mini.travelserver.global.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
-import ybe.mini.travelserver.global.api.dto.AccommodationDetailResponse;
-import ybe.mini.travelserver.global.api.dto.AccommodationSimplePagenationResponse;
-import ybe.mini.travelserver.global.api.dto.RoomsDetailResponse;
-import ybe.mini.travelserver.global.api.dto.AccommodationsSimpleSearchResponse;
+import ybe.mini.travelserver.global.api.dto.DetailInfoResponse;
+import ybe.mini.travelserver.global.api.dto.DetailIntroResponse;
+import ybe.mini.travelserver.global.api.dto.SearchKeywordResponse;
+import ybe.mini.travelserver.global.api.dto.SearchStayResponse;
 
 import static ybe.mini.travelserver.global.api.TourAPIProperties.*;
 
 @Slf4j
 @RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TourAPIUtils {
     private static final RestTemplate restTemplate = new RestTemplate();
 
@@ -45,7 +47,7 @@ public class TourAPIUtils {
         return responseEntity.getBody();
     }
 
-    public static AccommodationsSimpleSearchResponse bringAccommodationByKeyword(String keyword) {
+    public static SearchKeywordResponse bringAccommodationByKeyword(String keyword) {
         StringBuilder url = buildCommonUrl(SEARCH_KEYWORD);
         url.append("&contentTypeId=").append(CONTENT_TYPE_ID);
         url.append("&keyword=").append(keyword);
@@ -53,33 +55,33 @@ public class TourAPIUtils {
 
         return fetchDataFromAPI(
                 url.toString(),
-                AccommodationsSimpleSearchResponse.class
+                SearchKeywordResponse.class
         );
     }
 
-    public static AccommodationDetailResponse bringAccommodationDetail(long contentId) {
+    public static DetailIntroResponse bringAccommodationDetail(long contentId) {
         StringBuilder url = buildCommonUrl(DETAIL_INTRO);
         url.append("&contentTypeId=").append(CONTENT_TYPE_ID);
         url.append("&contentId=").append(contentId);
 
         return fetchDataFromAPI(
                 url.toString(),
-                AccommodationDetailResponse.class
+                DetailIntroResponse.class
         );
     }
 
-    public static RoomsDetailResponse bringRoom(long contentId) {
+    public static DetailInfoResponse bringRoom(long contentId) {
         StringBuilder url = buildCommonUrl(DETAIL_INFO);
         url.append("&contentTypeId=").append(CONTENT_TYPE_ID);
         url.append("&contentId=").append(contentId);
 
         return fetchDataFromAPI(
                 url.toString(),
-                RoomsDetailResponse.class
+                DetailInfoResponse.class
         );
     }
 
-    public static AccommodationSimplePagenationResponse bringAccommodationByPagenation(int pageNo, int numOfRows) {
+    public static SearchStayResponse bringAccommodationByPagenation(int pageNo, int numOfRows) {
         StringBuilder url = buildCommonUrl(SEARCH_STAY);
         url.append("&pageNo=").append(pageNo);
         url.append("&numOfRows=").append(numOfRows);
@@ -87,7 +89,7 @@ public class TourAPIUtils {
 
         return fetchDataFromAPI(
                 url.toString(),
-                AccommodationSimplePagenationResponse.class
+                SearchStayResponse.class
         );
     }
 }
