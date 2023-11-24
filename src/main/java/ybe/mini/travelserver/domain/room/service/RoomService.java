@@ -17,11 +17,18 @@ public class RoomService {
     private final RoomRepository roomRepository;
 
     @Transactional(readOnly = true)
-    public List<RoomGetResponse> getAllRoomByAccommodation(Long accommodationId) {
+    public List<RoomGetResponse> bringRooms(Long accommodationId) {
         List<Room> rooms = roomRepository.findByAccommodationId(accommodationId);
         return rooms.stream()
                 .map(RoomGetResponse::fromEntity)
                 .collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
+    public RoomGetResponse bringRoom(Long roomId) {
+        Room room = roomRepository.findById(roomId).orElseThrow(RuntimeException::new);
+        return RoomGetResponse.fromEntity(room);
+    }
+
 
 }

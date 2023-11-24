@@ -20,9 +20,6 @@ public class Accommodation {
     @Comment("숙소 아이디(api 숙소키와 동일)")
     private Long id;
 
-    @Comment("숙소 카테고리")
-    private AccommodationType accommodationType;
-
     @Comment("숙소 이름")
     private String name;
 

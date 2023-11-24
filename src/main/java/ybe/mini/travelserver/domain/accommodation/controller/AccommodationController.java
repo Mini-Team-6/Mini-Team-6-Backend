@@ -1,6 +1,7 @@
 package ybe.mini.travelserver.domain.accommodation.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,34 +15,32 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/accommodations")
+@RequestMapping("/temp/accommodations")
+@Slf4j
 public class AccommodationController {
 
     private final AccommodationService accommodationService;
 
     @GetMapping("/keyword")
-    public ResponseDto<List<AccommodationGetResponse>> getAllAccommodationsByKeyword(
+    public ResponseDto<List<AccommodationGetResponse>> bringAccommodations(
             @RequestParam String keyword
     ) {
         List<AccommodationGetResponse> accommodations =
-                accommodationService.getAllAccommodationsByKeyword(keyword);
+                accommodationService.bringAccommodations(keyword);
         return new ResponseDto<>(HttpStatus.OK.value(), accommodations);
     }
 
-    @GetMapping("/city")
-    public ResponseDto<List<AccommodationGetResponse>> getAllAccommodationsByCityAndDistrict(
-            @RequestParam String city,
-            @RequestParam String district
+    @GetMapping("/areacode")
+    public ResponseDto<List<AccommodationGetResponse>> bringAccommodationsByCity(
+            @RequestParam String areacode
     ) {
+        log.info("areacode: {}", areacode);
+//        String areaCode = String.valueOf(areacode);
+//        log.info("areaCode: {}", areaCode);
         List<AccommodationGetResponse> accommodations =
-                accommodationService.getAccommodationsByCityAndDistrict(city, district);
+                accommodationService.bringAccommodationsByAreaCode(areacode);
         return new ResponseDto<>(HttpStatus.OK.value(), accommodations);
     }
 
-
-    @GetMapping("/search")
-    public ResponseDto<List<AccommodationGetResponse>> searchAccommodation() {
-        return null;
-    }
 
 }
