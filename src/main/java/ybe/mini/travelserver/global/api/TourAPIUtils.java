@@ -2,7 +2,6 @@ package ybe.mini.travelserver.global.api;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
@@ -14,7 +13,6 @@ import ybe.mini.travelserver.global.api.dto.SearchStayResponse;
 import static ybe.mini.travelserver.global.api.TourAPIProperties.*;
 
 @Slf4j
-@RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TourAPIUtils {
     private static final RestTemplate restTemplate = new RestTemplate();
