@@ -29,7 +29,6 @@ jobs:
         run: |
           chmod +x ./gradlew
 
-      # 빌드 진행
       - name: Test with Gradle
         run: |
           ./gradlew test
