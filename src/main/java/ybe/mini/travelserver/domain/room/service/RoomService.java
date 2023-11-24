@@ -18,8 +18,8 @@ public class RoomService {
 
     @Transactional(readOnly = true)
     public List<RoomGetResponse> bringRooms(Long accommodationId) {
-        List<Room> rooms = roomRepository.findByAccommodationId(accommodationId);
-        return rooms.stream()
+        return roomRepository.findByAccommodationId(accommodationId)
+                .stream()
                 .map(RoomGetResponse::fromEntity)
                 .collect(Collectors.toList());
     }

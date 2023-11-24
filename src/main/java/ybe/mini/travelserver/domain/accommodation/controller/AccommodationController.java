@@ -16,31 +16,27 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/temp/accommodations")
-@Slf4j
 public class AccommodationController {
 
     private final AccommodationService accommodationService;
 
-    @GetMapping("/keyword")
-    public ResponseDto<List<AccommodationGetResponse>> bringAccommodations(
-            @RequestParam String keyword
+    @GetMapping
+    public ResponseDto<List<AccommodationGetResponse>> searchAccommodations(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false, value = "area-code") String areaCode
     ) {
         List<AccommodationGetResponse> accommodations =
-                accommodationService.bringAccommodations(keyword);
+                accommodationService.bringAccommodations(keyword, areaCode);
         return new ResponseDto<>(HttpStatus.OK.value(), accommodations);
     }
 
-    @GetMapping("/areacode")
-    public ResponseDto<List<AccommodationGetResponse>> bringAccommodationsByCity(
-            @RequestParam String areacode
+    @GetMapping("/{accommodationId}")
+    public ResponseDto<AccommodationAndRoomResponse> getAccommodationAndRooms(
+            @PathVariable Long accommodationId
     ) {
-        log.info("areacode: {}", areacode);
-//        String areaCode = String.valueOf(areacode);
-//        log.info("areaCode: {}", areaCode);
-        List<AccommodationGetResponse> accommodations =
-                accommodationService.bringAccommodationsByAreaCode(areacode);
-        return new ResponseDto<>(HttpStatus.OK.value(), accommodations);
+        AccommodationAndRoomResponse accommodationAndRoomResponse
+                = accommodationService.bringAccommodationAndRooms(accommodationId);
+        return new ResponseDto<>(HttpStatus.OK.value(), accommodationAndRoomResponse);
     }
-
 
 }
