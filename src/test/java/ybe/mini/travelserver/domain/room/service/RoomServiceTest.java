@@ -56,5 +56,4 @@ class RoomServiceTest extends DummyObjectForService {
         Assertions.assertEquals(expected, actual);
         then(roomRepository).should().findById(anyLong());
     }
-
 }
