@@ -1,14 +1,9 @@
 package ybe.mini.travelserver.global.api;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
-@Configuration
-@ConfigurationProperties("server.tour-api")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TourAPIProperties {
     public static final String KEY_DECODED = "0ON3kBtDxd0KYGW5spO8inNljADd/IqfnS/l3nMWq3EkARl20N3MmZVYlSvH3Y8V5fEAo7Seucd5pR7Ebm2Phg==";
     public static final String KEY_ENCODED = "0ON3kBtDxd0KYGW5spO8inNljADd%2FIqfnS%2Fl3nMWq3EkARl20N3MmZVYlSvH3Y8V5fEAo7Seucd5pR7Ebm2Phg%3D%3D";
