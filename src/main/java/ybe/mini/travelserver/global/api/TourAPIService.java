@@ -78,11 +78,18 @@ public class TourAPIService {
         List<Room> rooms = new ArrayList<>();
         for (var roomItem : roomItems) {
             Room room = Room.builder()
-                    .id(Long.valueOf(roomItem.contenttypeid()))
+                    .roomTypeId(Long.valueOf(roomItem.roomcode()))
                     .name(roomItem.roomtitle())
                     .description(roomItem.roomintro())
                     .price(Integer.parseInt(roomItem.roomoffseasonminfee1()))
+                    .image(roomItem.roomimg1())
+                    .stock(Integer.parseInt(roomItem.roomcount()))
                     .capacity(Integer.parseInt(roomItem.roommaxcount()))
+                    .accommodation(
+                            Accommodation.builder()
+                                    .id(accommodationId)
+                                    .build()
+                    )
                     .build();
 
             rooms.add(room);
@@ -105,6 +112,8 @@ public class TourAPIService {
                         .address(keywordItem.addr1())
                         .latitude(Double.valueOf(keywordItem.mapy()))
                         .longitude(Double.valueOf(keywordItem.mapx()))
+                        .phone(keywordItem.tel())
+                        .areaCode(keywordItem.areacode())
                         .build())
                 .build();
     }
