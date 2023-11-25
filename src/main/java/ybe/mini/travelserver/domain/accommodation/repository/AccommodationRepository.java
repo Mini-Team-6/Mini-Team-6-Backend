@@ -9,5 +9,6 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, Lo
     List<Accommodation> findByNameContaining(String keyword);
 
     List<Accommodation> findByLocationAreaCode(String areaCode);
+
 }
 

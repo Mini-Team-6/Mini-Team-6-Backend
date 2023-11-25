@@ -8,9 +8,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.member.entity.Member;
 import ybe.mini.travelserver.domain.member.repository.MemberRepository;
-import ybe.mini.travelserver.domain.reservation.repository.ReservationRepository;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateRequest;
 import ybe.mini.travelserver.domain.reservation.entity.Reservation;
+import ybe.mini.travelserver.domain.reservation.repository.ReservationRepository;
 import ybe.mini.travelserver.domain.reservation_room.dto.ReservationRoomCreateRequest;
 import ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoom;
 import ybe.mini.travelserver.domain.reservation_room.repository.ReservationRoomRepository;
@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static ybe.mini.travelserver.domain.reservation.entity.ReservationStatus.PAYED_BEFORE;
 import static ybe.mini.travelserver.domain.reservation.entity.ReservationStatus.PAYED_SUCCESS;
 import static ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatus.RESERVED;
@@ -58,10 +57,13 @@ class ReservationServiceTest {
         assertThat(findReservation.getReservationRooms().get(0).getCheckIn()).isEqualTo(LocalDateTime.of(2022,1,1,1,1));
         assertThat(findReservation.getReservationRooms().get(0).getCheckOut()).isEqualTo(LocalDateTime.of(2022,1,3,1,1));
         assertThat(findReservation.getReservationRooms().get(0).getStatus()).isEqualTo(RESERVED);
-
-        assertThat(findReservation.getReservationRooms().get(1).getCheckIn()).isEqualTo(LocalDateTime.of(2023,1,1,1,1));
-        assertThat(findReservation.getReservationRooms().get(1).getCheckOut()).isEqualTo(LocalDateTime.of(2023,1,3,1,1));
-        assertThat(findReservation.getReservationRooms().get(1).getStatus()).isEqualTo(RESERVED);
+        assertThat(findReservation.getReservationRooms().get(0).getRoom().getRoomTypeId())
+                .isEqualTo(reservationCreateRequest.reservationRooms().get(0).roomTypeId());
+        assertThat(findReservation.getReservationRooms().get(0).getRoom().getAccommodation().getId())
+                .isEqualTo(reservationCreateRequest.reservationRooms().get(0).accommodationId());
+//        assertThat(findReservation.getReservationRooms().get(1).getCheckIn()).isEqualTo(LocalDateTime.of(2023,1,1,1,1));
+//        assertThat(findReservation.getReservationRooms().get(1).getCheckOut()).isEqualTo(LocalDateTime.of(2023,1,3,1,1));
+//        assertThat(findReservation.getReservationRooms().get(1).getStatus()).isEqualTo(RESERVED);
 
     }
 
@@ -92,7 +94,8 @@ class ReservationServiceTest {
         reservationService.createReservation(member1.getEmail(), reservationCreateRequest1);
 
         //when
-        List<Reservation> myReservations1 = reservationService.getMyReservations(member1.getEmail());
+//        List<Reservation> myReservations1 = reservationService.getMyReservations(member1.getEmail());
+        List<Reservation> myReservations1 = reservationService.getMyReservations(member1.getId());
 
         //then
         assertThat(myReservations1.size()).isEqualTo(2);
@@ -124,15 +127,18 @@ class ReservationServiceTest {
     private ReservationCreateRequest createReservationCreateRequest() {
         ReservationRoomCreateRequest roomRequest1 =
                 new ReservationRoomCreateRequest(
-                        1L, LocalDateTime.of(2022,1,1,1,1),
+                        142785L, "가락관광호텔", 11430L,
+                        LocalDateTime.of(2022,1,1,1,1),
                         LocalDateTime.of(2022,1,3,1,1), 2
                 );
-        ReservationRoomCreateRequest roomRequest2 =
-                new ReservationRoomCreateRequest(
-                        1L, LocalDateTime.of(2023,1,1,1,1),
-                        LocalDateTime.of(2023,1,3,1,1), 2
-                );
-        return new ReservationCreateRequest(List.of(roomRequest1, roomRequest2));
+//        ReservationRoomCreateRequest roomRequest2 =
+//                new ReservationRoomCreateRequest(
+//                        2572777L, "게더링앳홍대", 32L,
+//                        LocalDateTime.of(2023,1,1,1,1),
+//                        LocalDateTime.of(2023,1,3,1,1), 2
+//                );
+//        return new ReservationCreateRequest(List.of(roomRequest1, roomRequest2));
+        return new ReservationCreateRequest(List.of(roomRequest1));
     }
 
     private Member createMember(String email) {

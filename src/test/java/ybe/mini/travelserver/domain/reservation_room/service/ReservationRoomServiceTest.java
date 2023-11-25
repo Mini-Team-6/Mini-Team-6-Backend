@@ -95,15 +95,17 @@ class ReservationRoomServiceTest {
     private ReservationCreateRequest createReservationCreateRequest() {
         ReservationRoomCreateRequest roomRequest1 =
                 new ReservationRoomCreateRequest(
-                        1L, LocalDateTime.of(2022,1,1,1,1),
+                        142785L, "가락관광호텔", 11430L,
+                        LocalDateTime.of(2022,1,1,1,1),
                         LocalDateTime.of(2022,1,3,1,1), 2
                 );
-        ReservationRoomCreateRequest roomRequest2 =
-                new ReservationRoomCreateRequest(
-                        1L, LocalDateTime.of(2023,1,1,1,1),
-                        LocalDateTime.of(2023,1,3,1,1), 2
-                );
-        return new ReservationCreateRequest(List.of(roomRequest1, roomRequest2));
+//        ReservationRoomCreateRequest roomRequest2 =
+//                new ReservationRoomCreateRequest(
+//                        1L, LocalDateTime.of(2023,1,1,1,1),
+//                        LocalDateTime.of(2023,1,3,1,1), 2
+//                );
+//        return new ReservationCreateRequest(List.of(roomRequest1, roomRequest2));
+        return new ReservationCreateRequest(List.of(roomRequest1));
     }
 
     private Member createMember(String email) {

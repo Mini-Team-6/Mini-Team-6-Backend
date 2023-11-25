@@ -6,7 +6,11 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public record ReservationRoomCreateRequest(
-        Long roomId,
+
+        Long accommodationId,
+        String accommodationName,
+        Long roomTypeId,
+
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
         LocalDateTime checkIn,
 
