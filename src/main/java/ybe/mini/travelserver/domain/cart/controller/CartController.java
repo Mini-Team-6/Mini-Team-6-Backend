@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ybe.mini.travelserver.domain.accommodation.Location;
+import ybe.mini.travelserver.domain.accommodation.entity.Location;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 import ybe.mini.travelserver.domain.cart.dto.request.CartCreateRequest;
 import ybe.mini.travelserver.domain.cart.dto.response.CartGetResponse;
