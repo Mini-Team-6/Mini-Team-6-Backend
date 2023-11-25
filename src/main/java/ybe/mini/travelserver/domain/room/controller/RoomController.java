@@ -7,7 +7,6 @@ import ybe.mini.travelserver.domain.room.dto.RoomGetResponse;
 import ybe.mini.travelserver.domain.room.service.RoomService;
 import ybe.mini.travelserver.global.common.ResponseDto;
 
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,14 +14,6 @@ import java.util.List;
 public class RoomController {
 
     private final RoomService roomService;
-
-    @GetMapping("/")
-    public ResponseDto<List<RoomGetResponse>> bringRooms(
-            @RequestParam Long accommodationId
-    ) {
-        List<RoomGetResponse> rooms = roomService.bringRooms(accommodationId);
-        return new ResponseDto<>(HttpStatus.OK.value(), rooms);
-    }
 
     @GetMapping("/{roomId}")
     public ResponseDto<RoomGetResponse> bringRoom(

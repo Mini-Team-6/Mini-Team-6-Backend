@@ -2,35 +2,60 @@ package ybe.mini.travelserver.domain.accommodation.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ybe.mini.travelserver.domain.accommodation.dto.AccommodationAndRoomResponse;
 import ybe.mini.travelserver.domain.accommodation.dto.AccommodationGetResponse;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 import ybe.mini.travelserver.domain.accommodation.repository.AccommodationRepository;
+import ybe.mini.travelserver.domain.room.dto.RoomGetResponse;
+import ybe.mini.travelserver.domain.room.service.RoomService;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class AccommodationService {
 
     private final AccommodationRepository accommodationRepository;
+    private final RoomService roomService;
 
-    public List<AccommodationGetResponse> bringAccommodations(String keyword) {
-        List<Accommodation> accommodations = accommodationRepository.findByNameContaining(keyword);
+    @Transactional(readOnly = true)
+    public List<AccommodationGetResponse> bringAccommodations(String keyword, String areaCode) {
+        List<Accommodation> accommodations;
+
+
+        if (!Objects.isNull(keyword) && !Objects.isNull(areaCode)) {
+            accommodations = accommodationRepository.findByNameContainingAndLocationAreaCode(keyword, areaCode);
+        } else if (!Objects.isNull(keyword)) {
+            accommodations = accommodationRepository.findByNameContaining(keyword);
+        } else if (!Objects.isNull(areaCode)) {
+            accommodations = accommodationRepository.findByLocationAreaCode(areaCode);
+        } else {
+            accommodations = accommodationRepository.findAll();
+        }
 
         return getResponseList(accommodations);
     }
 
-    public List<AccommodationGetResponse> bringAccommodationsByAreaCode(String areaCode) {
-        List<Accommodation> accommodations = accommodationRepository.findByLocationAreaCode(areaCode);
+    @Transactional(readOnly = true)
+    public AccommodationAndRoomResponse bringAccommodationAndRooms(Long accommodationId) {
+        Accommodation accommodation = bringAccommodation(accommodationId);
+        AccommodationGetResponse accommodationGetResponse = AccommodationGetResponse.fromEntity(accommodation);
+        List<RoomGetResponse> roomGetResponseList = roomService.bringRooms(accommodationId);
+        return AccommodationAndRoomResponse.fromEntity(accommodationGetResponse, roomGetResponseList);
+    }
 
-        return getResponseList(accommodations);
+
+    private Accommodation bringAccommodation(Long accommodationId) {
+        return accommodationRepository
+                .findById(accommodationId).orElseThrow(RuntimeException::new);
     }
 
     private static List<AccommodationGetResponse> getResponseList(List<Accommodation> accommodations) {
         return accommodations.stream()
                 .map(AccommodationGetResponse::fromEntity)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 }
