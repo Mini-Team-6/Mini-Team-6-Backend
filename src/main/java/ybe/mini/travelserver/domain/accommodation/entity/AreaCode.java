@@ -1,5 +1,10 @@
 package ybe.mini.travelserver.domain.accommodation.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum AreaCode {
 
     SEOUL("1"),
@@ -20,13 +25,6 @@ public enum AreaCode {
     JEONNAM("38"),
     JEJU("39");
 
-    private final String code;
-
-    AreaCode(String code) {
-        this.code = code;
-    }
-
-    public String getCode() {
-        return code;
-    }
+    private final String city;
+    private final int code;
 }
