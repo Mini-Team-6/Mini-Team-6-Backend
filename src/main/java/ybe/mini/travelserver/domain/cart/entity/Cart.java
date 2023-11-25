@@ -1,4 +1,4 @@
-package ybe.mini.travelserver.domain.cart;
+package ybe.mini.travelserver.domain.cart.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -44,4 +44,6 @@ public class Cart extends BaseTimeEntity {
 
     @Comment("숙박 인원")
     private Integer guestNumber;
+
+
 }
