@@ -11,6 +11,7 @@ import ybe.mini.travelserver.domain.room.dto.RoomGetResponse;
 import ybe.mini.travelserver.domain.room.service.RoomService;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -23,14 +24,13 @@ public class AccommodationService {
     public List<AccommodationGetResponse> bringAccommodations(String keyword, String areaCode) {
         List<Accommodation> accommodations;
 
-        if (keyword != null || areaCode != null) {
-            if (keyword != null && areaCode != null) {
-                accommodations = accommodationRepository.findByNameContainingAndLocationAreaCode(keyword, areaCode);
-            } else if (keyword != null) {
-                accommodations = accommodationRepository.findByNameContaining(keyword);
-            } else {
-                accommodations = accommodationRepository.findByLocationAreaCode(areaCode);
-            }
+
+        if (!Objects.isNull(keyword) && !Objects.isNull(areaCode)) {
+            accommodations = accommodationRepository.findByNameContainingAndLocationAreaCode(keyword, areaCode);
+        } else if (!Objects.isNull(keyword)) {
+            accommodations = accommodationRepository.findByNameContaining(keyword);
+        } else if (!Objects.isNull(areaCode)) {
+            accommodations = accommodationRepository.findByLocationAreaCode(areaCode);
         } else {
             accommodations = accommodationRepository.findAll();
         }
