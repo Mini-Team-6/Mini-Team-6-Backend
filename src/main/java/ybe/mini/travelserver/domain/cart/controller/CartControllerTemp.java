@@ -23,24 +23,29 @@ public class CartControllerTemp {
 
     // 장바구니 전체 조회
     @GetMapping
-    public ResponseDto<List<CartGetResponse>> getAllCart(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        List<CartGetResponse> cartGetResponse = cartService.getMyCarts(principalDetails.getMemberId());
+    public ResponseDto<List<CartGetResponse>> getAllCart(
+            @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        List<CartGetResponse> cartGetResponse =
+                cartService.getMyCarts(principalDetails.getMemberId());
         return new ResponseDto<>(HttpStatus.OK.value(), cartGetResponse);
     }
 
     // 장바구니 생성
     @PostMapping
-    public ResponseDto<CartCreateResponse> createCart(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                                      @RequestBody CartCreateRequest cartCreateRequest) {
-        CartCreateResponse cartCreateResponse = cartService.createCart(principalDetails.getMemberId(), cartCreateRequest);
+    public ResponseDto<CartCreateResponse> createCart(
+            @AuthenticationPrincipal PrincipalDetails principalDetails,
+            @RequestBody CartCreateRequest cartCreateRequest) {
+        CartCreateResponse cartCreateResponse =
+                cartService.createCart(principalDetails.getMemberId(), cartCreateRequest);
         return new ResponseDto<>(HttpStatus.CREATED.value(), cartCreateResponse);
     }
 
 
     // 장바구니 삭제
-    @GetMapping("/{cartId}")
-    public ResponseDto<CartDeleteResponse> deleteCart(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                                      @PathVariable Long cartId) {
+    @DeleteMapping("/{cartId}")
+    public ResponseDto<CartDeleteResponse> deleteCart(
+            @AuthenticationPrincipal PrincipalDetails principalDetails,
+            @PathVariable Long cartId) {
         CartDeleteResponse cartDeleteResponse = cartService.deleteCart(cartId);
         return new ResponseDto<>(HttpStatus.OK.value(), cartDeleteResponse);
     }
