@@ -19,7 +19,10 @@ public record CartGetResponse (
     RoomGetResponse roomGetResponse,
     AccommodationGetResponse accommodationGetResponse
 ) {
-    public static CartGetResponse fromEntity(Cart cart, Room room, Accommodation accommodation) {
+    public static CartGetResponse fromEntity(
+            Cart cart,
+            Room room,
+            Accommodation accommodation) {
         return new CartGetResponse(
                 cart.getId(),
                 cart.getGuestNumber(),

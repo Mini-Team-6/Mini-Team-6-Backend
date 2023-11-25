@@ -15,7 +15,7 @@ import ybe.mini.travelserver.global.security.PrincipalDetails;
 import java.util.List;
 
 @RestController
-@RequestMapping("/temp-carts")
+@RequestMapping("/temp/carts")
 @RequiredArgsConstructor
 public class CartControllerTemp {
 

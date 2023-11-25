@@ -13,12 +13,14 @@ import java.time.LocalDateTime;
 public record CartCreateRequest(
     @NotBlank
     Long roomId,
+    @NotBlank
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     LocalDateTime checkIn,
+    @NotBlank
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     LocalDateTime checkOut,
     @NotBlank
-    int guestNumber
+    Integer guestNumber
 
 ) {
     public static CartCreateRequest fromEntity(Cart cart) {
