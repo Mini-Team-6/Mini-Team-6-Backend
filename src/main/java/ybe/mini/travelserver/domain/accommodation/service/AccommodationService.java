@@ -11,7 +11,6 @@ import ybe.mini.travelserver.domain.room.dto.RoomGetResponse;
 import ybe.mini.travelserver.domain.room.service.RoomService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -56,7 +55,7 @@ public class AccommodationService {
     private static List<AccommodationGetResponse> getResponseList(List<Accommodation> accommodations) {
         return accommodations.stream()
                 .map(AccommodationGetResponse::fromEntity)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 }
