@@ -13,11 +13,19 @@ public class TourAPIController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> bringAccommodationsByKeyword(
-            @RequestParam String keyword
+    public ResponseEntity<?> bringAccommodations(
+            @RequestParam(required = false, defaultValue = "_") String keyword,
+            @RequestParam(required = false, defaultValue = "1") int pageNo,
+            @RequestParam(required = false, defaultValue = "10") int numOfRows,
+            @RequestParam(required = false) String areaCode
     ) {
         return ResponseEntity.ok(
-                TourAPIUtils.bringAccommodationByKeyword(keyword)
+                tourAPIService.bringAccommodationsForSearch(
+                        pageNo,
+                        numOfRows,
+                        keyword,
+                        areaCode
+                )
         );
     }
 
@@ -35,11 +43,4 @@ public class TourAPIController {
         );
     }
 
-    @GetMapping("/page/{pageNo}")
-    public ResponseEntity<?> bringAccommodations(@PathVariable int pageNo) {
-        int numOfRows = 10;
-        return ResponseEntity.ok(
-                TourAPIUtils.bringAccommodationByPagenation(pageNo, numOfRows)
-        );
-    }
 }
