@@ -3,7 +3,7 @@ package ybe.mini.travelserver.domain.accommodation.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ybe.mini.travelserver.domain.accommodation.Location;
+import ybe.mini.travelserver.domain.accommodation.entity.Location;
 import ybe.mini.travelserver.domain.accommodation.dto.AccommodationAndRoomResponse;
 import ybe.mini.travelserver.domain.accommodation.dto.AccommodationGetResponse;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
@@ -76,6 +76,9 @@ public class TempAccommodationController {
                 .image("http://tong.visitkorea.or.kr/cms/resource/54/2603354_image2_1.jpg")
                 .build();
 
+        AccommodationGetResponse accommodationGetResponse =
+                AccommodationGetResponse.fromEntity(accommodation);
+
         Room room = Room.builder()
                 .capacity(2)
                 .description("객실 설명 1")
@@ -100,7 +103,7 @@ public class TempAccommodationController {
         RoomGetResponse roomGetResponse1 = RoomGetResponse.fromEntity(room1);
 
         AccommodationAndRoomResponse accommodationAndRoomResponse =
-                AccommodationAndRoomResponse.fromEntity(accommodation,
+                AccommodationAndRoomResponse.fromEntity(accommodationGetResponse,
                         List.of(roomGetResponse, roomGetResponse1));
 
         return new ResponseDto<>(HttpStatus.OK.value(), accommodationAndRoomResponse);

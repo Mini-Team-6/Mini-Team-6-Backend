@@ -2,6 +2,8 @@ package ybe.mini.travelserver.domain.accommodation.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ybe.mini.travelserver.domain.accommodation.dto.AccommodationAndRoomResponse;
 import ybe.mini.travelserver.domain.accommodation.dto.AccommodationGetResponse;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 import ybe.mini.travelserver.domain.accommodation.repository.AccommodationRepository;
@@ -40,8 +42,9 @@ public class AccommodationService {
     @Transactional(readOnly = true)
     public AccommodationAndRoomResponse bringAccommodationAndRooms(Long accommodationId) {
         Accommodation accommodation = bringAccommodation(accommodationId);
+        AccommodationGetResponse accommodationGetResponse = AccommodationGetResponse.fromEntity(accommodation);
         List<RoomGetResponse> roomGetResponseList = roomService.bringRooms(accommodationId);
-        return AccommodationAndRoomResponse.fromEntity(accommodation, roomGetResponseList);
+        return AccommodationAndRoomResponse.fromEntity(accommodationGetResponse, roomGetResponseList);
     }
 
 

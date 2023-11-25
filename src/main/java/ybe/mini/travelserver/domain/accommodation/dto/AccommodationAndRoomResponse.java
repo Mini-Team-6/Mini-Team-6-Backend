@@ -2,7 +2,6 @@ package ybe.mini.travelserver.domain.accommodation.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
-import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 import ybe.mini.travelserver.domain.room.dto.RoomGetResponse;
 
 import java.util.List;
@@ -17,14 +16,14 @@ public record AccommodationAndRoomResponse(
 ) {
     @Builder
     public static AccommodationAndRoomResponse fromEntity(
-            Accommodation accommodation,
+            AccommodationGetResponse accommodationGetResponse,
             List<RoomGetResponse> roomGetResponse
     ) {
         return new AccommodationAndRoomResponse(
-                accommodation.getId(),
-                accommodation.getName(),
-                accommodation.getLocation().getAddress(),
-                accommodation.getImage(),
+                accommodationGetResponse.AccommodationId(),
+                accommodationGetResponse.name(),
+                accommodationGetResponse.location().getAddress(),
+                accommodationGetResponse.image(),
                 roomGetResponse
         );
     }
