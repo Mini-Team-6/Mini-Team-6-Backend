@@ -2,7 +2,7 @@ package ybe.mini.travelserver.domain.accommodation.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
-import ybe.mini.travelserver.domain.accommodation.Location;
+import ybe.mini.travelserver.domain.accommodation.entity.Location;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 
 @JsonIgnoreProperties(ignoreUnknown = true)

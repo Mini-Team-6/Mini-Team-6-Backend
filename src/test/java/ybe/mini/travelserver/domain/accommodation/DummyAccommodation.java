@@ -2,6 +2,7 @@ package ybe.mini.travelserver.domain.accommodation;
 
 import ybe.mini.travelserver.domain.accommodation.dto.AccommodationGetResponse;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
+import ybe.mini.travelserver.domain.accommodation.entity.Location;
 
 public class DummyAccommodation {
     protected Accommodation dummyAccommodation() {
