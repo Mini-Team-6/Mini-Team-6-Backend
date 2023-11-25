@@ -8,7 +8,8 @@ import org.springframework.web.client.RestTemplate;
 import ybe.mini.travelserver.global.api.dto.DetailInfoResponse;
 import ybe.mini.travelserver.global.api.dto.DetailIntroResponse;
 import ybe.mini.travelserver.global.api.dto.SearchKeywordResponse;
-import ybe.mini.travelserver.global.api.dto.SearchStayResponse;
+
+import java.util.Objects;
 
 import static ybe.mini.travelserver.global.api.TourAPIProperties.*;
 
@@ -22,6 +23,7 @@ public class TourAPIUtils {
         url.append("?MobileOS=").append(MOBILE_OS);
         url.append("&MobileApp=").append(MOBILE_APP);
         url.append("&_type=").append(RENDER_TYPE);
+        url.append("&contentTypeId=").append(CONTENT_TYPE_ID);
         url.append("&serviceKey=").append(KEY_DECODED);
 
         return url;
@@ -45,21 +47,8 @@ public class TourAPIUtils {
         return responseEntity.getBody();
     }
 
-    public static SearchKeywordResponse bringAccommodationByKeyword(String keyword) {
-        StringBuilder url = buildCommonUrl(SEARCH_KEYWORD);
-        url.append("&contentTypeId=").append(CONTENT_TYPE_ID);
-        url.append("&keyword=").append(keyword);
-        url.append("&arrange=").append("R");
-
-        return fetchDataFromAPI(
-                url.toString(),
-                SearchKeywordResponse.class
-        );
-    }
-
     public static DetailIntroResponse bringAccommodationDetail(long contentId) {
         StringBuilder url = buildCommonUrl(DETAIL_INTRO);
-        url.append("&contentTypeId=").append(CONTENT_TYPE_ID);
         url.append("&contentId=").append(contentId);
 
         return fetchDataFromAPI(
@@ -70,7 +59,6 @@ public class TourAPIUtils {
 
     public static DetailInfoResponse bringRoom(long contentId) {
         StringBuilder url = buildCommonUrl(DETAIL_INFO);
-        url.append("&contentTypeId=").append(CONTENT_TYPE_ID);
         url.append("&contentId=").append(contentId);
 
         return fetchDataFromAPI(
@@ -79,15 +67,38 @@ public class TourAPIUtils {
         );
     }
 
-    public static SearchStayResponse bringAccommodationByPagenation(int pageNo, int numOfRows) {
-        StringBuilder url = buildCommonUrl(SEARCH_STAY);
-        url.append("&pageNo=").append(pageNo);
-        url.append("&numOfRows=").append(numOfRows);
+
+    public static SearchKeywordResponse bringAccommodations(
+            int pageNo,
+            int numOfRows,
+            String keyword,
+            String areaCode
+    ) {
+        StringBuilder url = buildCommonUrl(SEARCH_KEYWORD);
+        url.append("&keyword=").append(keyword == null ? "_" : keyword);
+
+        if (pageNo != 0 && numOfRows != 0) {
+            url.append("&pageNo=").append(pageNo);
+            url.append("&numOfRows=").append(numOfRows);
+        }
+
+        if (!Objects.isNull(areaCode)) {
+            url.append("&areaCode=").append(areaCode);
+        }
+
         url.append("&arrange=").append("R");
 
         return fetchDataFromAPI(
                 url.toString(),
-                SearchStayResponse.class
+                SearchKeywordResponse.class
         );
+    }
+
+    public static SearchKeywordResponse bringAccommodations(String keyword) {
+        return bringAccommodations(1, 1, keyword, null);
+    }
+
+    public static SearchKeywordResponse bringAccommodations(int pageNo, int numOfRows) {
+        return bringAccommodations(pageNo, numOfRows, null, null);
     }
 }
