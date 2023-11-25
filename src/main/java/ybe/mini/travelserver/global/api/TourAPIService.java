@@ -3,8 +3,8 @@ package ybe.mini.travelserver.global.api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ybe.mini.travelserver.domain.accommodation.Location;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
+import ybe.mini.travelserver.domain.accommodation.entity.Location;
 import ybe.mini.travelserver.domain.room.entity.Room;
 import ybe.mini.travelserver.global.api.dto.DetailInfoResponse;
 import ybe.mini.travelserver.global.api.dto.DetailIntroResponse;
@@ -12,6 +12,7 @@ import ybe.mini.travelserver.global.api.dto.SearchKeywordResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -23,7 +24,7 @@ public class TourAPIService {
             String keyword
     ) {
         var accommodationDetailResponse = TourAPIUtils.bringAccommodationDetail(accommodationId);
-        var accommodationsSimpleSearchResponse = TourAPIUtils.bringAccommodationByKeyword(keyword);
+        var accommodationsSimpleSearchResponse = TourAPIUtils.bringAccommodations(keyword);
 
         var detailItems = accommodationDetailResponse.response().body().items().item();
         var keywordItems = accommodationsSimpleSearchResponse.response().body().items().item();
@@ -43,7 +44,7 @@ public class TourAPIService {
     }
 
     public Accommodation bringAccommodation(String keyword) {
-        var accommodationsSimpleSearchResponse = TourAPIUtils.bringAccommodationByKeyword(keyword);
+        var accommodationsSimpleSearchResponse = TourAPIUtils.bringAccommodations(keyword);
 
         var keywordItems = accommodationsSimpleSearchResponse.response().body().items().item();
 
@@ -64,7 +65,6 @@ public class TourAPIService {
                 detailItem
         );
     }
-
 
     public List<Room> bringRooms(long accommodationId) {
         DetailInfoResponse detailInfoResponse = TourAPIUtils.bringRoom(accommodationId);
@@ -98,16 +98,56 @@ public class TourAPIService {
         return rooms;
     }
 
+    public List<Accommodation> bringAccommodationsForSearch(
+            int pageNo,
+            int numOfRows,
+            String keyword,
+            String areaCode
+    ) {
+        var accommodationsSimpleSearchResponse = TourAPIUtils.bringAccommodations(
+                pageNo,
+                numOfRows,
+                keyword,
+                areaCode
+        );
+
+        var searchedItems = accommodationsSimpleSearchResponse.response().body().items().item();
+
+        if (searchedItems.isEmpty()) {
+            throw new IllegalArgumentException("숙소 정보가 없습니다.");
+        }
+
+        List<Accommodation> accommodations = new ArrayList<>();
+
+        for (var item : searchedItems) {
+            long accommodationId = Long.parseLong(item.contentid());
+
+            accommodations.add(
+                    generateAccommodation(
+                            accommodationId,
+                            item,
+                            null
+                    )
+            );
+        }
+
+        return accommodations;
+    }
+
     private static Accommodation generateAccommodation(
             long accommodationId,
             SearchKeywordResponse.Item keywordItem,
             DetailIntroResponse.Item detailItem
     ) {
+        String subfacility = Optional.ofNullable(detailItem)
+                .map(DetailIntroResponse.Item::subfacility)
+                .orElse("");
+
         return Accommodation.builder()
                 .id(accommodationId)
                 .name(keywordItem.title())
                 .image(keywordItem.firstimage())
-                .description(detailItem.subfacility())
+                .description(subfacility)
                 .location(Location.builder()
                         .address(keywordItem.addr1())
                         .latitude(Double.valueOf(keywordItem.mapy()))
