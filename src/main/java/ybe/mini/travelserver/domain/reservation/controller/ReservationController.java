@@ -28,7 +28,7 @@ public class ReservationController {
             @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
         return new ResponseDto<>(
-                HttpStatus.OK.value(),
+                HttpStatus.CREATED.value(),
                 reservationService.createReservation(principalDetails.getEmail(), createRequest)
         );         //@Return : status, <생성된 ReservationId>
     }

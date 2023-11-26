@@ -69,7 +69,7 @@ public class ReservationService {
     public Long updateReservationStatusToPay(Long reservationId) {
         Reservation reservation = getReservationById(reservationId);
         reservation.updateStatusToPaySuccess();
-        return reservation.getId();
+        return reservation.getId(); //todo : 하위 ReservationRoom 들도 status 업데이트 필요
     }
 
     @Transactional
