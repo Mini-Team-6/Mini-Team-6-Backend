@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.room.dto.RoomGetResponse;
 import ybe.mini.travelserver.domain.room.entity.Room;
 import ybe.mini.travelserver.domain.room.repository.RoomRepository;
+import ybe.mini.travelserver.global.api.TourAPIService;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
 public class RoomService {
 
     private final RoomRepository roomRepository;
+    private final TourAPIService tourAPIService;
 
     @Transactional(readOnly = true)
     public List<RoomGetResponse> bringRooms(Long accommodationId) {
@@ -21,6 +23,12 @@ public class RoomService {
                 .stream()
                 .map(RoomGetResponse::fromEntity)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public RoomGetResponse bringRoom(Long accommodationId, Long roomTypeId) {
+        Room room = tourAPIService.bringRoom(accommodationId, roomTypeId);
+        return RoomGetResponse.fromEntity(room);
     }
 
     @Transactional(readOnly = true)
