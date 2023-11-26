@@ -17,8 +17,7 @@ import ybe.mini.travelserver.domain.member.repository.MemberRepository;
 import ybe.mini.travelserver.global.security.JwtIssuer;
 import ybe.mini.travelserver.global.security.PrincipalDetails;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 import static ybe.mini.travelserver.global.security.Role.ROLE_USER;
 
@@ -38,7 +37,7 @@ public class MemberService {
                 new UsernamePasswordAuthenticationToken(
                         signinRequest.email(),
                         signinRequest.password(),
-                        new ArrayList<>(List.of(new SimpleGrantedAuthority(ROLE_USER)))
+                        Collections.singleton(new SimpleGrantedAuthority(ROLE_USER))
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);

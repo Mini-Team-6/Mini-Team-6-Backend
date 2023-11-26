@@ -5,5 +5,5 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Role {
-    public static final String ROLE_USER = "hasRole('ROLE_USER')";
+    public static final String ROLE_USER = "ROLE_USER";
 }
