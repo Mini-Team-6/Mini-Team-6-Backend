@@ -26,8 +26,8 @@ public class RoomService {
     }
 
     @Transactional(readOnly = true)
-    public RoomGetResponse bringRoom(Long accommodationId, Long roomId) {
-        Room room = tourAPIService.bringRoom(accommodationId, roomId);
+    public RoomGetResponse bringRoom(Long accommodationId, Long roomTypeId) {
+        Room room = tourAPIService.bringRoom(accommodationId, roomTypeId);
         return RoomGetResponse.fromEntity(room);
     }
 
