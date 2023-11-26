@@ -1,14 +1,11 @@
 package ybe.mini.travelserver.global.config;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
-
-import java.io.IOException;
 
 @Component
 public class SecurityAuthenticationEntryPoint implements AuthenticationEntryPoint {
@@ -24,7 +21,7 @@ public class SecurityAuthenticationEntryPoint implements AuthenticationEntryPoin
             HttpServletRequest request,
             HttpServletResponse response,
             AuthenticationException authException
-    ) throws IOException, ServletException {
+    ) {
         handlerExceptionResolver.resolveException(
                 request,
                 response,
