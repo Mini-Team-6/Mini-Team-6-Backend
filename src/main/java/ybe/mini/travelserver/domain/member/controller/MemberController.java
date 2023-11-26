@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ybe.mini.travelserver.domain.member.dto.*;
@@ -12,7 +12,7 @@ import ybe.mini.travelserver.domain.member.service.MemberService;
 import ybe.mini.travelserver.global.common.ResponseDto;
 import ybe.mini.travelserver.global.security.PrincipalDetails;
 
-import static ybe.mini.travelserver.global.security.Role.ROLE_USER;
+import static ybe.mini.travelserver.global.security.Role.HAS_ROLE_USER;
 
 @Slf4j
 @RestController
@@ -35,7 +35,7 @@ public class MemberController {
         return new ResponseDto<>(HttpStatus.OK.value(), signupResponse);
     }
 
-    @Secured(ROLE_USER)
+    @PreAuthorize(HAS_ROLE_USER)
     @GetMapping("/mypage")
     public ResponseDto<MypageResponse> bringMember(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         MypageResponse mypageResponse = memberService.getMemberProfile(principalDetails);
@@ -43,7 +43,7 @@ public class MemberController {
         return new ResponseDto<>(HttpStatus.OK.value(), mypageResponse);
     }
 
-    @Secured(ROLE_USER)
+    @PreAuthorize(HAS_ROLE_USER)
     @PatchMapping("/mypage")
     public ResponseDto<MypageUpdateResponse> updateMember(@RequestBody @Valid MypageUpdateRequest mypageUpdateRequest) {
         MypageUpdateResponse mypageUpdateResponse = memberService.updateMemberProfile(mypageUpdateRequest);
@@ -51,7 +51,7 @@ public class MemberController {
         return new ResponseDto<>(HttpStatus.OK.value(), mypageUpdateResponse);
     }
 
-    @Secured(ROLE_USER)
+    @PreAuthorize(HAS_ROLE_USER)
     @DeleteMapping("/mypage")
     public ResponseDto<MypageDeleteResponse> deleteMember(
             @AuthenticationPrincipal PrincipalDetails principalDetails,

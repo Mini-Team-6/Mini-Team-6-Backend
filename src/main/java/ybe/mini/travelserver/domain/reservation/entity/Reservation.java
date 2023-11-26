@@ -57,6 +57,7 @@ public class Reservation extends BaseTimeEntity {
 
     public void updateStatusToPaySuccess() {
         status = PAYED_SUCCESS;
+        reservationRooms.forEach(ReservationRoom::updateStatusToPayed);
     }
 
     public static Reservation createReservation(
