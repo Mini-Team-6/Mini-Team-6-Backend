@@ -3,8 +3,8 @@ package ybe.mini.travelserver.global.api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ybe.mini.travelserver.domain.accommodation.entity.Location;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
+import ybe.mini.travelserver.domain.accommodation.entity.Location;
 import ybe.mini.travelserver.domain.room.entity.Room;
 import ybe.mini.travelserver.global.api.dto.DetailInfoResponse;
 import ybe.mini.travelserver.global.api.dto.DetailIntroResponse;
@@ -97,6 +97,22 @@ public class TourAPIService {
 
         return rooms;
     }
+
+    public Room bringRoom(
+            long accommodationId,
+            long roomTypeId
+    ) {
+        List<Room> rooms = bringRooms(accommodationId);
+
+        for (var room : rooms) {
+            if (room.getRoomTypeId() == roomTypeId) {
+                return room;
+            }
+        }
+
+        throw new IllegalArgumentException("객실 정보가 없습니다.");
+    }
+
 
     public List<Accommodation> bringAccommodationsForSearch(
             int pageNo,
