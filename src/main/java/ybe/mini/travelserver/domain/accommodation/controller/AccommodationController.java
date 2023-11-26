@@ -17,22 +17,25 @@ public class AccommodationController {
 
     private final AccommodationService accommodationService;
 
-    @GetMapping
+    @GetMapping("/page/{pageNo}")
     public ResponseDto<List<AccommodationGetResponse>> searchAccommodations(
+            @PathVariable int pageNo,
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false, value = "area-code") String areaCode
     ) {
+        int numOfRows = 10;
         List<AccommodationGetResponse> accommodations =
-                accommodationService.bringAccommodations(keyword, areaCode);
+                accommodationService.bringAccommodationsFromAPI(pageNo, numOfRows, keyword, areaCode);
         return new ResponseDto<>(HttpStatus.OK.value(), accommodations);
     }
 
     @GetMapping("/{accommodationId}")
     public ResponseDto<AccommodationAndRoomResponse> getAccommodationAndRooms(
-            @PathVariable Long accommodationId
+            @PathVariable Long accommodationId,
+            @RequestParam String keyword
     ) {
         AccommodationAndRoomResponse accommodationAndRoomResponse
-                = accommodationService.bringAccommodationAndRooms(accommodationId);
+                = accommodationService.bringAccommodationAndRoomsFromAPI(accommodationId, keyword);
         return new ResponseDto<>(HttpStatus.OK.value(), accommodationAndRoomResponse);
     }
 
