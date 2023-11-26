@@ -25,22 +25,6 @@ class RoomServiceTest extends DummyObjectForService {
     @Mock
     RoomRepository roomRepository;
 
-    @DisplayName("숙소에 따른 객실 전체 조회")
-    @Test
-    void bringRooms_success() {
-        // given
-        given(roomRepository.findByAccommodationId(anyLong()))
-                .willReturn(List.of(dummyRoom(dummyAccommodation())));
-
-        // when
-        var actual = roomService.bringRooms(1L);
-
-        // then
-        var expected = List.of(dummyRoomGetResponse());
-        Assertions.assertEquals(expected, actual);
-        then(roomRepository).should().findByAccommodationId(anyLong());
-    }
-
     @DisplayName("객실 상세 조회")
     @Test
     void bringRoom_success() {

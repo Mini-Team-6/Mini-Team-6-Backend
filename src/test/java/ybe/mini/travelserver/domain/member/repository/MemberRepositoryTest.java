@@ -41,10 +41,10 @@ class MemberRepositoryTest implements DummyMember {
         given(memberRepository.findByEmail(wrongEmail)).willReturn(Optional.empty());
 
         // when
-        Optional<Member> actual = memberRepository.findByEmail(email);
+        Optional<Member> actual = memberRepository.findByEmail(wrongEmail);
 
         // then
         assertTrue(actual.isEmpty());
-        then(memberRepository).should().findByEmail(email);
+        then(memberRepository).should().findByEmail(wrongEmail);
     }
 }
