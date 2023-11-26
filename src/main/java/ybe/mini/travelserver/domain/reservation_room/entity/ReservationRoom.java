@@ -25,7 +25,7 @@ public class ReservationRoom {
     @Comment("예약 번호")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     @Comment("객실 번호")
     private Room room;
@@ -43,6 +43,7 @@ public class ReservationRoom {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime checkOut;
 
+    @Enumerated(EnumType.STRING)
     @Comment("에약 상태")
     private ReservationRoomStatus status;
 

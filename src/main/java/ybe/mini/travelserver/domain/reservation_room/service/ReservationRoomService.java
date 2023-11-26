@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.reservation.repository.ReservationRepository;
 import ybe.mini.travelserver.domain.reservation.entity.Reservation;
+import ybe.mini.travelserver.domain.reservation_room.dto.ReservationRoomGetResponse;
 import ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoom;
 import ybe.mini.travelserver.domain.reservation_room.repository.ReservationRoomRepository;
 
@@ -20,17 +21,17 @@ public class ReservationRoomService {
     private final ReservationRepository reservationRepository;
 
     @Transactional(readOnly = true)
-    public List<ReservationRoom> getReservationRoomsFromReservation(Long reservationId) {
+    public List<ReservationRoomGetResponse> getReservationRoomsFromReservation(Long reservationId) {
         Reservation reservation = getReservationById(reservationId);
 
-        return reservationRoomRepository.findAllByReservation(reservation);
+        return reservationRoomRepository.findAllByReservation(reservation).stream()
+                .map(ReservationRoomGetResponse::fromEntity).toList();
     }
 
     @Transactional
     public Long deleteReservationRoom(Long reservationId, Long reservationRoomId) {
         reservationRoomRepository.deleteById(getReservationRoomById(reservationRoomId).getId());
-        Reservation reservation = getReservationById(reservationId);
-        reservation.deleteReservationRoom(reservationRoomId);
+        getReservationById(reservationId).deleteReservationRoom(reservationRoomId);
         return reservationRoomId;
     }
 

@@ -42,6 +42,7 @@ public class Reservation extends BaseTimeEntity {
     @Builder.Default
     private List<ReservationRoom> reservationRooms = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
     @Comment("예약 상태")
     private ReservationStatus status;
 
@@ -73,9 +74,7 @@ public class Reservation extends BaseTimeEntity {
     }
 
     public void deleteReservationRoom(Long reservationRoomId) {
-        for(ReservationRoom room : reservationRooms) {
-            if(Objects.equals(room.getId(), reservationRoomId)) reservationRooms.remove(room);
-        }
+        reservationRooms.removeIf(room -> Objects.equals(room.getId(), reservationRoomId));
     }
 
     public Integer getTotalPrice() {
