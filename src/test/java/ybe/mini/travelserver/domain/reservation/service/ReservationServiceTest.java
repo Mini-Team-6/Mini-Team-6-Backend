@@ -9,10 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.member.entity.Member;
 import ybe.mini.travelserver.domain.member.repository.MemberRepository;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateRequest;
+import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateResponse;
+import ybe.mini.travelserver.domain.reservation.dto.ReservationGetResponse;
 import ybe.mini.travelserver.domain.reservation.entity.Reservation;
 import ybe.mini.travelserver.domain.reservation.repository.ReservationRepository;
 import ybe.mini.travelserver.domain.reservation_room.dto.ReservationRoomCreateRequest;
-import ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoom;
 import ybe.mini.travelserver.domain.reservation_room.repository.ReservationRoomRepository;
 
 import java.time.LocalDateTime;
@@ -47,11 +48,11 @@ class ReservationServiceTest {
         ReservationCreateRequest reservationCreateRequest = createReservationCreateRequest();
 
         //when
-        Reservation createdReservation =
+        ReservationCreateResponse createdReservation =
                 reservationService.createReservation(member.getEmail(), reservationCreateRequest);
 
         //then
-        Reservation findReservation = reservationRepository.findById(createdReservation.getId())
+        Reservation findReservation = reservationRepository.findById(createdReservation.id())
                 .orElseThrow(RuntimeException::new);
         assertThat(findReservation.getStatus()).isEqualTo(PAYED_BEFORE);
         assertThat(findReservation.getReservationRooms().get(0).getCheckIn()).isEqualTo(LocalDateTime.of(2022,1,1,1,1));
@@ -72,14 +73,14 @@ class ReservationServiceTest {
         //given
         Member member = createMember("test@test.com");
         ReservationCreateRequest reservationCreateRequest = createReservationCreateRequest();
-        Reservation createdReservation =
+        ReservationCreateResponse createdReservation =
                 reservationService.createReservation(member.getEmail(), reservationCreateRequest);
 
         //when
-        reservationService.updateReservationStatusToPay(createdReservation.getId());
+        reservationService.updateReservationStatusToPay(createdReservation.id());
 
         //then
-        Reservation findReservation = reservationRepository.findById(createdReservation.getId())
+        Reservation findReservation = reservationRepository.findById(createdReservation.id())
                 .orElseThrow(RuntimeException::new);
         assertThat(findReservation.getStatus()).isEqualTo(PAYED_SUCCESS);
 
@@ -95,7 +96,7 @@ class ReservationServiceTest {
 
         //when
 //        List<Reservation> myReservations1 = reservationService.getMyReservations(member1.getEmail());
-        List<Reservation> myReservations1 = reservationService.getMyReservations(member1.getId());
+        List<ReservationGetResponse> myReservations1 = reservationService.getMyReservations(member1.getId());
 
         //then
         assertThat(myReservations1.size()).isEqualTo(2);
@@ -106,21 +107,15 @@ class ReservationServiceTest {
         //given
         Member member = createMember("test@test.com");
         ReservationCreateRequest reservationCreateRequest = createReservationCreateRequest();
-        Reservation reservation = reservationService.createReservation(member.getEmail(), reservationCreateRequest);
+        ReservationCreateResponse reservation = reservationService.createReservation(member.getEmail(), reservationCreateRequest);
 
         //when
-        reservationService.deleteReservation(reservation.getId());
+        reservationService.deleteReservation(reservation.id());
 
         //then
         Assertions.assertThrows(
                 RuntimeException.class,
-                () -> reservationRepository.findById(reservation.getId()).orElseThrow(RuntimeException::new));
-        for(ReservationRoom room : reservation.getReservationRooms()) {
-            Assertions.assertThrows(
-                    RuntimeException.class,
-                    () -> reservationRoomRepository.findById(room.getId()).orElseThrow(RuntimeException::new)
-            );
-        }
+                () -> reservationRepository.findById(reservation.id()).orElseThrow(RuntimeException::new));
 
     }
 

@@ -43,6 +43,7 @@ public class ReservationRoom {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime checkOut;
 
+    @Enumerated(EnumType.STRING)
     @Comment("에약 상태")
     private ReservationRoomStatus status;
 
