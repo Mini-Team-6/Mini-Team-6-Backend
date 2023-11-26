@@ -25,7 +25,7 @@ public class CartControllerTemp {
     private final CartService cartService;
 
     // 장바구니 전체 조회
-    @PreAuthorize(ROLE_USER)
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
     public ResponseDto<List<CartGetResponse>> getAllCart(
             @AuthenticationPrincipal PrincipalDetails principalDetails) {
@@ -35,7 +35,7 @@ public class CartControllerTemp {
     }
 
     // 장바구니 생성
-    @PreAuthorize(ROLE_USER)
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping
     public ResponseDto<CartCreateResponse> createCart(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
@@ -47,7 +47,7 @@ public class CartControllerTemp {
 
 
     // 장바구니 삭제
-    @PreAuthorize(ROLE_USER)
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/{cartId}")
     public ResponseDto<CartDeleteResponse> deleteCart(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
