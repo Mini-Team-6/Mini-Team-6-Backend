@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ybe.mini.travelserver.domain.accommodation.entity.Location;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
+import ybe.mini.travelserver.domain.accommodation.entity.Location;
 import ybe.mini.travelserver.domain.cart.dto.request.CartCreateRequest;
 import ybe.mini.travelserver.domain.cart.dto.response.CartGetResponse;
 import ybe.mini.travelserver.domain.cart.entity.Cart;
@@ -13,7 +13,7 @@ import ybe.mini.travelserver.domain.room.entity.Room;
 import ybe.mini.travelserver.global.common.ResponseDto;
 import ybe.mini.travelserver.global.security.PrincipalDetails;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 @RestController
 @RequestMapping("/carts")
@@ -76,15 +76,15 @@ public class CartController {
         Cart cart1 = Cart.builder()
                 .id(1L)
                 .room(room1)
-                .checkIn(LocalDateTime.of(2023, 1,1,15,0))
-                .checkOut(LocalDateTime.of(2023, 1,5,12,0))
+                .checkIn(LocalDate.of(2023, 1,1))
+                .checkOut(LocalDate.of(2023, 1,5))
                 .guestNumber(2)
                 .build();
         Cart cart2 = Cart.builder()
                 .id(2L)
                 .room(room2)
-                .checkIn(LocalDateTime.of(2023, 2,1,15,0))
-                .checkOut(LocalDateTime.of(2023, 2,5,12,0))
+                .checkIn(LocalDate.of(2023, 1,1))
+                .checkOut(LocalDate.of(2023, 1,5))
                 .guestNumber(3)
                 .build();
 

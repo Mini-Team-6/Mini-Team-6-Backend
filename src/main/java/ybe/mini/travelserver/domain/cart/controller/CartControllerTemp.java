@@ -2,6 +2,7 @@ package ybe.mini.travelserver.domain.cart.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ybe.mini.travelserver.domain.cart.dto.request.CartCreateRequest;
@@ -14,6 +15,8 @@ import ybe.mini.travelserver.global.security.PrincipalDetails;
 
 import java.util.List;
 
+import static ybe.mini.travelserver.global.security.Role.ROLE_USER;
+
 @RestController
 @RequestMapping("/temp/carts")
 @RequiredArgsConstructor
@@ -22,6 +25,7 @@ public class CartControllerTemp {
     private final CartService cartService;
 
     // 장바구니 전체 조회
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
     public ResponseDto<List<CartGetResponse>> getAllCart(
             @AuthenticationPrincipal PrincipalDetails principalDetails) {
@@ -31,6 +35,7 @@ public class CartControllerTemp {
     }
 
     // 장바구니 생성
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping
     public ResponseDto<CartCreateResponse> createCart(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
@@ -42,6 +47,7 @@ public class CartControllerTemp {
 
 
     // 장바구니 삭제
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/{cartId}")
     public ResponseDto<CartDeleteResponse> deleteCart(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
