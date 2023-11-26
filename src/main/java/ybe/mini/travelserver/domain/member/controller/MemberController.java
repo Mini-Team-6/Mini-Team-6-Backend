@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ybe.mini.travelserver.domain.member.dto.*;
@@ -12,14 +12,13 @@ import ybe.mini.travelserver.domain.member.service.MemberService;
 import ybe.mini.travelserver.global.common.ResponseDto;
 import ybe.mini.travelserver.global.security.PrincipalDetails;
 
-import java.net.URI;
+import static ybe.mini.travelserver.global.security.Role.ROLE_USER;
 
 @Slf4j
 @RestController
 @RequestMapping("/members")
 @RequiredArgsConstructor
 public class MemberController {
-
     private final MemberService memberService;
 
     @PostMapping("/signin")
@@ -33,17 +32,18 @@ public class MemberController {
     public ResponseDto<SignupResponse> signup(@RequestBody @Valid SignupRequest signupRequest) {
         SignupResponse signupResponse = memberService.createMember(signupRequest);
 
-        URI createdUri = URI.create("/home");
         return new ResponseDto<>(HttpStatus.OK.value(), signupResponse);
     }
 
+    @PreAuthorize(ROLE_USER)
     @GetMapping("/mypage")
     public ResponseDto<MypageResponse> bringMember(@AuthenticationPrincipal PrincipalDetails principalDetails) {
         MypageResponse mypageResponse = memberService.getMemberProfile(principalDetails);
+
         return new ResponseDto<>(HttpStatus.OK.value(), mypageResponse);
     }
 
-
+    @PreAuthorize(ROLE_USER)
     @PatchMapping("/mypage")
     public ResponseDto<MypageUpdateResponse> updateMember(@RequestBody @Valid MypageUpdateRequest mypageUpdateRequest) {
         MypageUpdateResponse mypageUpdateResponse = memberService.updateMemberProfile(mypageUpdateRequest);
@@ -51,16 +51,17 @@ public class MemberController {
         return new ResponseDto<>(HttpStatus.OK.value(), mypageUpdateResponse);
     }
 
-
+    @PreAuthorize(ROLE_USER)
     @DeleteMapping("/mypage")
-    public ResponseDto<Integer> deleteMember(
+    public ResponseDto<MypageDeleteResponse> deleteMember(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
             @RequestBody @Valid MypageDeleteRequest mypageDeleteRequest
     ) {
-        if (memberService.deleteMemberProfile(principalDetails, mypageDeleteRequest)) {
-            return new ResponseDto<>(HttpStatus.OK.value(), 1); //To do : 1대신 삭제된 ID를 반환해주면 좋을거 같습니다.
-        }
+        MypageDeleteResponse mypageDeleteResponse = memberService.deleteMemberProfile(
+                principalDetails,
+                mypageDeleteRequest
+        );
 
-        return new ResponseDto<>(HttpStatus.BAD_REQUEST.value(), null);
+        return new ResponseDto<>(HttpStatus.OK.value(), mypageDeleteResponse);
     }
 }

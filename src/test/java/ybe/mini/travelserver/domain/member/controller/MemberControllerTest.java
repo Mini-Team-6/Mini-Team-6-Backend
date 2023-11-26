@@ -87,7 +87,7 @@ class MemberControllerTest implements DummyMemberDTO, DummyPrincipal {
     @DisplayName("회원정보 삭제 테스트")
     void testDeleteMember() {
         // given
-        given(memberService.deleteMemberProfile(any(), any())).willReturn(true);
+        given(memberService.deleteMemberProfile(any(), any())).willReturn(dummyMypageDeleteResponse());
 
         // when
         var actual = memberController.deleteMember(
@@ -96,7 +96,7 @@ class MemberControllerTest implements DummyMemberDTO, DummyPrincipal {
         );
 
         // then
-        var expected = new ResponseDto<>(200, 1);
+        var expected = new ResponseDto<>(200, dummyMypageDeleteResponse());
         assertEquals(expected, actual);
         then(memberService).should().deleteMemberProfile(any(), any());
     }
