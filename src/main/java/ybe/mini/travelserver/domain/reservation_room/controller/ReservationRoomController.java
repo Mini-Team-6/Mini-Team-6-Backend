@@ -8,7 +8,6 @@ import ybe.mini.travelserver.domain.reservation_room.dto.ReservationRoomGetRespo
 import ybe.mini.travelserver.domain.reservation_room.service.ReservationRoomService;
 import ybe.mini.travelserver.global.common.ResponseDto;
 
-import java.security.Principal;
 import java.util.List;
 
 @Slf4j
@@ -38,7 +37,7 @@ public class ReservationRoomController {
         return new ResponseDto<>(
                 HttpStatus.OK.value(),
                 reservationRoomService.deleteReservationRoom(reservationId, reservationRoomId)
-        );         //@Return : status, <생성된 ReservationId>
+        );
     }
 
 }

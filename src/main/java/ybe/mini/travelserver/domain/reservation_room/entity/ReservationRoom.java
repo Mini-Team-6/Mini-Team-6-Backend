@@ -12,6 +12,7 @@ import ybe.mini.travelserver.domain.room.entity.Room;
 
 import java.time.LocalDateTime;
 
+import static ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatus.PAYED;
 import static ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatus.RESERVED;
 
 @SuperBuilder
@@ -52,6 +53,10 @@ public class ReservationRoom {
 
     public void setReservation(Reservation reservation) {
         this.reservation = reservation;
+    }
+
+    public void updateStatusToPayed() {
+        status = PAYED;
     }
 
     public static ReservationRoom createReservationRoom(

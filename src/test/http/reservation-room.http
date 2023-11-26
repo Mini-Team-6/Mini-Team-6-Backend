@@ -1,0 +1,9 @@
+### 에약 번호로 예약한 숙소 조회
+GET http://localhost:8080/temp/reservation-rooms/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAwOTgxNzYyLCJleHAiOjE3MDA5ODM1NjIsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.YDK49hx4vmt_eBiW_CyKExnf0OpJUuw_6Ayys4ikwL0
+
+### 예약 취소
+DELETE http://localhost:8080/temp/reservation-rooms?reservationId=1&reservationRoomId=1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAwOTgxNzYyLCJleHAiOjE3MDA5ODM1NjIsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.YDK49hx4vmt_eBiW_CyKExnf0OpJUuw_6Ayys4ikwL0
