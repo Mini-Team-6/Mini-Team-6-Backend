@@ -1,12 +1,18 @@
 package ybe.mini.travelserver.domain.reservation_room.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Builder;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@Builder
 public record ReservationRoomCreateRequest(
-        Long roomId,
+
+        Long accommodationId,
+        String accommodationName,
+        Long roomTypeId,
+
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
         LocalDateTime checkIn,
 

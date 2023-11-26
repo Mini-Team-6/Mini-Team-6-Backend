@@ -44,4 +44,8 @@ public class Room {
     @JoinColumn(name = "accommodation_id")
     @Comment("숙박 시설 번호(FK)")
     private Accommodation accommodation;
+
+    public void setAccommodation(Accommodation accommodation) {
+        this.accommodation = accommodation;
+    }
 }

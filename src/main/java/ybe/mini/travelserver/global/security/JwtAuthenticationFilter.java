@@ -1,5 +1,6 @@
 package ybe.mini.travelserver.global.security;
 
+import com.auth0.jwt.exceptions.*;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -19,18 +21,38 @@ import java.util.Optional;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtDecoder jwtDecoder;
     private final JwtToPrincipalConverter jwtToPrincipalConverter;
+    private final HandlerExceptionResolver handlerExceptionResolver;
 
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
-            FilterChain filterChain
+            @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        extractTokenFromRequest(request)
-                .map(jwtDecoder::decode)
-                .map(jwtToPrincipalConverter::convert)
-                .map(UserPrincipalAuthenticationToken::new)
-                .ifPresent(authentication -> SecurityContextHolder.getContext().setAuthentication(authentication));
+
+        try {
+            extractTokenFromRequest(request)
+                    .map(jwtDecoder::decode)
+                    .map(jwtToPrincipalConverter::convert)
+                    .map(UserPrincipalAuthenticationToken::new)
+                    .ifPresent(authentication -> SecurityContextHolder.getContext().setAuthentication(authentication));
+        } catch (
+                SignatureGenerationException |
+                AlgorithmMismatchException |
+                InvalidClaimException |
+                JWTDecodeException |
+                SignatureVerificationException |
+                TokenExpiredException ex
+        ) {
+            handlerExceptionResolver.resolveException(
+                    request,
+                    response,
+                    null,
+                    ex
+            );
+
+            return;
+        }
 
         filterChain.doFilter(request, response);
     }

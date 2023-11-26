@@ -2,3 +2,12 @@ server:
   port: 8080
   error:
     include-message: always
+
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true # 404오류 예외로 던지기
+    problemdetails:
+      enabled: true #표준 예외 폼 사용
+  web:
+    resources:
+      add-mappings: false # 404오류 에 대해 리소스에서 접근하지 않고 예외로 던지기

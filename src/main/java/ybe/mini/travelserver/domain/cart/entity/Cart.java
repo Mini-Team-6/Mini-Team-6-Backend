@@ -1,4 +1,4 @@
-package ybe.mini.travelserver.domain.cart;
+package ybe.mini.travelserver.domain.cart.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -11,7 +11,7 @@ import ybe.mini.travelserver.domain.member.entity.Member;
 import ybe.mini.travelserver.domain.room.entity.Room;
 import ybe.mini.travelserver.global.entity.BaseTimeEntity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @SuperBuilder
 @Getter
@@ -35,13 +35,14 @@ public class Cart extends BaseTimeEntity {
     private Room room;
 
     @Comment("객실 체크인")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime checkIn;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate checkIn;
 
     @Comment("객실 체크아웃")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime checkOut;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate checkOut;
 
     @Comment("숙박 인원")
     private Integer guestNumber;
+
 }

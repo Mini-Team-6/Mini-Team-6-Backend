@@ -1,4 +1,4 @@
-package ybe.mini.travelserver.domain.accommodation;
+package ybe.mini.travelserver.domain.accommodation.entity;
 
 import jakarta.persistence.Embeddable;
 import lombok.Getter;

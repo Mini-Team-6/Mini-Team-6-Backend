@@ -12,6 +12,7 @@ import ybe.mini.travelserver.domain.room.entity.Room;
 
 import java.time.LocalDateTime;
 
+import static ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatus.PAYED;
 import static ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatus.RESERVED;
 
 @SuperBuilder
@@ -25,7 +26,7 @@ public class ReservationRoom {
     @Comment("예약 번호")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     @Comment("객실 번호")
     private Room room;
@@ -43,6 +44,7 @@ public class ReservationRoom {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime checkOut;
 
+    @Enumerated(EnumType.STRING)
     @Comment("에약 상태")
     private ReservationRoomStatus status;
 
@@ -51,6 +53,10 @@ public class ReservationRoom {
 
     public void setReservation(Reservation reservation) {
         this.reservation = reservation;
+    }
+
+    public void updateStatusToPayed() {
+        status = PAYED;
     }
 
     public static ReservationRoom createReservationRoom(

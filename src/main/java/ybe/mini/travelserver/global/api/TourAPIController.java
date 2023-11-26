@@ -1,48 +1,46 @@
 package ybe.mini.travelserver.global.api;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/tour-api")
 public class TourAPIController {
+    TourAPIService tourAPIService;
 
-    private final TourAPIService tourAPIService;
+    public TourAPIController(TourAPIService tourAPIService) {
+        this.tourAPIService = tourAPIService;
+    }
 
     @GetMapping("/search")
-    public ResponseEntity<?> bringAccommodationsByKeyword(@RequestParam String keyword) {
+    public ResponseEntity<?> bringAccommodations(
+            @RequestParam(required = false, defaultValue = "_") String keyword,
+            @RequestParam(required = false, defaultValue = "1") int pageNo,
+            @RequestParam(required = false, defaultValue = "10") int numOfRows,
+            @RequestParam(required = false) String areaCode
+    ) {
         return ResponseEntity.ok(
-                TourAPIUtils.bringAccommodationByKeyword(keyword)
+                tourAPIService.bringAccommodationsForSearch(
+                        pageNo,
+                        numOfRows,
+                        keyword,
+                        areaCode
+                )
         );
     }
 
     @GetMapping("/accommodation/{contentId}")
-    public ResponseEntity<?> bringAccommodation(@PathVariable int contentId) {
+    public ResponseEntity<?> bringAccommodation(@PathVariable long contentId) {
         return ResponseEntity.ok(
                 TourAPIUtils.bringAccommodationDetail(contentId)
         );
     }
 
     @GetMapping("/accommodation/{contentId}/rooms")
-    public ResponseEntity<?> bringRooms(@PathVariable int contentId) {
+    public ResponseEntity<?> bringRooms(@PathVariable long contentId) {
         return ResponseEntity.ok(
                 TourAPIUtils.bringRoom(contentId)
         );
     }
 
-    @GetMapping("/page/{pageNo}")
-    public ResponseEntity<?> bringAccommodations(@PathVariable int pageNo) {
-        int numOfRows = 10;
-        return ResponseEntity.ok(
-                TourAPIUtils.bringAccommodationByPagenation(pageNo, numOfRows)
-        );
-    }
-
-    @GetMapping("/save")
-    public ResponseEntity<?> saveAccommodations() {
-        tourAPIService.saveAccommodationsToDBFromFile();
-        return ResponseEntity.ok().build();
-    }
 }

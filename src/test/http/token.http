@@ -17,6 +17,18 @@ Content-Type: application/json
   "password": "123456"
 }
 
-### 회원 조회
+### 회원 마이페이지 올바른 토큰
 GET http://localhost:8080/members/mypage
-Authorization: Bearer #로그인 성공시 토큰 발급됨. 값 넣어주면 동작함
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiaWF0IjoxNzAwOTg2ODIwLCJleHAiOjE3MDA5ODg2MjAsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.t6iD-_ymvp5jVKuihpndMDC4Zn6yc8wlTlil-DAci1E
+
+#### 만료된 토큰
+GET http://localhost:8080/members/mypage
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiaWF0IjoxNzAwOTgwMzE3LCJleHAiOjE3MDA5ODIxMTcsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.RYtDzSU4KMFpNmLatajhIm1Or0WdQsMm5q2SJXedsgM
+
+#### 잘못된 jwt 포맷
+GET http://localhost:8080/members/mypage
+Authorization: Bearer s.eyJzdWIiOiI1IiwiaWF0IjoxNzAwOTgwMzE3LCJleHAiOjE3MDA5ODIxMTcsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.RYtDzSU4KMFpNmLatajhIm1Or0WdQsMm5q2SJXedsgM
+
+#### 발급처가 다른, 위/변조된 토큰
+GET http://localhost:8080/members/mypage
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9ramFlb29rOThAZ21haWwuY29tIiwicGFzc3dvcmQiOiIxMjM0NTYifQ.B0Fzvz6rYLjgNqn0QhA7CkAwaDWxj24epb5A0GTi7-g
