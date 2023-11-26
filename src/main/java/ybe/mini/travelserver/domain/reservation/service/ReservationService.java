@@ -41,19 +41,7 @@ public class ReservationService {
         for(ReservationRoomCreateRequest roomRequest : reservationRequest.reservationRooms()) {
             Accommodation accommodation =   //To-do : Bring 제대로 안되면 Exception 날려주는 거 고민
                     tourAPIService.bringAccommodation(roomRequest.accommodationId(), roomRequest.accommodationName());
-            List<Room> rooms =
-                    tourAPIService.bringRooms(roomRequest.accommodationId());
-
-            Room room = null;
-            for(Room tRoom : rooms) {
-                if(tRoom.getRoomTypeId().equals(roomRequest.roomTypeId())) {
-                    room = tRoom;
-                }
-            }
-            if(room==null) {
-                //To-do : Exception 처리
-            }
-            assert room != null;    //Exception 구현되는 대로 없앨 예정
+            Room room = tourAPIService.bringRoom(roomRequest.accommodationId(), roomRequest.roomTypeId());
 
             accommodation = getOrSaveAccommodation(accommodation);
             room.setAccommodation(accommodation);
