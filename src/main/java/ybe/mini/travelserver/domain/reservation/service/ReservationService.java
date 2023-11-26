@@ -8,13 +8,12 @@ import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 import ybe.mini.travelserver.domain.accommodation.repository.AccommodationRepository;
 import ybe.mini.travelserver.domain.member.entity.Member;
 import ybe.mini.travelserver.domain.member.repository.MemberRepository;
+import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateRequest;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateResponse;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationGetResponse;
-import ybe.mini.travelserver.domain.reservation.repository.ReservationRepository;
-import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateRequest;
 import ybe.mini.travelserver.domain.reservation.entity.Reservation;
+import ybe.mini.travelserver.domain.reservation.repository.ReservationRepository;
 import ybe.mini.travelserver.domain.reservation_room.dto.ReservationRoomCreateRequest;
-import ybe.mini.travelserver.domain.reservation_room.dto.ReservationRoomGetResponse;
 import ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoom;
 import ybe.mini.travelserver.domain.room.entity.Room;
 import ybe.mini.travelserver.domain.room.repository.RoomRepository;
@@ -74,6 +73,7 @@ public class ReservationService {
 
     @Transactional
     public Long deleteReservation(Long reservationId) {
+        getReservationById(reservationId);
         reservationRepository.deleteById(getReservationById(reservationId).getId());
         return reservationId;
     }
