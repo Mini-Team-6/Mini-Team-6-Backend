@@ -30,7 +30,11 @@ public class AccommodationService {
             String keyword, AreaCode areaCode
     ) {
         List<Accommodation> accommodations =
-                tourAPIService.bringAccommodationsForSearch(pageNo, numOfRows, keyword, areaCode);
+                tourAPIService.bringAccommodationsForSearch(
+                        pageNo,
+                        numOfRows,
+                        keyword,
+                        String.valueOf(areaCode.getCode()));
 
         return getResponseList(accommodations);
     }
