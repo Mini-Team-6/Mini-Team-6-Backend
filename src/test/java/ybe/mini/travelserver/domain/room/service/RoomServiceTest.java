@@ -33,7 +33,7 @@ class RoomServiceTest extends DummyObjectForService {
                 .willReturn(Optional.of(dummyRoom(dummyAccommodation())));
 
         // when
-        var actual = roomService.bringRoom(1L, 1L);
+        var actual = roomService.bringRoom(1L);
 
         // then
         var expected = dummyRoomGetResponse();
