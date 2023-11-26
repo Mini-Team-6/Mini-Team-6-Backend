@@ -71,4 +71,12 @@ public interface DummyMemberDTO extends DummyMember {
                 member.getPassword()
         );
     }
+
+    default MypageDeleteResponse dummyMypageDeleteResponse() {
+        Member member = dummyMember();
+        return new MypageDeleteResponse(
+                member.getEmail(),
+                member.getPassword()
+        );
+    }
 }

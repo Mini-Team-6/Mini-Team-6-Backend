@@ -20,7 +20,6 @@ import ybe.mini.travelserver.global.security.JwtIssuer;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.any;
@@ -120,6 +119,7 @@ class MemberServiceTest implements DummyMemberDTO, DummyPrincipal {
         var actual = memberService.deleteMemberProfile(dummyPrincipalDetails(), dummyMypageDeleteRequest());
 
         // then
-        assertTrue(actual);
+        var expected = dummyMypageDeleteResponse();
+        assertEquals(expected, actual);
     }
 }
