@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ybe.mini.travelserver.domain.accommodation.dto.AccommodationAndRoomResponse;
 import ybe.mini.travelserver.domain.accommodation.dto.AccommodationGetResponse;
+import ybe.mini.travelserver.domain.accommodation.entity.AreaCode;
 import ybe.mini.travelserver.domain.accommodation.service.AccommodationService;
 import ybe.mini.travelserver.global.common.ResponseDto;
 
@@ -21,7 +22,7 @@ public class AccommodationController {
     public ResponseDto<List<AccommodationGetResponse>> searchAccommodations(
             @PathVariable int pageNo,
             @RequestParam(required = false) String keyword,
-            @RequestParam(required = false, value = "area-code") String areaCode
+            @RequestParam(required = false, value = "area-code") AreaCode areaCode
     ) {
         int numOfRows = 10;
         List<AccommodationGetResponse> accommodations =
@@ -32,7 +33,7 @@ public class AccommodationController {
     @GetMapping("/{accommodationId}")
     public ResponseDto<AccommodationAndRoomResponse> getAccommodationAndRooms(
             @PathVariable Long accommodationId,
-            @RequestParam String keyword
+            @RequestParam(required = false, defaultValue = "_") String keyword
     ) {
         AccommodationAndRoomResponse accommodationAndRoomResponse
                 = accommodationService.bringAccommodationAndRoomsFromAPI(accommodationId, keyword);

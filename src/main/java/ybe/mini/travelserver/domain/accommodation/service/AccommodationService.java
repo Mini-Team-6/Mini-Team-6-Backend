@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.accommodation.dto.AccommodationAndRoomResponse;
 import ybe.mini.travelserver.domain.accommodation.dto.AccommodationGetResponse;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
+import ybe.mini.travelserver.domain.accommodation.entity.AreaCode;
 import ybe.mini.travelserver.domain.accommodation.repository.AccommodationRepository;
 import ybe.mini.travelserver.domain.room.dto.RoomGetResponse;
 import ybe.mini.travelserver.domain.room.entity.Room;
@@ -26,7 +27,7 @@ public class AccommodationService {
 
     public List<AccommodationGetResponse> bringAccommodationsFromAPI(
             int pageNo, int numOfRows,
-            String keyword, String areaCode
+            String keyword, AreaCode areaCode
     ) {
         List<Accommodation> accommodations =
                 tourAPIService.bringAccommodationsForSearch(pageNo, numOfRows, keyword, areaCode);
