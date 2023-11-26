@@ -24,7 +24,7 @@ public class ReservationController {
 
     @PostMapping
     public ResponseDto<ReservationCreateResponse> tryReservation (
-            @RequestBody ReservationCreateRequest createRequest, //To-do : Validation ++
+            @RequestBody ReservationCreateRequest createRequest, //Todo : Validation ++
             @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
         return new ResponseDto<>(

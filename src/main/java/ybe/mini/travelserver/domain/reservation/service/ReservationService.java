@@ -39,7 +39,7 @@ public class ReservationService {
 
         List<ReservationRoom> reservationRooms = new ArrayList<>();
         for(ReservationRoomCreateRequest roomRequest : reservationRequest.reservationRooms()) {
-            Accommodation accommodation =   //To-do : Bring 제대로 안되면 Exception 날려주는 거 고민
+            Accommodation accommodation =   //todo : Bring 제대로 안되면 Exception 날려주는 거 고민
                     tourAPIService.bringAccommodation(roomRequest.accommodationId(), roomRequest.accommodationName());
             Room room = tourAPIService.bringRoom(roomRequest.accommodationId(), roomRequest.roomTypeId());
 
@@ -94,13 +94,12 @@ public class ReservationService {
 
     private Reservation getReservationById(Long id) {
         return reservationRepository.findById(id)
-                .orElseThrow(RuntimeException::new);    //To-do : Custom Exception Handle
+                .orElseThrow(RuntimeException::new);    //Todo : Custom Exception Handle
     }
 
     private Member getMemberByEmail(String email) {
-        log.info("TAGGGGGGGGGGGGGGGGGGGG = {}", email);
         return memberRepository.findByEmail(email)
-                .orElseThrow(RuntimeException::new);    //To-do : Custom Exception Handle
+                .orElseThrow(RuntimeException::new);    //Todo : Custom Exception Handle
     }
 
 }
