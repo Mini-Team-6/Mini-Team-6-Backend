@@ -3,6 +3,7 @@ package ybe.mini.travelserver.domain.accommodation.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ybe.mini.travelserver.domain.accommodation.entity.AreaCode;
 import ybe.mini.travelserver.domain.accommodation.entity.Location;
 import ybe.mini.travelserver.domain.accommodation.dto.AccommodationAndRoomResponse;
 import ybe.mini.travelserver.domain.accommodation.dto.AccommodationGetResponse;
@@ -18,10 +19,11 @@ import java.util.List;
 @RequestMapping("/accommodations")
 public class TempAccommodationController {
 
-    @GetMapping
+    @GetMapping("/page/{pageNo}")
     public ResponseDto<List<AccommodationGetResponse>> searchAccommodations(
+            @PathVariable int pageNo,
             @RequestParam(required = false) String keyword,
-            @RequestParam(required = false, value = "area-code") String areaCode
+            @RequestParam(required = false, value = "area-code") AreaCode areaCode
     ) {
         Location location = Location.builder()
                 .address("강원특별자치도 강릉시 창해로 307 ")
@@ -66,7 +68,8 @@ public class TempAccommodationController {
 
     @GetMapping("/{accommodationId}")
     public ResponseDto<AccommodationAndRoomResponse> getAccommodationAndRooms(
-            @PathVariable Long accommodationId
+            @PathVariable Long accommodationId,
+            @RequestParam(required = false, defaultValue = "_") String keyword
     ) {
         Accommodation accommodation = Accommodation.builder()
                 .name("세인트존스 호텔")
