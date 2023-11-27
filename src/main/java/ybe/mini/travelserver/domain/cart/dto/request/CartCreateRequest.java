@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
+import ybe.mini.travelserver.domain.accommodation.entity.AreaCode;
 
 import java.time.LocalDate;
 
@@ -14,28 +15,28 @@ import java.time.LocalDate;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record CartCreateRequest(
 
-    @Positive
-    Long roomTypeId,
+        @Positive
+        Long roomTypeId,
 
-    @FutureOrPresent
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    LocalDate checkIn,
+        @FutureOrPresent
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        LocalDate checkIn,
 
-    @FutureOrPresent
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    LocalDate checkOut,
+        @FutureOrPresent
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        LocalDate checkOut,
 
-    @Positive
-    Integer guestNumber,
+        @Positive
+        Integer guestNumber,
 
-    @Positive
-    Long accommodationId,
+        @Positive
+        Long accommodationId,
 
-    @NotBlank
-    String keyword,
+        @NotBlank
+        String keyword,
 
-    @NotBlank
-    String areaCode
+        @NotNull
+        AreaCode areaCode
 ) {
 
 }
