@@ -1,9 +1,10 @@
 ### 예약 생성
-POST http://localhost:8080/temp/reservations
+POST http://localhost:8080/reservations
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMDIyMDAzLCJleHAiOjE3MDEwMjM4MDMsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.dnY4hXXEjMkybH1gwaxL9MbQkeAabZczI5S9SzaHxLM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMDY3MTg3LCJleHAiOjE3MDEwNjg5ODcsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.Xbds062YfqCfbIiop7JYNSZDLB712OXF6BAWkZV5FyU
 
 {
+  "paymentType": "CARD",
   "reservationRooms" : [
     {
       "accommodationId": 142785,
@@ -21,13 +22,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0I
 ### 나의 예약 조회
 GET http://localhost:8080/temp/reservations
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMDIyMDAzLCJleHAiOjE3MDEwMjM4MDMsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.dnY4hXXEjMkybH1gwaxL9MbQkeAabZczI5S9SzaHxLM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMDU4NDc0LCJleHAiOjE3MDEwNjAyNzQsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.dWNu-q6QKED1cNmrS8mXG5sWo15gl-7m-859eHAIzkE
 
 
 ### 예약 결제
-POST http://localhost:8080/temp/reservations/1/payment
+POST http://localhost:8080/temp/reservations/22/payment
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMDEwNDU4LCJleHAiOjE3MDEwMTIyNTgsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.c5NKrqgVNj_CKLS2naYTx7p775vyAI1rMh_QwGRdv_Q
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMDU4NDc0LCJleHAiOjE3MDEwNjAyNzQsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.dWNu-q6QKED1cNmrS8mXG5sWo15gl-7m-859eHAIzkE
 
 ### 예약 취소
 DELETE http://localhost:8080/temp/reservations/2

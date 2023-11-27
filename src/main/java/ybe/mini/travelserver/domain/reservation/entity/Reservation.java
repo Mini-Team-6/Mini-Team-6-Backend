@@ -9,14 +9,13 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 import ybe.mini.travelserver.domain.member.entity.Member;
 import ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoom;
-import ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatus;
 import ybe.mini.travelserver.global.entity.BaseTimeEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static ybe.mini.travelserver.domain.reservation.entity.ReservationStatus.*;
+import static ybe.mini.travelserver.domain.reservation.entity.PaymentType.*;
 
 @SuperBuilder
 @Getter
@@ -44,30 +43,22 @@ public class Reservation extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Comment("예약 상태")
-    private ReservationStatus status;
-
-    public void setStatus(ReservationStatus status) {
-        this.status = status;
-    }
+    private PaymentType paymentType;
 
     public void addReservationRoom(ReservationRoom reservationRoom) {
         reservationRooms.add(reservationRoom);
         reservationRoom.setReservation(this);
     }
 
-    public void updateStatusToPaySuccess() {
-        status = PAYED_SUCCESS;
-        reservationRooms.forEach(ReservationRoom::updateStatusToPayed);
-    }
-
     public static Reservation createReservation(
             Member member,
+            PaymentType paymentType,
             List<ReservationRoom> reservationRooms
     ) {
 
         Reservation reservation = Reservation.builder()
                 .member(member)
-                .status(PAYED_BEFORE)
+                .paymentType(paymentType)
                 .build();
         reservationRooms.forEach(reservation::addReservationRoom);
 

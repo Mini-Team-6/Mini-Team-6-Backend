@@ -6,9 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 import ybe.mini.travelserver.domain.accommodation.repository.AccommodationRepository;
+import ybe.mini.travelserver.domain.cart.repository.CartRepository;
 import ybe.mini.travelserver.domain.member.entity.Member;
 import ybe.mini.travelserver.domain.member.exception.MemberNotFoundException;
 import ybe.mini.travelserver.domain.member.repository.MemberRepository;
+import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateFromCartRequest;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateRequest;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateResponse;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationGetResponse;
@@ -34,29 +36,32 @@ public class ReservationService {
     private final TourAPIService tourAPIService;
     private final RoomRepository roomRepository;
     private final AccommodationRepository accommodationRepository;
+    private final CartRepository cartRepository;
 
     @Transactional
     public ReservationCreateResponse createReservation(String userEmail, ReservationCreateRequest reservationRequest) {
 
-        List<ReservationRoom> reservationRooms = new ArrayList<>();
-        for(ReservationRoomCreateRequest roomRequest : reservationRequest.reservationRooms()) {
-            Accommodation accommodation =   //todo : Bring 제대로 안되면 Exception 날려주는 거 고민
-                    tourAPIService.bringAccommodation(roomRequest.accommodationId(), roomRequest.accommodationName());
-            Room room = tourAPIService.bringRoom(roomRequest.accommodationId(), roomRequest.roomTypeId());
-
-            accommodation = getOrSaveAccommodation(accommodation);
-            room.setAccommodation(accommodation);
-            room = getOrSaveRoom(room);
-
-            ReservationRoom reservationRoom = ReservationRoom.createReservationRoom(
-                    room, roomRequest.checkIn(), roomRequest.checkOut(), roomRequest.guestNumber()
-            );
-            reservationRooms.add(reservationRoom);
-        }
-
+        List<ReservationRoom> reservationRooms =
+                reservationRoomDtosToEntityList(reservationRequest.reservationRooms());
         Member member = getMemberByEmail(userEmail);
+        Reservation reservation =
+                Reservation.createReservation(member, reservationRequest.paymentType(), reservationRooms);
 
-        Reservation reservation = Reservation.createReservation(member, reservationRooms);
+        return ReservationCreateResponse.fromEntity(reservationRepository.save(reservation));
+    }
+
+    public ReservationCreateResponse createReservationAndDeleteCart(
+            String userEmail, ReservationCreateFromCartRequest reservationRequest
+    ) {
+
+        reservationRequest.cardIds().forEach(this::deleteCart);
+
+        List<ReservationRoom> reservationRooms =
+                reservationRoomDtosToEntityList(reservationRequest.reservationRooms());
+        Member member = getMemberByEmail(userEmail);
+        Reservation reservation =
+                Reservation.createReservation(member, reservationRequest.paymentType(), reservationRooms);
+
         return ReservationCreateResponse.fromEntity(reservationRepository.save(reservation));
     }
 
@@ -67,17 +72,33 @@ public class ReservationService {
     }
 
     @Transactional
-    public Long updateReservationStatusToPay(Long reservationId) {
-        Reservation reservation = getReservationById(reservationId);
-        reservation.updateStatusToPaySuccess();
-        return reservation.getId();
-    }
-
-    @Transactional
     public Long deleteReservation(Long reservationId) {
         getReservationById(reservationId);
         reservationRepository.deleteById(getReservationById(reservationId).getId());
         return reservationId;
+    }
+
+    private List<ReservationRoom> reservationRoomDtosToEntityList(List<ReservationRoomCreateRequest> roomCreateRequests) {
+        List<ReservationRoom> reservationRooms = new ArrayList<>();
+        for(ReservationRoomCreateRequest roomRequest : roomCreateRequests) {
+            ReservationRoom reservationRoom = reservationRoomDtoToEntity(roomRequest);
+            reservationRooms.add(reservationRoom);
+        }
+        return reservationRooms;
+    }
+
+    private ReservationRoom reservationRoomDtoToEntity(ReservationRoomCreateRequest roomRequest) {
+        Accommodation accommodation =   //todo : Bring 제대로 안되면 Exception 날려주는 거 고민
+                tourAPIService.bringAccommodation(roomRequest.accommodationId(), roomRequest.accommodationName());
+        Room room = tourAPIService.bringRoom(roomRequest.accommodationId(), roomRequest.roomTypeId());
+
+        accommodation = getOrSaveAccommodation(accommodation);
+        room.setAccommodation(accommodation);
+        room = getOrSaveRoom(room);
+
+        return ReservationRoom.createReservationRoom(
+                room, roomRequest.checkIn(), roomRequest.checkOut(), roomRequest.guestNumber()
+        );
     }
 
     private Room getOrSaveRoom(Room room) {
@@ -98,6 +119,11 @@ public class ReservationService {
     private Member getMemberByEmail(String email) {
         return memberRepository.findByEmail(email)
                 .orElseThrow(MemberNotFoundException::new);
+    }
+
+    private void deleteCart(Long cartId) {
+        cartRepository.findById(cartId).orElseThrow(RuntimeException::new);  //todo : CustomException, 민정님 구현 후 적용
+        cartRepository.deleteById(cartId);
     }
 
 }

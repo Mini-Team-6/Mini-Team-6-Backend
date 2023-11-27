@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateFromCartRequest;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateRequest;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateResponse;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationGetResponse;
@@ -19,7 +20,7 @@ import java.util.List;
 import static ybe.mini.travelserver.global.security.Role.ROLE_USER;
 
 @Slf4j
-@RequestMapping("/temp/reservations")
+@RequestMapping("/reservations")
 @RestController
 @RequiredArgsConstructor
 public class ReservationController {
@@ -39,6 +40,18 @@ public class ReservationController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping("/from-cart")
+    public ResponseDto<ReservationCreateResponse> tryReservationFromCart (
+            @RequestBody @Valid ReservationCreateFromCartRequest createRequest,
+            @AuthenticationPrincipal PrincipalDetails principalDetails
+    ) {
+        return new ResponseDto<>(
+                HttpStatus.CREATED.value(),
+                reservationService.createReservationAndDeleteCart(principalDetails.getEmail(), createRequest)
+        );
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
     public ResponseDto<List<ReservationGetResponse>> getMyReservations (
             @AuthenticationPrincipal PrincipalDetails principalDetails
@@ -48,16 +61,6 @@ public class ReservationController {
                 reservationService.getMyReservations(principalDetails.getMemberId())
         );
     }
-
-    @PostMapping("/{reservationId}/payment")
-    public ResponseDto<Long> payReservation(
-            @PathVariable Long reservationId
-    ) {
-        return new ResponseDto<>(HttpStatus.OK.value(),
-                reservationService.updateReservationStatusToPay(reservationId)
-        );
-    }
-
 
     @DeleteMapping("/{reservationId}")
     public ResponseDto<Long> deleteReservation(

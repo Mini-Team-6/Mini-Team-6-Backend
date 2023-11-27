@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ReservationStatus {
+public enum PaymentType {
 
-    PAYED_BEFORE("결제 전"),
-    PAYED_SUCCESS("결제 완료"),
-    CANCELED("결제 취소"),
-    REFUND("결제 환불")
+    KAKAO_PAY("카카오페이 결제"),
+    CARD("카드 결제"),
+    MOBILE("휴대폰 결제"),
+    ACCOUNT("계좌 이체")
     ;
 
     private final String name;

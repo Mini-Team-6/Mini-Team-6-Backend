@@ -1,8 +1,7 @@
 package ybe.mini.travelserver.domain.reservation.dto;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import ybe.mini.travelserver.domain.reservation.entity.PaymentType;
@@ -12,10 +11,12 @@ import java.io.Serializable;
 import java.util.List;
 
 @Builder
-public record ReservationCreateRequest(
+public record ReservationCreateFromCartRequest(
 
         @NotNull
         PaymentType paymentType,
+        @NotEmpty
+        List<Long> cardIds,
         @Valid
         List<ReservationRoomCreateRequest> reservationRooms
 ) implements Serializable {
