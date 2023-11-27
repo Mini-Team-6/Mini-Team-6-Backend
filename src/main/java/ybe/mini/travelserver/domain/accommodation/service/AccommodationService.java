@@ -10,6 +10,7 @@ import ybe.mini.travelserver.domain.accommodation.entity.AreaCode;
 import ybe.mini.travelserver.domain.accommodation.repository.AccommodationRepository;
 import ybe.mini.travelserver.global.api.TourAPIService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,6 +26,10 @@ public class AccommodationService {
             int pageNo, int numOfRows,
             String keyword, AreaCode areaCode
     ) {
+        if (pageNo <= 0) {
+            return Collections.emptyList();
+        }
+
         String areaCodeString = (areaCode != null) ? String.valueOf(areaCode.getCode()) : null;
 
         List<Accommodation> accommodations =
