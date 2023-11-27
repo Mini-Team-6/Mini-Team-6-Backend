@@ -25,4 +25,5 @@ public class DTOExceptionHandler extends ProblemDetailCreator<DTOErrorMessage> {
         String errorMessage = Objects.requireNonNull(ex.getBindingResult().getFieldError()).getDefaultMessage();
         return createProblemDetail(errorMessage, METHOD_ARGUMENT_NOT_VALID.getStatus().value(), request);
     }
+
 }

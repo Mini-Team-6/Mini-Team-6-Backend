@@ -10,7 +10,9 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 @Getter
 @AllArgsConstructor
 public enum DTOErrorMessage implements ErrorMessage {
-    METHOD_ARGUMENT_NOT_VALID(BAD_REQUEST, "DTO 값이 유효하지 않습니다");
+    METHOD_ARGUMENT_NOT_VALID(BAD_REQUEST, "DTO 값이 유효하지 않습니다"),
+    ;
+
     private final HttpStatus status;
     private final String message;
 }

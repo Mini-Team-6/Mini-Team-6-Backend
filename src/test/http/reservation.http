@@ -1,7 +1,7 @@
 ### 예약 생성
 POST http://localhost:8080/temp/reservations
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMDIyMDAzLCJleHAiOjE3MDEwMjM4MDMsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.dnY4hXXEjMkybH1gwaxL9MbQkeAabZczI5S9SzaHxLM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMDc1Njk4LCJleHAiOjE3MDEwNzc0OTgsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.CFJ_abQV4neJ1B7uYFj2rTxIcjrGfV2RJj09UORA3T4
 
 {
   "reservationRooms" : [
@@ -9,9 +9,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0I
       "accommodationId": 142785,
       "accommodationName": "가락관광호텔",
       "roomTypeId": 11430,
-      "checkIn": "2022-01-01 14:00",
-      "checkOut": "2022-01-02 11:00",
-      "guestNumber": 2
+      "checkIn": "2024-01-01 14:00",
+      "checkOut": "2024-01-02 11:00",
+      "guestNumber": 1
     }
   ]
 }
