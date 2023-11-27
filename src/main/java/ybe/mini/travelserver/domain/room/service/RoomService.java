@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.room.dto.RoomGetResponse;
+import ybe.mini.travelserver.domain.room.dto.RoomGetResponseFromAPI;
 import ybe.mini.travelserver.domain.room.entity.Room;
 import ybe.mini.travelserver.domain.room.repository.RoomRepository;
 import ybe.mini.travelserver.global.api.TourAPIService;
@@ -25,10 +26,11 @@ public class RoomService {
                 .toList();
     }
 
-    @Transactional(readOnly = true)
-    public RoomGetResponse bringRoom(Long accommodationId, Long roomTypeId) {
-        Room room = tourAPIService.bringRoom(accommodationId, roomTypeId);
-        return RoomGetResponse.fromEntity(room);
+    public List<RoomGetResponseFromAPI> bringRoomsFromAPI(Long accommodationId) {
+        List<Room> rooms = tourAPIService.bringRooms(accommodationId);
+        return rooms.stream()
+                        .map(RoomGetResponseFromAPI::fromEntity)
+                        .toList();
     }
 
     @Transactional(readOnly = true)
@@ -36,6 +38,5 @@ public class RoomService {
         Room room = roomRepository.findById(roomId).orElseThrow(RuntimeException::new);
         return RoomGetResponse.fromEntity(room);
     }
-
 
 }
