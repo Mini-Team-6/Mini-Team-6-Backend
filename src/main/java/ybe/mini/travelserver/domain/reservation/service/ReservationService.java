@@ -7,11 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 import ybe.mini.travelserver.domain.accommodation.repository.AccommodationRepository;
 import ybe.mini.travelserver.domain.member.entity.Member;
+import ybe.mini.travelserver.domain.member.exception.MemberNotFoundException;
 import ybe.mini.travelserver.domain.member.repository.MemberRepository;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateRequest;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateResponse;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationGetResponse;
 import ybe.mini.travelserver.domain.reservation.entity.Reservation;
+import ybe.mini.travelserver.domain.reservation.exception.ReservationNotFoundException;
 import ybe.mini.travelserver.domain.reservation.repository.ReservationRepository;
 import ybe.mini.travelserver.domain.reservation_room.dto.ReservationRoomCreateRequest;
 import ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoom;
@@ -68,7 +70,7 @@ public class ReservationService {
     public Long updateReservationStatusToPay(Long reservationId) {
         Reservation reservation = getReservationById(reservationId);
         reservation.updateStatusToPaySuccess();
-        return reservation.getId(); //todo : 하위 ReservationRoom 들도 status 업데이트 필요
+        return reservation.getId();
     }
 
     @Transactional
@@ -88,18 +90,14 @@ public class ReservationService {
                 .orElseGet(() -> accommodationRepository.save(accommodation));
     }
 
-    private Room saveRoom(Room room) {
-        return roomRepository.save(room);
-    }
-
     private Reservation getReservationById(Long id) {
         return reservationRepository.findById(id)
-                .orElseThrow(RuntimeException::new);    //Todo : Custom Exception Handle
+                .orElseThrow(ReservationNotFoundException::new);
     }
 
     private Member getMemberByEmail(String email) {
         return memberRepository.findByEmail(email)
-                .orElseThrow(RuntimeException::new);    //Todo : Custom Exception Handle
+                .orElseThrow(MemberNotFoundException::new);
     }
 
 }

@@ -1,5 +1,6 @@
 package ybe.mini.travelserver.domain.reservation.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -28,13 +29,13 @@ public class ReservationController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping
     public ResponseDto<ReservationCreateResponse> tryReservation (
-            @RequestBody ReservationCreateRequest createRequest, //Todo : Validation ++
+            @RequestBody @Valid ReservationCreateRequest createRequest, //Todo : Validation ++
             @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
         return new ResponseDto<>(
                 HttpStatus.CREATED.value(),
                 reservationService.createReservation(principalDetails.getEmail(), createRequest)
-        );         //@Return : status, <생성된 ReservationId>
+        );
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
