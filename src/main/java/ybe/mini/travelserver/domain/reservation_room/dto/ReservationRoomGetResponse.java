@@ -20,7 +20,7 @@ public record ReservationRoomGetResponse(
         LocalDateTime checkOut,
         Integer guestNumber,
         ReservationRoomStatus status,
-        RoomGetResponse room    //Todo : Room room 으로 변경 논의
+        RoomGetResponse room
 
 ) implements Serializable {
 

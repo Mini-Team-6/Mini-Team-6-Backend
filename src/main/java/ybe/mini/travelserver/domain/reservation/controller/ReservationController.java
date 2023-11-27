@@ -29,7 +29,7 @@ public class ReservationController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping
     public ResponseDto<ReservationCreateResponse> tryReservation (
-            @RequestBody @Valid ReservationCreateRequest createRequest, //Todo : Validation ++
+            @RequestBody @Valid ReservationCreateRequest createRequest,
             @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
         return new ResponseDto<>(
