@@ -3,13 +3,12 @@ package ybe.mini.travelserver.domain.accommodation.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ybe.mini.travelserver.domain.accommodation.dto.AccommodationAndRoomResponse;
+import ybe.mini.travelserver.domain.accommodation.dto.AccommodationDetailGetResponse;
 import ybe.mini.travelserver.domain.accommodation.dto.AccommodationGetResponse;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 import ybe.mini.travelserver.domain.accommodation.entity.AreaCode;
 import ybe.mini.travelserver.domain.accommodation.repository.AccommodationRepository;
 import ybe.mini.travelserver.domain.room.dto.RoomGetResponse;
-import ybe.mini.travelserver.domain.room.entity.Room;
 import ybe.mini.travelserver.domain.room.service.RoomService;
 import ybe.mini.travelserver.global.api.TourAPIService;
 
@@ -41,20 +40,11 @@ public class AccommodationService {
         return getResponseList(accommodations);
     }
 
-    public AccommodationAndRoomResponse bringAccommodationAndRoomsFromAPI(
-            Long accommodationId,
-            String keyword
-    ) {
-        Accommodation accommodation = tourAPIService.bringAccommodation(accommodationId, keyword);
-        AccommodationGetResponse accommodationGetResponse = AccommodationGetResponse.fromEntity(accommodation);
-        List<Room> rooms = tourAPIService.bringRooms(accommodationId);
-        List<RoomGetResponse> roomGetResponseList =
-                rooms.stream()
-                        .map(RoomGetResponse::fromEntity)
-                        .toList();
-        return AccommodationAndRoomResponse.fromEntity(accommodationGetResponse, roomGetResponseList);
+    public AccommodationDetailGetResponse bringAccommodationFromAPI(Long accommodationId, String keyword, AreaCode areaCode) {
+        Accommodation accommodation =
+                tourAPIService.bringAccommodation(accommodationId, keyword, String.valueOf(areaCode));
+        return AccommodationDetailGetResponse.fromEntity(accommodation);
     }
-
 
     @Transactional(readOnly = true)
     public List<AccommodationGetResponse> bringAccommodations(String keyword, String areaCode) {
@@ -71,14 +61,6 @@ public class AccommodationService {
         }
 
         return getResponseList(accommodations);
-    }
-
-    @Transactional(readOnly = true)
-    public AccommodationAndRoomResponse bringAccommodationAndRooms(Long accommodationId) {
-        Accommodation accommodation = bringAccommodation(accommodationId);
-        AccommodationGetResponse accommodationGetResponse = AccommodationGetResponse.fromEntity(accommodation);
-        List<RoomGetResponse> roomGetResponseList = roomService.bringRooms(accommodationId);
-        return AccommodationAndRoomResponse.fromEntity(accommodationGetResponse, roomGetResponseList);
     }
 
 
