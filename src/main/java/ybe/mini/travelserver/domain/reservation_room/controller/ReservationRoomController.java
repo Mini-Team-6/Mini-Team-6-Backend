@@ -11,7 +11,7 @@ import ybe.mini.travelserver.global.common.ResponseDto;
 import java.util.List;
 
 @Slf4j
-@RequestMapping("/temp/reservation-rooms")
+@RequestMapping("/reservation-rooms")
 @RestController
 @RequiredArgsConstructor
 public class ReservationRoomController {

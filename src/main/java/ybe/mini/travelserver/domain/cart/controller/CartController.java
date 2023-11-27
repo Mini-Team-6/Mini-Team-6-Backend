@@ -2,110 +2,57 @@ package ybe.mini.travelserver.domain.cart.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
-import ybe.mini.travelserver.domain.accommodation.entity.Location;
 import ybe.mini.travelserver.domain.cart.dto.request.CartCreateRequest;
+import ybe.mini.travelserver.domain.cart.dto.response.CartCreateResponse;
+import ybe.mini.travelserver.domain.cart.dto.response.CartDeleteResponse;
 import ybe.mini.travelserver.domain.cart.dto.response.CartGetResponse;
-import ybe.mini.travelserver.domain.cart.entity.Cart;
-import ybe.mini.travelserver.domain.room.entity.Room;
+import ybe.mini.travelserver.domain.cart.service.CartService;
 import ybe.mini.travelserver.global.common.ResponseDto;
 import ybe.mini.travelserver.global.security.PrincipalDetails;
 
-import java.time.LocalDate;
 import java.util.List;
+
+import static ybe.mini.travelserver.global.security.Role.HAS_ROLE_USER;
+
 @RestController
 @RequestMapping("/carts")
 @RequiredArgsConstructor
 public class CartController {
 
+    private final CartService cartService;
+
     // 장바구니 전체 조회
+    @PreAuthorize(HAS_ROLE_USER)
     @GetMapping
-    public ResponseDto<List<CartGetResponse>> getAllCart(@AuthenticationPrincipal PrincipalDetails principalDetails)
-    {
-        Location location1 = Location.builder()
-                .address("강원특별자치도 강릉시 창해로 307 ")
-                .phone("033-660-9000")
-                .areaCode("32")
-                .latitude(37.7940780970)
-                .longitude(128.9186301059)
-                .build();
-
-        Accommodation accommodation1 = Accommodation.builder()
-                .name("세인트존스 호텔")
-                .location(location1)
-                .image("http://tong.visitkorea.or.kr/cms/resource/54/2603354_image2_1.jpg")
-                .description("푸른 해송숲과 청정 바다가 펼쳐진 강문해변에서의 자연 휴양과 " +
-                        "호텔 내에서 여유로운 휴양을 모두 즐길 수 있는 곳, 세인트존스 호텔이다...")
-                .build();
-
-        Location location2 = Location.builder()
-                .address("asd ")
-                .phone("010-1234-1234")
-                .areaCode("31")
-                .latitude(36.5484780970)
-                .longitude(129.4586301059)
-                .build();
-
-        Accommodation accommodation2 = Accommodation.builder()
-                .name("신라 호텔")
-                .location(location2)
-                .image("image1.jpg")
-                .description("신라 호텔 세부 내용")
-                .build();
-        Room room1 = Room.builder()
-                .capacity(2)
-                .description("객실 설명 1")
-                .image("이미지 1")
-                .name("객실 이름 1")
-                .price(100000)
-                .roomTypeId(1L)
-                .stock(50)
-                .build();
-        Room room2 = Room.builder()
-                .capacity(2)
-                .description("객실 설명 1")
-                .image("이미지 1")
-                .name("객실 이름 1")
-                .price(100000)
-                .roomTypeId(1L)
-                .stock(50)
-                .build();
-
-        Cart cart1 = Cart.builder()
-                .id(1L)
-                .room(room1)
-                .checkIn(LocalDate.of(2023, 1,1))
-                .checkOut(LocalDate.of(2023, 1,5))
-                .guestNumber(2)
-                .build();
-        Cart cart2 = Cart.builder()
-                .id(2L)
-                .room(room2)
-                .checkIn(LocalDate.of(2023, 1,1))
-                .checkOut(LocalDate.of(2023, 1,5))
-                .guestNumber(3)
-                .build();
-
-        CartGetResponse cartGetResponse1 = CartGetResponse.fromEntity(cart1, room1, accommodation1);
-        CartGetResponse cartGetResponse2 = CartGetResponse.fromEntity(cart2, room2, accommodation2);
-
-        return new ResponseDto<>(HttpStatus.OK.value(), List.of(cartGetResponse1, cartGetResponse2));
+    public ResponseDto<List<CartGetResponse>> getAllCart(
+            @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        List<CartGetResponse> cartGetResponse =
+                cartService.getMyCarts(principalDetails.getMemberId());
+        return new ResponseDto<>(HttpStatus.OK.value(), cartGetResponse);
     }
 
-    // 장바구니 추가
+    // 장바구니 생성
+    @PreAuthorize(HAS_ROLE_USER)
     @PostMapping
-    public ResponseDto<Long> postCart(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                                    @RequestBody CartCreateRequest cartCreateRequest) {
-        Long cartId = 1L;
-        return new ResponseDto<>(HttpStatus.CREATED.value(), cartId);
+    public ResponseDto<CartCreateResponse> createCart(
+            @AuthenticationPrincipal PrincipalDetails principalDetails,
+            @RequestBody CartCreateRequest cartCreateRequest) {
+        CartCreateResponse cartCreateResponse =
+                cartService.createCart(principalDetails.getMemberId(), cartCreateRequest);
+        return new ResponseDto<>(HttpStatus.CREATED.value(), cartCreateResponse);
     }
+
 
     // 장바구니 삭제
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/{cartId}")
-    public ResponseDto<?> deleteCart(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                        @PathVariable long cartId) {
-        return new ResponseDto<>(HttpStatus.OK.value(), cartId);
+    public ResponseDto<CartDeleteResponse> deleteCart(
+            @AuthenticationPrincipal PrincipalDetails principalDetails,
+            @PathVariable Long cartId) {
+        CartDeleteResponse cartDeleteResponse = cartService.deleteCart(cartId);
+        return new ResponseDto<>(HttpStatus.OK.value(), cartDeleteResponse);
     }
 }

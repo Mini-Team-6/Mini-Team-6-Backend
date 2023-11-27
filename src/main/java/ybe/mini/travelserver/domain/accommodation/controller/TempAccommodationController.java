@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/accommodations")
+@RequestMapping("/temp/accommodations")
 public class TempAccommodationController {
 
     @GetMapping("/page/{pageNo}")
