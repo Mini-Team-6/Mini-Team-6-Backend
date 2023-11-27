@@ -1,0 +1,14 @@
+#### 숙소 검색 : 페이지 이동
+GET http://localhost:8080/temp/accommodations/page/1
+
+#### + 검색어
+GET http://localhost:8080/temp/accommodations/page/1?keyword=호텔
+
+#### + 지역 별 검색
+GET http://localhost:8080/temp/accommodations/page/1?area-code=ULSAN
+
+#### + 검색어 + 지역 별 검색
+GET http://localhost:8080/temp/accommodations/page/1?keyword=호텔&area-code=ULSAN
+
+#### 하나의 숙소 내 모든 종류의 객실 세부 조회
+GET http://localhost:8080/temp/accommodations/3013312
