@@ -18,7 +18,7 @@ import java.util.List;
 import static ybe.mini.travelserver.global.security.Role.ROLE_USER;
 
 @Slf4j
-@RequestMapping("/temp/reservations")
+@RequestMapping("/reservations")
 @RestController
 @RequiredArgsConstructor
 public class ReservationController {
