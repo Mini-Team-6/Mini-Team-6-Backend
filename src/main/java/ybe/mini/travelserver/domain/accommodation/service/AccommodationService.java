@@ -8,8 +8,6 @@ import ybe.mini.travelserver.domain.accommodation.dto.AccommodationGetResponse;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 import ybe.mini.travelserver.domain.accommodation.entity.AreaCode;
 import ybe.mini.travelserver.domain.accommodation.repository.AccommodationRepository;
-import ybe.mini.travelserver.domain.room.dto.RoomGetResponse;
-import ybe.mini.travelserver.domain.room.service.RoomService;
 import ybe.mini.travelserver.global.api.TourAPIService;
 
 import java.util.List;
@@ -21,17 +19,16 @@ import java.util.Objects;
 public class AccommodationService {
 
     private final AccommodationRepository accommodationRepository;
-    private final RoomService roomService;
     private final TourAPIService tourAPIService;
 
-    public List<AccommodationGetResponse> bringAccommodationsFromAPI(
+    public List<AccommodationGetResponse> bringAccommodations(
             int pageNo, int numOfRows,
             String keyword, AreaCode areaCode
     ) {
         String areaCodeString = (areaCode != null) ? String.valueOf(areaCode.getCode()) : null;
 
         List<Accommodation> accommodations =
-                tourAPIService.bringAccommodationsForSearch(
+                tourAPIService.bringAccommodations(
                         pageNo,
                         numOfRows,
                         keyword,
@@ -40,9 +37,11 @@ public class AccommodationService {
         return getResponseList(accommodations);
     }
 
-    public AccommodationDetailGetResponse bringAccommodationFromAPI(Long accommodationId, String keyword, AreaCode areaCode) {
+    public AccommodationDetailGetResponse bringAccommodationFromAPI(String keyword, AreaCode areaCode) {
+        String areaCodeString = (areaCode != null) ? String.valueOf(areaCode.getCode()) : null;
+
         Accommodation accommodation =
-                tourAPIService.bringAccommodation(accommodationId, keyword, String.valueOf(areaCode));
+                tourAPIService.bringAccommodation(keyword, areaCodeString);
         return AccommodationDetailGetResponse.fromEntity(accommodation);
     }
 

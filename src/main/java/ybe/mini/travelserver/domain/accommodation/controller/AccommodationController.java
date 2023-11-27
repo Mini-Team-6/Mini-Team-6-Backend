@@ -26,21 +26,18 @@ public class AccommodationController {
     ) {
         int numOfRows = 10;
         List<AccommodationGetResponse> accommodations =
-                accommodationService.bringAccommodationsFromAPI(pageNo, numOfRows, keyword, areaCode);
+                accommodationService.bringAccommodations(pageNo, numOfRows, keyword, areaCode);
         return new ResponseDto<>(HttpStatus.OK.value(), accommodations);
     }
 
-    @GetMapping("/{accommodationId}")
+    @GetMapping
     public ResponseDto<AccommodationDetailGetResponse> searchAccommodations(
-            @PathVariable Long accommodationId,
             @RequestParam String keyword,
             @RequestParam(value = "area-code") AreaCode areaCode
     ) {
         AccommodationDetailGetResponse accommodationDetailGetResponse =
-                accommodationService.bringAccommodationFromAPI(accommodationId, keyword, areaCode);
+                accommodationService.bringAccommodationFromAPI(keyword, areaCode);
         return new ResponseDto<>(HttpStatus.OK.value(), accommodationDetailGetResponse);
     }
-
-
 
 }
