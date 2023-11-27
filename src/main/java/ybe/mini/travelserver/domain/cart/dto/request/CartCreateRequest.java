@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
+import ybe.mini.travelserver.domain.accommodation.entity.AreaCode;
 
 import java.time.LocalDate;
 
@@ -34,8 +35,8 @@ public record CartCreateRequest(
     @NotBlank
     String keyword,
 
-    @NotBlank
-    String areaCode
+    @NotNull
+    AreaCode areaCode
 ) {
 
 }

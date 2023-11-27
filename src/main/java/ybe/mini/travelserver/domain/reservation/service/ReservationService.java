@@ -88,8 +88,12 @@ public class ReservationService {
     }
 
     private ReservationRoom reservationRoomDtoToEntity(ReservationRoomCreateRequest roomRequest) {
+
+        String areaCodeString =
+                (roomRequest.areaCode() != null) ? String.valueOf(roomRequest.areaCode().getCode()) : null;
+
         Accommodation accommodation =   //todo : Bring 제대로 안되면 Exception 날려주는 거 고민
-                tourAPIService.bringAccommodation(roomRequest.accommodationName(), roomRequest.areaCode());
+                tourAPIService.bringAccommodation(roomRequest.accommodationName(), areaCodeString);
         Room room = tourAPIService.bringRoom(roomRequest.accommodationId(), roomRequest.roomTypeId());
 
         accommodation = getOrSaveAccommodation(accommodation);

@@ -9,13 +9,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0I
 
 ### 생성
 POST http://localhost:8080/carts
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMDczNTUxLCJleHAiOjE3MDEwNzUzNTEsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IntiY3J5cHR9JDJhJDEwJERBdjM5S1c2RFVSVzN1djh4eEFQR2U3MEliUkJPLmg2QkNtWkk0TEw5RTd5WFhubjFMYS9XIiwibmFtZSI6Im9ramFlb29rIn0.SJc-7hny0rnn95St-X1yS2YLhqloDUS7Yr2Xnex0fL4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMTEzNTU0LCJleHAiOjE3MDExMTUzNTQsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IntiY3J5cHR9JDJhJDEwJERBdjM5S1c2RFVSVzN1djh4eEFQR2U3MEliUkJPLmg2QkNtWkk0TEw5RTd5WFhubjFMYS9XIiwibmFtZSI6Im9ramFlb29rIn0.EAJUoy5hMcM9FtUUb7tZoFKzjXAgO-xNyHuvPCWp9QQ
 Content-Type: application/json
 
 {
   "roomTypeId": 11430,
   "accommodationId": 142785,
   "guestNumber": 1,
-  "checkIn": "2023-11-20",
-  "checkOut": "2023-11-21"
+  "checkIn": "2024-11-20",
+  "checkOut": "2024-11-21",
+  "areaCode": "SEOUL"
 }
