@@ -22,6 +22,8 @@ public class JwtIssuer {
                 .withIssuedAt(now)
                 .withExpiresAt(now.plus(properties.getTokenDuration()))
                 .withClaim("email", request.getEmail())
+                .withClaim("password", request.getPassword())
+                .withClaim("name", request.getName())
                 .sign(Algorithm.HMAC256(properties.getSecretKey()));
     }
 
@@ -30,5 +32,7 @@ public class JwtIssuer {
     public static class Request {
         private final Long memberId;
         private final String email;
+        private final String name;
+        private final String password;
     }
 }

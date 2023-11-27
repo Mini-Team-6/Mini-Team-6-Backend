@@ -46,6 +46,8 @@ public class MemberService {
         final String token = jwtIssuer.issue(JwtIssuer.Request.builder()
                 .memberId(principal.getMemberId())
                 .email(principal.getEmail())
+                .name(principal.getName())
+                .password(principal.getPassword())
                 .build());
 
         return new SigninResponse(token);
