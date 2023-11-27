@@ -8,6 +8,7 @@ import ybe.mini.travelserver.domain.reservation.repository.ReservationRepository
 import ybe.mini.travelserver.domain.reservation.entity.Reservation;
 import ybe.mini.travelserver.domain.reservation_room.dto.ReservationRoomGetResponse;
 import ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoom;
+import ybe.mini.travelserver.domain.reservation_room.exception.ReservationRoomNotFoundException;
 import ybe.mini.travelserver.domain.reservation_room.repository.ReservationRoomRepository;
 
 import java.util.List;
@@ -37,11 +38,11 @@ public class ReservationRoomService {
 
     private Reservation getReservationById(Long id) {
         return reservationRepository.findById(id)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(ReservationRoomNotFoundException::new);
     }
 
     private ReservationRoom getReservationRoomById(Long id) {
         return reservationRoomRepository.findById(id)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(ReservationRoomNotFoundException::new);
     }
 }
