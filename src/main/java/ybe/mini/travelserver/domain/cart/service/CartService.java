@@ -67,19 +67,14 @@ public class CartService {
                 .orElseThrow(RuntimeException::new);
     }
 
-    private Room getRoomById(Long id) {
-        return roomRepository.findById(id)
-                .orElseThrow(RuntimeException::new);
-    }
-
     private Accommodation createAccommodationById(Long accommodationId) {
         Accommodation accommodation = tourAPIService.bringAccommodation(accommodationId, "_");
-        return accommodationRepository.save(accommodation);
+        return getOrSaveAccommodation(accommodation);
     }
 
     private Room createRoomById(Long accommodationId, Long roomId) {
         Room room = tourAPIService.bringRoom(accommodationId, roomId);
-        return roomRepository.save(room);
+        return getOrSaveRoom(room);
     }
 
     private Cart createCart(CartCreateRequest cartCreateRequest, Room room, Member member) {
@@ -90,6 +85,16 @@ public class CartService {
                 .checkOut(cartCreateRequest.checkOut())
                 .checkIn(cartCreateRequest.checkIn())
                 .build();
+    }
+
+    private Room getOrSaveRoom(Room room) {
+        return roomRepository.findByRoomTypeId(room.getRoomTypeId())
+                .orElseGet(() -> roomRepository.save(room));
+    }
+
+    private Accommodation getOrSaveAccommodation(Accommodation accommodation) {
+        return accommodationRepository.findById(accommodation.getId())
+                .orElseGet(() -> accommodationRepository.save(accommodation));
     }
 
 }
