@@ -30,7 +30,7 @@ public class ReservationRoomController {
                 reservationRoomService.getReservationRoomsFromReservation(reservationId)
         );
     }
-    
+
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping
     public ResponseDto<Long> deleteReservationRoom(

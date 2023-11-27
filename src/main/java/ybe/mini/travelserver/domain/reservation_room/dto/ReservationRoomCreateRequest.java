@@ -12,8 +12,10 @@ public record ReservationRoomCreateRequest(
 
         @NotNull
         Long accommodationId,
-        @NotNull
+        @NotBlank
         String accommodationName,
+        @NotBlank
+        String areaCode,
         @NotNull
         Long roomTypeId,
 

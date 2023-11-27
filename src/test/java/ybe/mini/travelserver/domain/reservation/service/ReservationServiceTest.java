@@ -1,6 +1,5 @@
 package ybe.mini.travelserver.domain.reservation.service;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -45,7 +44,7 @@ class ReservationServiceTest implements DummyObjectForRoom, DummyReservationDTO,
     @Test
     void createReservation_success() {
         //given
-        given(tourAPIService.bringAccommodation(anyLong(), any())).willReturn(dummyAccommodation());
+        given(tourAPIService.bringAccommodation(any(), any())).willReturn(dummyAccommodation());
         given(tourAPIService.bringRoom(anyLong(), anyLong())).willReturn(dummyRoom(dummyAccommodation()));
         given(roomRepository.findByRoomTypeId(any())).willReturn(Optional.empty());
         given(roomRepository.save(any(Room.class))).willReturn(dummyRoom(dummyAccommodation()));
