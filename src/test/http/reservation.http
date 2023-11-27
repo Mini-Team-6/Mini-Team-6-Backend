@@ -1,0 +1,35 @@
+### 예약 생성
+POST http://localhost:8080/temp/reservations
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMDc1Njk4LCJleHAiOjE3MDEwNzc0OTgsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.CFJ_abQV4neJ1B7uYFj2rTxIcjrGfV2RJj09UORA3T4
+
+{
+  "reservationRooms" : [
+    {
+      "accommodationId": 142785,
+      "accommodationName": "가락관광호텔",
+      "roomTypeId": 11430,
+      "checkIn": "2024-01-01 14:00",
+      "checkOut": "2024-01-02 11:00",
+      "guestNumber": 1
+    }
+  ]
+}
+
+
+
+### 나의 예약 조회
+GET http://localhost:8080/temp/reservations
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMDIyMDAzLCJleHAiOjE3MDEwMjM4MDMsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.dnY4hXXEjMkybH1gwaxL9MbQkeAabZczI5S9SzaHxLM
+
+
+### 예약 결제
+POST http://localhost:8080/temp/reservations/1/payment
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMDEwNDU4LCJleHAiOjE3MDEwMTIyNTgsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.c5NKrqgVNj_CKLS2naYTx7p775vyAI1rMh_QwGRdv_Q
+
+### 예약 취소
+DELETE http://localhost:8080/temp/reservations/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAwOTc5NTI2LCJleHAiOjE3MDA5ODEzMjYsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.kcCZ2Kip4W6Ac_ZDbHP8iSp3oFsV3uzhcw066XGC6ks

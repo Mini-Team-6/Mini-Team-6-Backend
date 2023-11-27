@@ -1,0 +1,22 @@
+## 숙소
+
+### 숙소 검색 : 기본 10 row
+GET http://localhost:8080/tour-api/search
+
+#### + 검색어
+GET http://localhost:8080/tour-api/search?keyword=롯데호텔
+
+#### + 페이지 이동
+GET http://localhost:8080/tour-api/search?pageNo=1
+
+#### + 지역 별 검색
+GET http://localhost:8080/tour-api/search?areaCode=2
+
+#### + 검색어 + 지역 별 검색
+GET http://localhost:8080/tour-api/search?keyword=롯데&areaCode=6
+
+### 숙소 하나 상세 정보 제공
+GET http://localhost:8080/tour-api/accommodation/3013312
+
+### 하나의 숙소 내 모든 종류의 객실 세부 조회
+GET http://localhost:8080/tour-api/accommodation/3013312/rooms

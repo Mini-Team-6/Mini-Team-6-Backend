@@ -4,15 +4,22 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.member.dto.*;
 import ybe.mini.travelserver.domain.member.entity.Member;
+import ybe.mini.travelserver.domain.member.exception.MemberAlreadyExistException;
+import ybe.mini.travelserver.domain.member.exception.MemberNotFoundException;
 import ybe.mini.travelserver.domain.member.repository.MemberRepository;
 import ybe.mini.travelserver.global.security.JwtIssuer;
 import ybe.mini.travelserver.global.security.PrincipalDetails;
+
+import java.util.Collections;
+
+import static ybe.mini.travelserver.global.security.Role.ROLE_USER;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,7 +34,11 @@ public class MemberService {
     @Transactional(readOnly = true)
     public SigninResponse loginMember(SigninRequest signinRequest) {
         var authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(signinRequest.email(), signinRequest.password())
+                new UsernamePasswordAuthenticationToken(
+                        signinRequest.email(),
+                        signinRequest.password(),
+                        Collections.singleton(new SimpleGrantedAuthority(ROLE_USER))
+                )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
@@ -42,6 +53,10 @@ public class MemberService {
 
     @Transactional
     public SignupResponse createMember(SignupRequest signupRequest) {
+        if (memberRepository.existsByEmail(signupRequest.email())) {
+            throw new MemberAlreadyExistException();
+        }
+
         return SignupResponse.fromEntity(memberRepository.save(
                 new SignupRequest(
                         signupRequest.email(),
@@ -57,7 +72,7 @@ public class MemberService {
         String email = principalDetails.getUsername();
 
         Member member = memberRepository.findByEmail(email)
-                .orElseThrow(NullPointerException::new);
+                .orElseThrow(MemberNotFoundException::new);
 
         return MypageResponse.fromEntity(member);
     }
@@ -65,23 +80,33 @@ public class MemberService {
 
     @Transactional
     public MypageUpdateResponse updateMemberProfile(MypageUpdateRequest mypageUpdateRequest) {
-        Member member = memberRepository.save(mypageUpdateRequest.toEntity());
+        Member existingMember = memberRepository.findByEmail(mypageUpdateRequest.email())
+                .orElseThrow(MemberNotFoundException::new);
 
-        return MypageUpdateResponse.fromEntity(member);
+        return MypageUpdateResponse.fromEntity(
+                existingMember.updateProfile(
+                        mypageUpdateRequest.email(),
+                        passwordEncoder.encode(mypageUpdateRequest.password()),
+                        mypageUpdateRequest.name()
+                )
+        );
     }
 
 
     @Transactional
     public MypageDeleteResponse deleteMemberProfile(
+            PrincipalDetails principalDetails,
             MypageDeleteRequest mypageDeleteRequest
     ) {
-        Member member = memberRepository.findByEmailAndPassword(
-                mypageDeleteRequest.email(),
-                passwordEncoder.encode(mypageDeleteRequest.password())
-        ).orElseThrow(NullPointerException::new);
+        if (!principalDetails.getUsername().equals(mypageDeleteRequest.email())) {
+            throw new MemberNotFoundException();
+        }
 
-        memberRepository.delete(member);
+        Member existingMember = memberRepository.findByEmail(mypageDeleteRequest.email())
+                .orElseThrow(MemberNotFoundException::new);
 
-        return MypageDeleteResponse.fromEntity(member);
+        memberRepository.delete(existingMember);
+
+        return MypageDeleteResponse.fromEntity(existingMember);
     }
 }

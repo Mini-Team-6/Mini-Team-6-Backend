@@ -50,6 +50,10 @@ dependencies {
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+    //javers
+    implementation 'org.javers:javers-core:7.2.0'
+
+
 
 }
 
