@@ -17,7 +17,7 @@ import ybe.mini.travelserver.global.security.PrincipalDetails;
 
 import java.util.List;
 
-import static ybe.mini.travelserver.global.security.Role.HAS_ROLE_USER;
+import static ybe.mini.travelserver.global.security.Role.ROLE_USER;
 
 @Slf4j
 @RequestMapping("/reservations")
@@ -27,7 +27,7 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
-    @PreAuthorize(HAS_ROLE_USER)
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping
     public ResponseDto<ReservationCreateResponse> tryReservation (
             @RequestBody @Valid ReservationCreateRequest createRequest,
@@ -51,7 +51,7 @@ public class ReservationController {
         );
     }
 
-    @PreAuthorize(HAS_ROLE_USER)
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
     public ResponseDto<List<ReservationGetResponse>> getMyReservations (
             @AuthenticationPrincipal PrincipalDetails principalDetails

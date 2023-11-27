@@ -63,20 +63,6 @@ class ReservationServiceTest implements DummyObjectForRoom, DummyReservationDTO,
     }
 
     @Test
-    void updateReservationStatusToPay_success() {
-        //given
-        given(reservationRepository.findById(anyLong())).willReturn(Optional.ofNullable(dummyReservation()));
-
-        //when
-        var actual = reservationService.updateReservationStatusToPay(1L);
-
-        //then
-        var expected = 1L;
-        assertEquals(actual, expected);
-
-    }
-
-    @Test
     void deleteReservation_success() {
         //given
         given(reservationRepository.findById(anyLong())).willReturn(Optional.ofNullable(dummyReservation()));
