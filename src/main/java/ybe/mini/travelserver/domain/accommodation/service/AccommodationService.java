@@ -29,12 +29,14 @@ public class AccommodationService {
             int pageNo, int numOfRows,
             String keyword, AreaCode areaCode
     ) {
+        String areaCodeString = (areaCode != null) ? String.valueOf(areaCode.getCode()) : null;
+
         List<Accommodation> accommodations =
                 tourAPIService.bringAccommodationsForSearch(
                         pageNo,
                         numOfRows,
                         keyword,
-                        String.valueOf(areaCode.getCode()));
+                        areaCodeString);
 
         return getResponseList(accommodations);
     }
