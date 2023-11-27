@@ -69,21 +69,6 @@ class ReservationControllerTest implements DummyReservationDTO, DummyPrincipal {
         then(reservationService).should().getMyReservations(any());
     }
 
-    @Test
-    @DisplayName("예약 결제")
-    void payReservation_success() {
-        //given
-        given(reservationService.updateReservationStatusToPay(any()))
-                .willReturn(1L);
-
-        //when
-        var actual = reservationController.payReservation(1L);
-
-        //then
-        var expected = new ResponseDto<>(OK.value(), 1L);
-        assertEquals(actual, expected);
-        then(reservationService).should().updateReservationStatusToPay(any());
-    }
 
     @Test
     @DisplayName("예약 삭제")

@@ -1,4 +1,4 @@
-package ybe.mini.travelserver.domain.reservation.exception;
+package ybe.mini.travelserver.domain.reservation_room.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,10 +9,9 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @Getter
 @AllArgsConstructor
-public enum ReservationErrorMessage implements ErrorMessage {
+public enum ReservationRoomErrorMessage implements ErrorMessage {
 
-    HTTP_MESSAGE_NOT_READABLE(BAD_REQUEST, "DTO 양식이 맞지 않습니다."),
-    RESERVATION_NOT_FOUND(BAD_REQUEST, "해당 ID의 예약 정보가 없습니다.")
+    RESERVATION_ROOM_NOT_FOUND(BAD_REQUEST, "해당 ID의 예약 객실 정보가 없습니다.")
     ;
     private final HttpStatus status;
     private final String message;

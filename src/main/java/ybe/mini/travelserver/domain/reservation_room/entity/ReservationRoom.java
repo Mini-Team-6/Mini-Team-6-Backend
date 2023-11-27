@@ -55,10 +55,6 @@ public class ReservationRoom {
         this.reservation = reservation;
     }
 
-    public void updateStatusToPayed() {
-        status = PAYED;
-    }
-
     public static ReservationRoom createReservationRoom(
             Room room, LocalDateTime checkIn, LocalDateTime checkOut, Integer guestNumber
     ) {
