@@ -1,6 +1,5 @@
 package ybe.mini.travelserver.global.api.dto;
 
-
 import ybe.mini.travelserver.global.api.dto.common.Response;
 
 /**
@@ -8,7 +7,7 @@ import ybe.mini.travelserver.global.api.dto.common.Response;
  * 추가 관광정보 상세내역을 조회한다.
  * 상세반복정보를 안내URL의 국문관광정보 상세 매뉴얼 문서를 참고하시기 바랍니다.
  */
-public record DetailInfoResponse(Response<Item> response) {
+public record RoomTourAPIResponse(Response<Item> response) {
     public record Item(
             String contentid,//콘텐츠ID
             String contenttypeid,//콘텐츠타입ID
