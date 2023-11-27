@@ -2,7 +2,10 @@ package ybe.mini.travelserver.domain.cart.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 
 import java.time.LocalDate;
@@ -10,26 +13,29 @@ import java.time.LocalDate;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record CartCreateRequest(
-    @NotBlank
+
+    @Positive
     Long roomTypeId,
-    @NotBlank
+
+    @FutureOrPresent
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     LocalDate checkIn,
-    @NotBlank
+
+    @FutureOrPresent
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     LocalDate checkOut,
-    @NotBlank
-    Integer guestNumber,
-    @NotBlank
-    Long accommodationId
 
+    @Positive
+    Integer guestNumber,
+
+    @Positive
+    Long accommodationId,
+
+    @NotBlank
+    String keyword,
+
+    @NotBlank
+    String areaCode
 ) {
-//    public static CartCreateRequest fromEntity(Cart cart) {
-//        return new CartCreateRequest(
-//                cart.getId(),
-//                cart.getCheckIn(),
-//                cart.getCheckOut(),
-//                cart.getGuestNumber()
-//        );
-//    }
+
 }
