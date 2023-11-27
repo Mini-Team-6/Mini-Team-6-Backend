@@ -1,0 +1,21 @@
+### 조회
+GET http://localhost:8080/carts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMDY2NjE5LCJleHAiOjE3MDEwNjg0MTksImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IntiY3J5cHR9JDJhJDEwJHdpZjd6bWlYUGY3TkNUQ3ZvNlM4ZC5NdG5VMHZNenJRUVBjN1piblpZN2IvN3FQaVo4T1BpIiwibmFtZSI6Im9ramFlb29rIn0.EMCgqXHBobPLQbZ9yL4zFWbf6TwzGQ9PJvxmCw7QnD8
+
+### 삭제
+DELETE http://localhost:8080/carts/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMDY2NzQyLCJleHAiOjE3MDEwNjg1NDIsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IntiY3J5cHR9JDJhJDEwJHdpZjd6bWlYUGY3TkNUQ3ZvNlM4ZC5NdG5VMHZNenJRUVBjN1piblpZN2IvN3FQaVo4T1BpIiwibmFtZSI6Im9ramFlb29rIn0.Gwmp4rbynlp2nJNCfTcyJA5AzCVmnD_4LkXS84FvEGg
+
+
+### 생성
+POST http://localhost:8080/carts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMDY2NzQyLCJleHAiOjE3MDEwNjg1NDIsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IntiY3J5cHR9JDJhJDEwJHdpZjd6bWlYUGY3TkNUQ3ZvNlM4ZC5NdG5VMHZNenJRUVBjN1piblpZN2IvN3FQaVo4T1BpIiwibmFtZSI6Im9ramFlb29rIn0.Gwmp4rbynlp2nJNCfTcyJA5AzCVmnD_4LkXS84FvEGg
+Content-Type: application/json
+
+{
+  "roomTypeId": 11430,
+  "accommodationId": 142785,
+  "guestNumber": 1,
+  "checkIn": "2023-11-20",
+  "checkOut": "2023-11-21"
+}

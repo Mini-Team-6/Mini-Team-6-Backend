@@ -19,6 +19,7 @@ public class PrincipalDetailsService implements UserDetailsService {
         return PrincipalDetails.builder()
                 .memberId(member.getId())
                 .email(member.getEmail())
+                .name(member.getName())
                 .password(member.getPassword())
                 .build();
     }
