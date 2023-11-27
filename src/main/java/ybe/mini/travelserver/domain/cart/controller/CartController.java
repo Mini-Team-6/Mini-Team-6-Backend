@@ -15,6 +15,8 @@ import ybe.mini.travelserver.global.security.PrincipalDetails;
 
 import java.util.List;
 
+import static ybe.mini.travelserver.global.security.Role.HAS_ROLE_USER;
+
 @RestController
 @RequestMapping("/carts")
 @RequiredArgsConstructor
@@ -23,7 +25,7 @@ public class CartController {
     private final CartService cartService;
 
     // 장바구니 전체 조회
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize(HAS_ROLE_USER)
     @GetMapping
     public ResponseDto<List<CartGetResponse>> getAllCart(
             @AuthenticationPrincipal PrincipalDetails principalDetails) {
@@ -33,7 +35,7 @@ public class CartController {
     }
 
     // 장바구니 생성
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize(HAS_ROLE_USER)
     @PostMapping
     public ResponseDto<CartCreateResponse> createCart(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
