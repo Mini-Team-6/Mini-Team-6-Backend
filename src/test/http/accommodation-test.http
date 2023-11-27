@@ -10,5 +10,5 @@ GET http://localhost:8080/accommodations/page/1?area-code=ULSAN
 #### + 검색어 + 지역 별 검색
 GET http://localhost:8080/accommodations/page/1?keyword=호텔&area-code=ULSAN
 
-#### 하나의 숙소 내 모든 종류의 객실 세부 조회
-GET http://localhost:8080/accommodations/3013312
+#### 숙소 상세 조회
+GET localhost:8080/accommodations?keyword=호텔&area-code=BUSAN
