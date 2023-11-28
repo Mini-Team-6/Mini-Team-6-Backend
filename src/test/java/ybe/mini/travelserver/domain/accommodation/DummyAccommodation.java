@@ -1,6 +1,5 @@
 package ybe.mini.travelserver.domain.accommodation;
 
-import ybe.mini.travelserver.domain.accommodation.dto.AccommodationGetResponse;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 import ybe.mini.travelserver.domain.accommodation.entity.Location;
 
@@ -20,7 +19,19 @@ public class DummyAccommodation {
                 .build();
     }
 
-    protected AccommodationGetResponse dummyAccommodationGetResponse() {
-        return AccommodationGetResponse.fromEntity(dummyAccommodation());
+    protected Accommodation dummyAccommodation1() {
+        return Accommodation.builder()
+                .name("숙소 이름")
+                .location(Location.builder()
+                        .address("숙소 주소")
+                        .phone("숙소 전화번호")
+                        .areaCode("지역 코드")
+                        .latitude(36.57454563)
+                        .longitude(127.645468423)
+                        .build())
+                .image("이미지 URL")
+                .description("숙소 상세 설명")
+                .build();
     }
+
 }
