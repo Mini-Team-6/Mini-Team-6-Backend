@@ -2,10 +2,7 @@ package ybe.mini.travelserver.domain.cart.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import lombok.Builder;
 import ybe.mini.travelserver.domain.accommodation.entity.AreaCode;
 
@@ -18,13 +15,11 @@ public record CartCreateRequest(
         @Positive
         Long roomTypeId,
 
-        @FutureOrPresent
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyyMMdd")
-        LocalDate checkIn,
+        @Pattern(regexp = "\\d{8}", message = "날짜 입력은 8자리 숫자이어야 합니다.")
+        String checkIn,
 
-        @FutureOrPresent
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyyMMdd")
-        LocalDate checkOut,
+        @Pattern(regexp = "\\d{8}", message = "날짜 입력은 8자리 숫자이어야 합니다.")
+        String checkOut,
 
         @Positive
         Integer guestNumber,
