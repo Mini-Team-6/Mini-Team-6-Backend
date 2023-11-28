@@ -11,6 +11,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 @AllArgsConstructor
 public enum DTOErrorMessage implements ErrorMessage {
     METHOD_ARGUMENT_NOT_VALID(BAD_REQUEST, "DTO 값이 유효하지 않습니다"),
+    DATETIME_PARSE(BAD_REQUEST, "날짜 형식이 유효하지 않습니다"),
     ;
 
     private final HttpStatus status;

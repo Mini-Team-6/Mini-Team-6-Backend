@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ybe.mini.travelserver.global.exception.ProblemDetailCreator;
 
+import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
+import static ybe.mini.travelserver.global.exception.dto.DTOErrorMessage.DATETIME_PARSE;
 import static ybe.mini.travelserver.global.exception.dto.DTOErrorMessage.METHOD_ARGUMENT_NOT_VALID;
 
 @RestControllerAdvice
@@ -26,4 +28,10 @@ public class DTOExceptionHandler extends ProblemDetailCreator<DTOErrorMessage> {
         return createProblemDetail(errorMessage, METHOD_ARGUMENT_NOT_VALID.getStatus().value(), request);
     }
 
+    @ExceptionHandler(DateTimeParseException.class)
+    public ProblemDetail handleDateTimeParseException(
+            HttpServletRequest request
+    ) {
+        return createProblemDetail(DATETIME_PARSE, request);
+    }
 }
