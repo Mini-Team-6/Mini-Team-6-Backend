@@ -53,6 +53,8 @@ dependencies {
     //javers
     implementation 'org.javers:javers-core:7.2.0'
 
+    // xml jaxb
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:+'
 
 
 }
