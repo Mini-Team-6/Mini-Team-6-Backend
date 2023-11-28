@@ -19,11 +19,11 @@ public record CartCreateRequest(
         Long roomTypeId,
 
         @FutureOrPresent
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyyMMdd")
         LocalDate checkIn,
 
         @FutureOrPresent
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyyMMdd")
         LocalDate checkOut,
 
         @Positive
