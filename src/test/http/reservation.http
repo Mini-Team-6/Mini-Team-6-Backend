@@ -1,7 +1,7 @@
 ### 예약 생성
 POST http://localhost:8080/reservations
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMTEzNTU0LCJleHAiOjE3MDExMTUzNTQsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IntiY3J5cHR9JDJhJDEwJERBdjM5S1c2RFVSVzN1djh4eEFQR2U3MEliUkJPLmg2QkNtWkk0TEw5RTd5WFhubjFMYS9XIiwibmFtZSI6Im9ramFlb29rIn0.EAJUoy5hMcM9FtUUb7tZoFKzjXAgO-xNyHuvPCWp9QQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMTU2NTc2LCJleHAiOjE3MDExNTgzNzYsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IntiY3J5cHR9JDJhJDEwJFNCbjZSQ3ZQdFQ2WW1vSVM0ZzU1dE8xTFBwRDJkSjJLbDBKcDRXT3k5RmhuNzNxdnNJQS51IiwibmFtZSI6Im9ramFlb29rIn0.HCiMHNhtW45GEFH2tbkihaeiqADBmehLfg2iGlIDuCE
 
 {
   "paymentType": "CARD",
@@ -11,8 +11,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0I
       "accommodationName": "가락관광호텔",
       "areaCode": "SEOUL",
       "roomTypeId": 11430,
-      "checkIn": "2024-01-01 14:00",
-      "checkOut": "2024-01-02 11:00",
+      "checkIn": "2024-01-01T00:00",
+      "checkOut": "2024-01-03T00:00",
       "guestNumber": 2
     }
   ]
@@ -21,7 +21,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0I
 ### 예약 생성 장바구니
 POST http://localhost:8080/reservations/from-cart
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMTExNjg1LCJleHAiOjE3MDExMTM0ODUsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IntiY3J5cHR9JDJhJDEwJERBdjM5S1c2RFVSVzN1djh4eEFQR2U3MEliUkJPLmg2QkNtWkk0TEw5RTd5WFhubjFMYS9XIiwibmFtZSI6Im9ramFlb29rIn0.ZlI9RVIpiEWw3IPhht0sKtSTdv63zX-W0BxBiYJqs2Q
+Authorization: Bearer yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMTE1OTk2LCJleHAiOjE3MDExMTc3OTYsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IntiY3J5cHR9JDJhJDEwJHdpZjd6bWlYUGY3TkNUQ3ZvNlM4ZC5NdG5VMHZNenJRUVBjN1piblpZN2IvN3FQaVo4T1BpIiwibmFtZSI6Im9ramFlb29rIn0.G9xn5RFjHQZSnmTLfLtzmygz_HlUGxPyugnzpC06fQg
 
 {
   "paymentType": "CARD",

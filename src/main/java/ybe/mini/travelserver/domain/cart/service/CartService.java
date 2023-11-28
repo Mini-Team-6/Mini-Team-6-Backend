@@ -50,10 +50,10 @@ public class CartService {
 
     @Transactional(readOnly = true)
     public List<CartGetResponse> getMyCarts(Long userId) {
-         return cartRepository.findALLByMemberId(userId).stream()
-                 .map((Cart cart) -> CartGetResponse.fromEntity(
-                         cart, cart.getRoom(), cart.getRoom().getAccommodation())
-                 ).toList();
+        return cartRepository.findALLByMemberId(userId).stream()
+                .map((Cart cart) -> CartGetResponse.fromEntity(
+                        cart, cart.getRoom(), cart.getRoom().getAccommodation())
+                ).toList();
     }
 
     @Transactional

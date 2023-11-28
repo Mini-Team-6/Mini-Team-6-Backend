@@ -11,6 +11,8 @@ import ybe.mini.travelserver.global.common.ResponseDto;
 
 import java.util.List;
 
+import static ybe.mini.travelserver.global.security.Role.HAS_ROLE_USER;
+
 @Slf4j
 @RequestMapping("/reservation-rooms")
 @RestController
@@ -19,7 +21,7 @@ public class ReservationRoomController {
 
     private final ReservationRoomService reservationRoomService;
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize(HAS_ROLE_USER)
     @GetMapping("/{reservationId}")
     public ResponseDto<List<ReservationRoomGetResponse>> getReservationRoomsByReserveId(
             @PathVariable Long reservationId
@@ -31,7 +33,7 @@ public class ReservationRoomController {
         );
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize(HAS_ROLE_USER)
     @DeleteMapping
     public ResponseDto<Long> deleteReservationRoom(
             @RequestParam Long reservationId,
