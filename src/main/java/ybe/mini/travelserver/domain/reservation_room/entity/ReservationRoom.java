@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import ybe.mini.travelserver.domain.reservation.entity.Reservation;
 import ybe.mini.travelserver.domain.room.entity.Room;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatus.PAYED;
@@ -37,12 +38,12 @@ public class ReservationRoom {
     private Reservation reservation;
 
     @Comment("객실 체크인")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime checkIn;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate checkIn;
 
     @Comment("객실 체크아웃")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime checkOut;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate checkOut;
 
     @Enumerated(EnumType.STRING)
     @Comment("에약 상태")
@@ -56,7 +57,7 @@ public class ReservationRoom {
     }
 
     public static ReservationRoom createReservationRoom(
-            Room room, LocalDateTime checkIn, LocalDateTime checkOut, Integer guestNumber
+            Room room, LocalDate checkIn, LocalDate checkOut, Integer guestNumber
     ) {
         return ReservationRoom.builder()
                 .room(room)

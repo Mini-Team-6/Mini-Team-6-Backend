@@ -21,7 +21,10 @@ import ybe.mini.travelserver.domain.room.entity.Room;
 import ybe.mini.travelserver.domain.room.repository.RoomRepository;
 import ybe.mini.travelserver.global.api.TourAPIService;
 
+import java.time.LocalDate;
 import java.util.List;
+
+import static ybe.mini.travelserver.global.util.Validation.validateDateFormat;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -81,14 +84,18 @@ public class CartService {
     }
 
     private Cart createCart(CartCreateRequest cartCreateRequest, Room room, Member member) {
+
+        LocalDate checkIn = validateDateFormat(cartCreateRequest.checkIn());
+        LocalDate checkOut = validateDateFormat(cartCreateRequest.checkOut());
         return Cart.builder()
                 .guestNumber(cartCreateRequest.guestNumber())
                 .room(room)
                 .member(member)
-                .checkOut(cartCreateRequest.checkOut())
-                .checkIn(cartCreateRequest.checkIn())
+                .checkOut(checkOut)
+                .checkIn(checkIn)
                 .build();
     }
+
 
     private Room getOrSaveRoom(Room room) {
         return roomRepository.findByRoomTypeId(room.getRoomTypeId())

@@ -22,9 +22,12 @@ import ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoom;
 import ybe.mini.travelserver.domain.room.entity.Room;
 import ybe.mini.travelserver.domain.room.repository.RoomRepository;
 import ybe.mini.travelserver.global.api.TourAPIService;
+import ybe.mini.travelserver.global.util.Validation;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static ybe.mini.travelserver.global.util.Validation.validateDateFormat;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -101,7 +104,10 @@ public class ReservationService {
         room = getOrSaveRoom(room);
 
         return ReservationRoom.createReservationRoom(
-                room, roomRequest.checkIn(), roomRequest.checkOut(), roomRequest.guestNumber()
+                room,
+                validateDateFormat(roomRequest.checkIn()),
+                validateDateFormat(roomRequest.checkOut()),
+                roomRequest.guestNumber()
         );
     }
 

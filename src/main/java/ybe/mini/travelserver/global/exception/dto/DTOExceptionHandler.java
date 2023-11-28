@@ -10,8 +10,7 @@ import ybe.mini.travelserver.global.exception.ProblemDetailCreator;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
-import static ybe.mini.travelserver.global.exception.dto.DTOErrorMessage.DATETIME_PARSE;
-import static ybe.mini.travelserver.global.exception.dto.DTOErrorMessage.METHOD_ARGUMENT_NOT_VALID;
+import static ybe.mini.travelserver.global.exception.dto.DTOErrorMessage.*;
 
 @RestControllerAdvice
 public class DTOExceptionHandler extends ProblemDetailCreator<DTOErrorMessage> {
@@ -34,4 +33,12 @@ public class DTOExceptionHandler extends ProblemDetailCreator<DTOErrorMessage> {
     ) {
         return createProblemDetail(DATETIME_PARSE, request);
     }
+
+    @ExceptionHandler(DateFormatNotCurrentOrFutureException.class)
+    public ProblemDetail handleDateFormatNotCurrentOrFutureException(
+            HttpServletRequest request
+    ) {
+        return createProblemDetail(DATETIME_NOT_CURRENT_OR_FUTURE, request);
+    }
+
 }

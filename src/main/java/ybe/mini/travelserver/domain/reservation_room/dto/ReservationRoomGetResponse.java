@@ -9,15 +9,16 @@ import ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatu
 import ybe.mini.travelserver.domain.room.dto.RoomGetResponse;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Builder
 public record ReservationRoomGetResponse(
         Long id,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-        LocalDateTime checkIn,
+        LocalDate checkIn,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-        LocalDateTime checkOut,
+        LocalDate checkOut,
         Integer guestNumber,
         ReservationRoomStatus status,
         RoomGetResponse room
