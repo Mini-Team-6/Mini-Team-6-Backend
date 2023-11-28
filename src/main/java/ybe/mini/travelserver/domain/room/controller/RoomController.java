@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ybe.mini.travelserver.domain.room.dto.RoomGetResponse;
 import ybe.mini.travelserver.domain.room.dto.RoomGetResponseFromAPI;
 import ybe.mini.travelserver.domain.room.service.RoomService;
 import ybe.mini.travelserver.global.common.ResponseDto;
