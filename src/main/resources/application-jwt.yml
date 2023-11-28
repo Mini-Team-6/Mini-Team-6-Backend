@@ -1,4 +1,4 @@
 security:
   jwt:
     secret-key: ${JWT_SECRET_KEY}
-    token-duration: 30m # 30 분 뒤 토큰 만료
+    token-duration: ${JWT_EXPIRE_TIME} # Duration 단위
