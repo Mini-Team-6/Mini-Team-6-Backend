@@ -53,7 +53,7 @@ public class CartController {
             @AuthenticationPrincipal PrincipalDetails principalDetails,
             @PathVariable Long cartId) {
         CartDeleteResponse cartDeleteResponse =
-                cartService.deleteCart(principalDetails.getMemberId(), cartId);
+                cartService.deleteCart(cartId);
         return new ResponseDto<>(HttpStatus.OK.value(), cartDeleteResponse);
     }
 }
