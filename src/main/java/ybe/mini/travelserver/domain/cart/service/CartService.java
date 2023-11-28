@@ -12,7 +12,6 @@ import ybe.mini.travelserver.domain.cart.dto.response.CartCreateResponse;
 import ybe.mini.travelserver.domain.cart.dto.response.CartDeleteResponse;
 import ybe.mini.travelserver.domain.cart.dto.response.CartGetResponse;
 import ybe.mini.travelserver.domain.cart.entity.Cart;
-import ybe.mini.travelserver.domain.cart.exception.CartInvalidMemberException;
 import ybe.mini.travelserver.domain.cart.exception.CartNotFoundException;
 import ybe.mini.travelserver.domain.cart.repository.CartRepository;
 import ybe.mini.travelserver.domain.member.entity.Member;
@@ -22,7 +21,10 @@ import ybe.mini.travelserver.domain.room.entity.Room;
 import ybe.mini.travelserver.domain.room.repository.RoomRepository;
 import ybe.mini.travelserver.global.api.TourAPIService;
 
+import java.time.LocalDate;
 import java.util.List;
+
+import static ybe.mini.travelserver.global.util.Validation.validateDateFormat;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -38,9 +40,9 @@ public class CartService {
     @Transactional
     public CartCreateResponse createCart(Long userId, CartCreateRequest cartCreateRequest) {
         Member member = getMemberById(userId);
-        createAccommodationById(cartCreateRequest.keyword(), cartCreateRequest.areaCode());
-        Room room = createRoomById(
-                cartCreateRequest.accommodationId(), cartCreateRequest.roomTypeId());
+        Accommodation accommodation =
+                createAccommodationById(cartCreateRequest.keyword(), cartCreateRequest.areaCode());
+        Room room = createRoomById(accommodation, cartCreateRequest.roomTypeId());
 
         Cart cart = createCart(cartCreateRequest, room, member);
         Cart createdCart = cartRepository.save(cart);
@@ -57,15 +59,11 @@ public class CartService {
     }
 
     @Transactional
-    public CartDeleteResponse deleteCart(Long memberId, Long cartId) {
-        Cart cart = cartRepository.findById(cartId)
+    public CartDeleteResponse deleteCart(Long cartId) {
+        cartRepository.findById(cartId)
                 .orElseThrow(CartNotFoundException::new);
-        if (cart.getMember().getId() == memberId) {
-            cartRepository.deleteById(cartId);
-            return new CartDeleteResponse(cartId);
-        } else {
-            throw new CartInvalidMemberException();
-        }
+        cartRepository.deleteById(cartId);
+        return new CartDeleteResponse(cartId);
     }
 
     private Member getMemberById(Long id) {
@@ -80,24 +78,24 @@ public class CartService {
         return getOrSaveAccommodation(accommodation);
     }
 
-    private Room createRoomById(Long accommodationId, Long roomId) {
-        Room room = tourAPIService.bringRoom(accommodationId, roomId);
+    private Room createRoomById(Accommodation accommodation, Long roomId) {
+        Room room = tourAPIService.bringRoom(accommodation.getId(), roomId);
         return getOrSaveRoom(room);
     }
 
     private Cart createCart(CartCreateRequest cartCreateRequest, Room room, Member member) {
-        // TODO : 성수님 roomId 관련 논의
-        roomRepository.findById(room.getId())
-                .orElseThrow(CartInvalidMemberException::new);
 
+        LocalDate checkIn = validateDateFormat(cartCreateRequest.checkIn());
+        LocalDate checkOut = validateDateFormat(cartCreateRequest.checkOut());
         return Cart.builder()
                 .guestNumber(cartCreateRequest.guestNumber())
                 .room(room)
                 .member(member)
-                .checkOut(cartCreateRequest.checkOut())
-                .checkIn(cartCreateRequest.checkIn())
+                .checkOut(checkOut)
+                .checkIn(checkIn)
                 .build();
     }
+
 
     private Room getOrSaveRoom(Room room) {
         return roomRepository.findByRoomTypeId(room.getRoomTypeId())

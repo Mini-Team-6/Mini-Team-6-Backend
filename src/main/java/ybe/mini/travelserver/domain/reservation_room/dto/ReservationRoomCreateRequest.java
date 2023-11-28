@@ -1,8 +1,8 @@
 package ybe.mini.travelserver.domain.reservation_room.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
+import org.springframework.format.annotation.DateTimeFormat;
 import ybe.mini.travelserver.domain.accommodation.entity.AreaCode;
 
 import java.io.Serializable;
@@ -19,16 +19,10 @@ public record ReservationRoomCreateRequest(
         AreaCode areaCode,
         @NotNull(message = "roomTypeId 양식이 잘못 입력되었습니다.")
         Long roomTypeId,
-
-        @NotNull
-        @FutureOrPresent
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-        LocalDateTime checkIn,
-
-        @NotNull
-        @FutureOrPresent
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-        LocalDateTime checkOut,
+        @Pattern(regexp = "\\d{8}", message = "날짜 입력은 8자리 숫자이어야 합니다.")
+        String checkIn,
+        @Pattern(regexp = "\\d{8}", message = "날짜 입력은 8자리 숫자이어야 합니다.")
+        String checkOut,
         @NotNull
         @Min(value = 1, message = "숙박 인원은 최소 1명 이어야 합니다.")
         Integer guestNumber

@@ -4,7 +4,7 @@ import ybe.mini.travelserver.domain.accommodation.entity.Location;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 import ybe.mini.travelserver.domain.room.entity.Room;
 
-public class DummyObjectForController implements DummyObjectForRoom{
+public class DummyObjectForControllerAndService implements DummyObjectForRoom{
 
     public Room dummyRoom(Accommodation accommodation) {
         return Room.builder()
@@ -19,8 +19,22 @@ public class DummyObjectForController implements DummyObjectForRoom{
                 .build();
     }
 
+    public Room dummyRoom1(Accommodation accommodation) {
+        return Room.builder()
+                .capacity(4)
+                .description("객실 설명 2")
+                .image("이미지 2")
+                .name("객실 이름 2")
+                .price(85000)
+                .roomTypeId(2L)
+                .stock(20)
+                .accommodation(accommodation)
+                .build();
+    }
+
     public Accommodation dummyAccommodation() {
         return Accommodation.builder()
+                .id(1L)
                 .name("세인트존스 호텔")
                 .location(Location.builder()
                         .address("강원특별자치도 강릉시 창해로 307 ")

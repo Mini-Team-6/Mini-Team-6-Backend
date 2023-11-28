@@ -21,11 +21,6 @@ public class CartExceptionHandler extends ProblemDetailCreator<CartErrorMessage>
         return createProblemDetail(CART_NOT_FOUND, request);
     }
 
-    @ExceptionHandler(CartInvalidMemberException.class)
-    public ProblemDetail handelCartInvalidMemberException(HttpServletRequest request) {
-        return createProblemDetail(CART_INVALID_MEMBER, request);
-    }
-
     @ExceptionHandler(CartAleadyExistException.class)
     public ProblemDetail handelCartAleadyExistException(HttpServletRequest request) {
         return createProblemDetail(CART_ALREADY_EXIST, request);
