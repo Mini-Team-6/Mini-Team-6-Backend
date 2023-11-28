@@ -1,7 +1,7 @@
 ### 예약 생성
 POST http://localhost:8080/reservations
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMTE2MTk4LCJleHAiOjE3MDExMTc5OTgsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IntiY3J5cHR9JDJhJDEwJGRWc3JDenZCWVdWdU5XWm5WN3d3QWVra3E5RUJWZ0t1anpxT28ucmZBU05FZEswZkd5QzVlIiwibmFtZSI6Im9ramFlb29rIn0.PUhHIiJF_XQ1vCcZW1LVXQLLJGkx_HAYKTYinAtH84c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMTU2NTc2LCJleHAiOjE3MDExNTgzNzYsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IntiY3J5cHR9JDJhJDEwJFNCbjZSQ3ZQdFQ2WW1vSVM0ZzU1dE8xTFBwRDJkSjJLbDBKcDRXT3k5RmhuNzNxdnNJQS51IiwibmFtZSI6Im9ramFlb29rIn0.HCiMHNhtW45GEFH2tbkihaeiqADBmehLfg2iGlIDuCE
 
 {
   "paymentType": "CARD",
@@ -11,8 +11,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0I
       "accommodationName": "가락관광호텔",
       "areaCode": "SEOUL",
       "roomTypeId": 11430,
-      "checkIn": "2024-01-01 14:00",
-      "checkOut": "2024-01-02 11:00",
+      "checkIn": "2024-01-01T00:00",
+      "checkOut": "2024-01-03T00:00",
       "guestNumber": 2
     }
   ]
