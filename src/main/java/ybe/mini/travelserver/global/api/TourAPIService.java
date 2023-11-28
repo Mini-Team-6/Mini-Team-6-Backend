@@ -26,7 +26,7 @@ public class TourAPIService {
 
         var body = accommodationsSimpleSearchResponse.response().body();
 
-        if (body.totalCount() == 0) {
+        if (body.numOfRows() == 0) {
             throw new NoAccommodationsFromAPIException();
         }
 
@@ -59,7 +59,7 @@ public class TourAPIService {
 
         var body = accommodationsSimpleSearchResponse.response().body();
 
-        if (body.totalCount() == 0) {
+        if (body.numOfRows() == 0) {
             throw new NoAccommodationsFromAPIException();
         }
         var items = body.items().item();
@@ -103,7 +103,7 @@ public class TourAPIService {
 
         var body = roomTourAPIResponse.response().body();
 
-        if (body.totalCount() == 0) {
+        if (body.numOfRows() == 0) {
             throw new NoRoomsFromAPIException();
         }
 

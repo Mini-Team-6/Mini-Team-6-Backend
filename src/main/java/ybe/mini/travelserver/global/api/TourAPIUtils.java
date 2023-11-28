@@ -1,5 +1,10 @@
 package ybe.mini.travelserver.global.api;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,16 +12,18 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.util.StreamUtils;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.HttpMessageConverterExtractor;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import ybe.mini.travelserver.global.api.dto.AccommodationTourAPIResponse;
 import ybe.mini.travelserver.global.api.dto.RoomTourAPIResponse;
-import ybe.mini.travelserver.global.exception.api.WrongCallBackException;
+import ybe.mini.travelserver.global.exception.api.TourAPIXMLErrorResponse;
+import ybe.mini.travelserver.global.exception.api.WrongRequestException;
+import ybe.mini.travelserver.global.exception.api.WrongXMLFormatException;
 
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
@@ -31,6 +38,14 @@ public class TourAPIUtils {
         DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory();
         factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.NONE);
         restTemplate.setUriTemplateHandler(factory);
+
+        ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json()
+                .featuresToEnable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)
+                .build();
+
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(objectMapper);
+
+        restTemplate.getMessageConverters().add(0, converter);
     }
 
     private static StringBuilder buildCommonUrl(String endpoint) {
@@ -63,9 +78,17 @@ public class TourAPIUtils {
                 clientHttpResponse -> {
                     MediaType contentType = clientHttpResponse.getHeaders().getContentType();
                     if (contentType != null && contentType.includes(MediaType.TEXT_XML)) {
-                        String body = StreamUtils.copyToString(clientHttpResponse.getBody(), Charset.defaultCharset());
-                        log.error("공공포텅 오류 XML 반환 : {}", body);
-                        throw new WrongCallBackException();
+                        try {
+                            JAXBContext jaxbContext = JAXBContext.newInstance(TourAPIXMLErrorResponse.class);
+                            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+                            TourAPIXMLErrorResponse tourAPIXMLErrorResponse = (TourAPIXMLErrorResponse) unmarshaller.unmarshal(clientHttpResponse.getBody());
+                            log.error("공공포털 오류 XML 반환 : {}", tourAPIXMLErrorResponse);
+
+                            String errorMessage = tourAPIXMLErrorResponse.getErrorHeader().getReturnAuthMsg();
+                            throw new WrongRequestException(errorMessage);
+                        } catch (JAXBException e) {
+                            throw new WrongXMLFormatException(e);
+                        }
                     }
 
                     return new HttpMessageConverterExtractor<>(responseType, restTemplate.getMessageConverters())
