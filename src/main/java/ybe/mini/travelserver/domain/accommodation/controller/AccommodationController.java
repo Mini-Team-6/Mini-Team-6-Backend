@@ -31,7 +31,7 @@ public class AccommodationController {
     }
 
     @GetMapping
-    public ResponseDto<AccommodationDetailGetResponse> searchAccommodations(
+    public ResponseDto<AccommodationDetailGetResponse> searchAccommodation(
             @RequestParam String keyword,
             @RequestParam(value = "area-code") AreaCode areaCode
     ) {
