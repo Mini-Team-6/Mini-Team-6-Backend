@@ -49,7 +49,6 @@ public interface DummyMemberDTO extends DummyMember {
     default MypageUpdateRequest dummyMypageUpdateRequest() {
         Member member2 = dummyMemberUpdatedProfile();
         return new MypageUpdateRequest(
-                member2.getEmail(),
                 member2.getPassword(),
                 member2.getName()
         );
@@ -67,8 +66,7 @@ public interface DummyMemberDTO extends DummyMember {
     default MypageDeleteRequest dummyMypageDeleteRequest() {
         Member member = dummyMember();
         return new MypageDeleteRequest(
-                member.getEmail(),
-                member.getPassword()
+                member.getEmail()
         );
     }
 
@@ -76,7 +74,7 @@ public interface DummyMemberDTO extends DummyMember {
         Member member = dummyMember();
         return new MypageDeleteResponse(
                 member.getEmail(),
-                member.getPassword()
+                member.getName()
         );
     }
 }
