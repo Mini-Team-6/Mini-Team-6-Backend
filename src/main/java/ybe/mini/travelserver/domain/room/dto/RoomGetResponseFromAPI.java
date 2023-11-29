@@ -26,4 +26,17 @@ public record RoomGetResponseFromAPI(
                 room.getStock()
         );
     }
+
+    @Builder
+    public static RoomGetResponseFromAPI fromEntity(Room room, Integer stock) {
+        return new RoomGetResponseFromAPI(
+                room.getCapacity(),
+                room.getDescription(),
+                room.getPrice(),
+                room.getImage(),
+                room.getName(),
+                room.getRoomTypeId(),
+                stock
+        );
+    }
 }
