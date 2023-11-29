@@ -42,7 +42,7 @@ public class CartService {
         Member member = getMemberById(userId);
         Accommodation accommodation =
                 createAccommodationById(cartCreateRequest.keyword(), cartCreateRequest.areaCode());
-        Room room = createRoomById(accommodation, cartCreateRequest.roomTypeId());
+        Room room = createRoomByRoomTypeId(accommodation, cartCreateRequest.roomTypeId());
 
         Cart cart = createCart(cartCreateRequest, room, member);
         Cart createdCart = cartRepository.save(cart);
@@ -78,8 +78,8 @@ public class CartService {
         return getOrSaveAccommodation(accommodation);
     }
 
-    private Room createRoomById(Accommodation accommodation, Long roomId) {
-        Room room = tourAPIService.bringRoom(accommodation.getId(), roomId);
+    private Room createRoomByRoomTypeId(Accommodation accommodation, Long roomTypeId) {
+        Room room = tourAPIService.bringRoom(accommodation.getId(), roomTypeId);
         return getOrSaveRoom(room);
     }
 
