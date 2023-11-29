@@ -72,15 +72,18 @@ class MemberControllerTest implements DummyMemberDTO, DummyPrincipal {
     @DisplayName("회원정보 수정 테스트")
     void testUpdateMember() {
         // given
-        given(memberService.updateMemberProfile(any())).willReturn(dummyMypageUpdateResponse());
+        given(memberService.updateMemberProfile(any(),any())).willReturn(dummyMypageUpdateResponse());
 
         // when
-        var actual = memberController.updateMember(dummyMypageUpdateRequest());
+        var actual = memberController.updateMember(
+                dummyPrincipalDetails(),
+                dummyMypageUpdateRequest()
+        );
 
         // then
         var expected = new ResponseDto<>(200, dummyMypageUpdateResponse());
         assertEquals(expected, actual);
-        then(memberService).should().updateMemberProfile(any());
+        then(memberService).should().updateMemberProfile(any(), any());
     }
 
     @Test

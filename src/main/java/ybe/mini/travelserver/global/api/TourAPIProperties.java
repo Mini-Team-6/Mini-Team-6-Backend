@@ -2,11 +2,14 @@ package ybe.mini.travelserver.global.api;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
+@Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class TourAPIProperties {
-    public static final String KEY_DECODED = "rKtD0jUO3f83Q/Q7QJ7yxo2GMBF489d4y5NM3H48uUffmUXjeoARqF4wmsICTBt3BVS988w8vG4Nh2UZtMV2/A==";
-    public static final String KEY_ENCODED = "1Wkp7yq9dkbxF4oNKeJQQJdUd55hQvujedMr43Rne5vvK7bkirS%2B1GRzd9rkerYmlitxxeoP8O86VsxM8WTz6A%3D%3D";
+    private static int keyIndex = 0;
+
     public static final String BASE_URL = "https://apis.data.go.kr/B551011/KorService1/";
 
     public static final String SEARCH_KEYWORD = "searchKeyword1";
@@ -15,4 +18,21 @@ public class TourAPIProperties {
     public static final String MOBILE_OS = "ETC";
     public static final String MOBILE_APP = "TravelAPP";
     public static final String RENDER_TYPE = "json";
+
+    private static final List<String> keyList = List.of(
+            System.getenv("TOUR_API_KEY_1"),
+            System.getenv("TOUR_API_KEY_2"),
+            System.getenv("TOUR_API_KEY_3"),
+            System.getenv("TOUR_API_KEY_4"),
+            System.getenv("TOUR_API_KEY_5")
+    );
+
+    public static String getEncodedKey() {
+        return keyList.get(keyIndex);
+    }
+
+    public static void changeNextKey() {
+        log.warn("API KEY를 변경합니다.");
+        TourAPIProperties.keyIndex = ++keyIndex % keyList.size();
+    }
 }
