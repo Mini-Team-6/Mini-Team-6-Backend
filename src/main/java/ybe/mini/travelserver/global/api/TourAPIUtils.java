@@ -54,7 +54,7 @@ public class TourAPIUtils {
         url.append("&MobileApp=").append(MOBILE_APP);
         url.append("&_type=").append(RENDER_TYPE);
         url.append("&contentTypeId=").append(CONTENT_TYPE_ID);
-        url.append("&serviceKey=").append(KEY_ENCODED);
+        url.append("&serviceKey=").append(getEncodedKey());
 
         return url;
     }
@@ -78,7 +78,9 @@ public class TourAPIUtils {
                 clientHttpResponse -> {
                     MediaType contentType = clientHttpResponse.getHeaders().getContentType();
                     if (contentType != null && contentType.includes(MediaType.TEXT_XML)) {
-                        try {
+                        try (clientHttpResponse) {
+                            changeNextKey();
+
                             JAXBContext jaxbContext = JAXBContext.newInstance(TourAPIXMLErrorResponse.class);
                             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
                             TourAPIXMLErrorResponse tourAPIXMLErrorResponse = (TourAPIXMLErrorResponse) unmarshaller.unmarshal(clientHttpResponse.getBody());
