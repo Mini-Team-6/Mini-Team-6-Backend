@@ -17,4 +17,5 @@ public interface DummyCart extends DummyMember, DummyObjectForRoom {
                 .guestNumber(2)
                 .build();
     }
+
 }

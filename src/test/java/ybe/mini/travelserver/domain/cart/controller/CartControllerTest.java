@@ -19,7 +19,8 @@ import ybe.mini.travelserver.global.common.ResponseDto;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static ybe.mini.travelserver.domain.accommodation.entity.AreaCode.SEOUL;
@@ -33,8 +34,8 @@ class CartControllerTest implements DummyPrincipal, DummyCart {
     @InjectMocks
     private CartController cartController;
 
-    @DisplayName("장바구니를 조회")
     @Test
+    @DisplayName("장바구니 조회")
     void getCart() {
         // given
         CartGetResponse cartGetResponse =
@@ -55,8 +56,8 @@ class CartControllerTest implements DummyPrincipal, DummyCart {
         then(cartService).should().getMyCarts(anyLong());
     }
 
-    @DisplayName("장바구니를 생성")
     @Test
+    @DisplayName("장바구니 생성")
     void createCart() {
         // given
         CartCreateRequest cartCreateRequest =
@@ -85,8 +86,8 @@ class CartControllerTest implements DummyPrincipal, DummyCart {
 
     }
 
-    @DisplayName("장바구니를 삭제")
     @Test
+    @DisplayName("장바구니 삭제")
     void deleteCart() {
         // given
         Long cartId = 1L;
