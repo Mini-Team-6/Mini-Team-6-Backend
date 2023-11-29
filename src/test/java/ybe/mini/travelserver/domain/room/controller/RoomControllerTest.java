@@ -18,6 +18,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
@@ -39,18 +40,18 @@ public class RoomControllerTest extends DummyObjectForControllerAndService {
                 RoomGetResponseFromAPI.fromEntity(dummyRoom(accommodation)),
                 RoomGetResponseFromAPI.fromEntity(dummyRoom1(accommodation))
         );
-        given(roomService.bringRoomsFromAPI(accommodation.getId())).willReturn(expectedRooms);
+        given(roomService.bringRoomsFromAPI(anyLong(), anyString(), anyString())).willReturn(expectedRooms);
 
 
         // when
         ResponseDto<List<RoomGetResponseFromAPI>> responseDto =
-                roomController.getRooms(accommodation.getId());
+                roomController.getRooms(accommodation.getId(), "20240102", "20240202");
 
         // then
         assertNotNull(responseDto);
         assertEquals(HttpStatus.OK.value(), responseDto.status());
         assertEquals(expectedRooms, responseDto.data());
-        then(roomService).should().bringRoomsFromAPI(accommodation.getId());
+        then(roomService).should().bringRoomsFromAPI(anyLong(), anyString(), anyString());
     }
 
 }

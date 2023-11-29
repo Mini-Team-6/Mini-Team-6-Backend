@@ -7,9 +7,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
+import ybe.mini.travelserver.domain.reservation_room.repository.ReservationRoomRepository;
 import ybe.mini.travelserver.domain.room.DummyObjectForControllerAndService;
 import ybe.mini.travelserver.domain.room.dto.RoomGetResponseFromAPI;
 import ybe.mini.travelserver.domain.room.entity.Room;
+import ybe.mini.travelserver.domain.room.repository.RoomRepository;
 import ybe.mini.travelserver.global.api.TourAPIService;
 
 import java.util.Arrays;
@@ -17,6 +19,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -26,6 +29,12 @@ class RoomServiceTest extends DummyObjectForControllerAndService {
 
     @Mock
     private TourAPIService tourAPIService;
+
+    @Mock
+    ReservationRoomRepository reservationRoomRepository;
+
+    @Mock
+    RoomRepository roomRepository;
 
     @InjectMocks
     private RoomService roomService;
@@ -41,10 +50,11 @@ class RoomServiceTest extends DummyObjectForControllerAndService {
         List<RoomGetResponseFromAPI> responseDto = expectedRooms.stream()
                 .map(RoomGetResponseFromAPI::fromEntity)
                 .toList();
-        given(tourAPIService.bringRooms(eq(accommodation.getId()))).willReturn(expectedRooms);
+        given(tourAPIService.bringRooms(anyLong())).willReturn(expectedRooms);
 
         // when
-        List<RoomGetResponseFromAPI> actualRooms = roomService.bringRoomsFromAPI(accommodation.getId());
+        List<RoomGetResponseFromAPI> actualRooms =
+                roomService.bringRoomsFromAPI(accommodation.getId(), "20240101", "20240102");
 
         // then
         assertNotNull(actualRooms);
