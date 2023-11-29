@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ybe.mini.travelserver.global.exception.ProblemDetailCreator;
 
-import static ybe.mini.travelserver.domain.member.exception.MemberErrorMessage.MEMBER_ALREADY_EXIST;
-import static ybe.mini.travelserver.domain.member.exception.MemberErrorMessage.MEMBER_NOT_FOUND;
+import static ybe.mini.travelserver.domain.member.exception.MemberErrorMessage.*;
 
 @RestControllerAdvice
 public class MemberExceptionHandler extends ProblemDetailCreator<MemberErrorMessage> {
@@ -24,4 +23,10 @@ public class MemberExceptionHandler extends ProblemDetailCreator<MemberErrorMess
     public ProblemDetail handleMemberNotFoundException(HttpServletRequest request) {
         return createProblemDetail(MEMBER_NOT_FOUND, request);
     }
+
+    @ExceptionHandler(CanNotControlOtherMembersData.class)
+    public ProblemDetail handleCanNotUpdateWithOtherValidTokens(HttpServletRequest request) {
+        return createProblemDetail(CAN_NOT_CONTROL_OTHER_MEMBERS_DATA, request);
+    }
+
 }

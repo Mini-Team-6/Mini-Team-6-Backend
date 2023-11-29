@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.member.dto.*;
 import ybe.mini.travelserver.domain.member.entity.Member;
+import ybe.mini.travelserver.domain.member.exception.CanNotControlOtherMembersData;
 import ybe.mini.travelserver.domain.member.exception.MemberAlreadyExistException;
 import ybe.mini.travelserver.domain.member.exception.MemberNotFoundException;
 import ybe.mini.travelserver.domain.member.repository.MemberRepository;
@@ -81,13 +82,16 @@ public class MemberService {
 
 
     @Transactional
-    public MypageUpdateResponse updateMemberProfile(MypageUpdateRequest mypageUpdateRequest) {
-        Member existingMember = memberRepository.findByEmail(mypageUpdateRequest.email())
+    public MypageUpdateResponse updateMemberProfile(
+            PrincipalDetails principalDetails,
+            MypageUpdateRequest mypageUpdateRequest
+    ) {
+        Member existingMember = memberRepository.findByEmail(principalDetails.getEmail())
                 .orElseThrow(MemberNotFoundException::new);
 
         return MypageUpdateResponse.fromEntity(
                 existingMember.updateProfile(
-                        mypageUpdateRequest.email(),
+                        principalDetails.getEmail(),
                         passwordEncoder.encode(mypageUpdateRequest.password()),
                         mypageUpdateRequest.name()
                 )
@@ -100,11 +104,11 @@ public class MemberService {
             PrincipalDetails principalDetails,
             MypageDeleteRequest mypageDeleteRequest
     ) {
-        if (!principalDetails.getUsername().equals(mypageDeleteRequest.email())) {
-            throw new MemberNotFoundException();
+        if (!principalDetails.getEmail().equals(mypageDeleteRequest.email())) {
+            throw new CanNotControlOtherMembersData();
         }
 
-        Member existingMember = memberRepository.findByEmail(mypageDeleteRequest.email())
+        Member existingMember = memberRepository.findByEmail(principalDetails.getEmail())
                 .orElseThrow(MemberNotFoundException::new);
 
         memberRepository.delete(existingMember);
