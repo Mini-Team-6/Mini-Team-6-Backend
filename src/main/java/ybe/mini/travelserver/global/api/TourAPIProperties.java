@@ -8,8 +8,8 @@ import java.util.List;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class TourAPIProperties {
     private static int keyIndex = 0;
-
     public static final String BASE_URL = "https://apis.data.go.kr/B551011/KorService1/";
 
     public static final String SEARCH_KEYWORD = "searchKeyword1";
