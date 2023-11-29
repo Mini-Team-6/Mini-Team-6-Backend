@@ -45,8 +45,14 @@ public class MemberController {
 
     @PreAuthorize(HAS_ROLE_USER)
     @PatchMapping("/mypage")
-    public ResponseDto<MypageUpdateResponse> updateMember(@RequestBody @Valid MypageUpdateRequest mypageUpdateRequest) {
-        MypageUpdateResponse mypageUpdateResponse = memberService.updateMemberProfile(mypageUpdateRequest);
+    public ResponseDto<MypageUpdateResponse> updateMember(
+            @AuthenticationPrincipal PrincipalDetails principalDetails,
+            @RequestBody @Valid MypageUpdateRequest mypageUpdateRequest
+    ) {
+        MypageUpdateResponse mypageUpdateResponse = memberService.updateMemberProfile(
+                principalDetails,
+                mypageUpdateRequest
+        );
 
         return new ResponseDto<>(HttpStatus.OK.value(), mypageUpdateResponse);
     }
