@@ -19,7 +19,7 @@ Content-Type: application/json
 
 ### 회원 마이페이지 올바른 토큰
 GET http://localhost:8080/members/mypage
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwiaWF0IjoxNzAwOTg2ODIwLCJleHAiOjE3MDA5ODg2MjAsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20ifQ.t6iD-_ymvp5jVKuihpndMDC4Zn6yc8wlTlil-DAci1E
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAxMjQ1MTA0LCJleHAiOjE3MDEyNDY5MDQsImVtYWlsIjoib2tqYWVvb2s5OEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IntiY3J5cHR9JDJhJDEwJFNCbjZSQ3ZQdFQ2WW1vSVM0ZzU1dE8xTFBwRDJkSjJLbDBKcDRXT3k5RmhuNzNxdnNJQS51IiwibmFtZSI6Im9ramFlb29rIn0.cqTN4G92c9KyiwW-0XCFRBM-SUDzIsEyxQFqJnVwzYI
 
 #### 만료된 토큰
 GET http://localhost:8080/members/mypage

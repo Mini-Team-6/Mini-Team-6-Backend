@@ -12,6 +12,7 @@ import ybe.mini.travelserver.domain.reservation.dummy.DummyReservation;
 import ybe.mini.travelserver.domain.reservation.dummy.DummyReservationDTO;
 import ybe.mini.travelserver.domain.reservation.entity.Reservation;
 import ybe.mini.travelserver.domain.reservation.repository.ReservationRepository;
+import ybe.mini.travelserver.domain.reservation_room.repository.ReservationRoomRepository;
 import ybe.mini.travelserver.domain.room.DummyObjectForRoom;
 import ybe.mini.travelserver.domain.room.entity.Room;
 import ybe.mini.travelserver.domain.room.repository.RoomRepository;
@@ -37,6 +38,8 @@ class ReservationServiceTest implements DummyObjectForRoom, DummyReservationDTO,
     RoomRepository roomRepository;
     @Mock
     AccommodationRepository accommodationRepository;
+    @Mock
+    ReservationRoomRepository reservationRoomRepository;
 
     @InjectMocks
     ReservationService reservationService;

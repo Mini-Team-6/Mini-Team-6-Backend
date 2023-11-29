@@ -44,7 +44,7 @@ public class RoomService {
                 reservationRoomRepository.findAllByRoomAndCheckInBetweenAndCheckOutBetween(
                     roomOpt.get(), checkIn, checkOut, checkIn, checkOut
                 );
-        return room.getStock() - reservationRooms.size();
+        return Math.max(0, room.getStock() - reservationRooms.size());
     }
 
 }

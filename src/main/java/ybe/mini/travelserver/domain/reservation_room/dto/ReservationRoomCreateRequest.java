@@ -1,12 +1,13 @@
 package ybe.mini.travelserver.domain.reservation_room.dto;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
-import org.springframework.format.annotation.DateTimeFormat;
 import ybe.mini.travelserver.domain.accommodation.entity.AreaCode;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Builder
 public record ReservationRoomCreateRequest(
