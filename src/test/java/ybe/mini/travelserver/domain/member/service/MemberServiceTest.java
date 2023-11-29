@@ -101,7 +101,10 @@ class MemberServiceTest implements DummyMemberDTO, DummyPrincipal {
         given(passwordEncoder.encode(newPassword)).willReturn(bcrptyedNewPassword);
 
         // when
-        var actual = memberService.updateMemberProfile(dummyMypageUpdateRequest());
+        var actual = memberService.updateMemberProfile(
+                dummyPrincipalDetails(),
+                dummyMypageUpdateRequest()
+        );
 
         // then
         var expected = dummyMypageUpdateResponse();
@@ -116,7 +119,10 @@ class MemberServiceTest implements DummyMemberDTO, DummyPrincipal {
         given(memberRepository.findByEmail(email)).willReturn(Optional.ofNullable(dummyMember()));
 
         // when
-        var actual = memberService.deleteMemberProfile(dummyPrincipalDetails(), dummyMypageDeleteRequest());
+        var actual = memberService.deleteMemberProfile(
+                dummyPrincipalDetails(),
+                dummyMypageDeleteRequest()
+        );
 
         // then
         var expected = dummyMypageDeleteResponse();
