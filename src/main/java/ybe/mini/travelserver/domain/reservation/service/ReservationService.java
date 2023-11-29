@@ -2,6 +2,7 @@ package ybe.mini.travelserver.domain.reservation.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
@@ -16,14 +17,16 @@ import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateResponse;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationGetResponse;
 import ybe.mini.travelserver.domain.reservation.entity.Reservation;
 import ybe.mini.travelserver.domain.reservation.exception.ReservationNotFoundException;
+import ybe.mini.travelserver.domain.reservation.exception.RoomStockIsEmptyException;
 import ybe.mini.travelserver.domain.reservation.repository.ReservationRepository;
 import ybe.mini.travelserver.domain.reservation_room.dto.ReservationRoomCreateRequest;
 import ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoom;
+import ybe.mini.travelserver.domain.reservation_room.repository.ReservationRoomRepository;
 import ybe.mini.travelserver.domain.room.entity.Room;
 import ybe.mini.travelserver.domain.room.repository.RoomRepository;
 import ybe.mini.travelserver.global.api.TourAPIService;
-import ybe.mini.travelserver.global.util.Validation;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +38,7 @@ import static ybe.mini.travelserver.global.util.Validation.validateDateFormat;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
+    private final ReservationRoomRepository reservationRoomRepository;
     private final MemberRepository memberRepository;
     private final TourAPIService tourAPIService;
     private final RoomRepository roomRepository;
@@ -44,13 +48,33 @@ public class ReservationService {
     @Transactional
     public ReservationCreateResponse createReservation(String userEmail, ReservationCreateRequest reservationRequest) {
 
+
         List<ReservationRoom> reservationRooms =
                 reservationRoomDtosToEntityList(reservationRequest.reservationRooms());
+
+        reservationRooms.forEach(this::isEnableReservation);
+
         Member member = getMemberByEmail(userEmail);
         Reservation reservation =
                 Reservation.createReservation(member, reservationRequest.paymentType(), reservationRooms);
 
         return ReservationCreateResponse.fromEntity(reservationRepository.save(reservation));
+    }
+
+    private void isEnableReservation(ReservationRoom resRoom) {
+        int restStock = getRestStock(
+                resRoom.getRoom(), resRoom.getCheckIn(), resRoom.getCheckOut()
+        );
+        if(restStock==0) throw new RoomStockIsEmptyException();
+    }
+
+    private Integer getRestStock(Room room, LocalDate checkIn, LocalDate checkOut) {
+        List<ReservationRoom> reservationRooms =
+                reservationRoomRepository.findAllByRoomAndCheckInBetweenAndCheckOutBetween(
+                        room, checkIn, checkOut, checkIn, checkOut
+                );
+        return Math.max(0, room.getStock() - reservationRooms.size());
+
     }
 
     public ReservationCreateResponse createReservationAndDeleteCart(
@@ -95,7 +119,7 @@ public class ReservationService {
         String areaCodeString =
                 (roomRequest.areaCode() != null) ? String.valueOf(roomRequest.areaCode().getCode()) : null;
 
-        Accommodation accommodation =   //todo : Bring 제대로 안되면 Exception 날려주는 거 고민
+        Accommodation accommodation =
                 tourAPIService.bringAccommodation(roomRequest.accommodationName(), areaCodeString);
         Room room = tourAPIService.bringRoom(roomRequest.accommodationId(), roomRequest.roomTypeId());
 

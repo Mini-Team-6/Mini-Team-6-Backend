@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TourAPIProperties {
     public static final String KEY_DECODED = "rKtD0jUO3f83Q/Q7QJ7yxo2GMBF489d4y5NM3H48uUffmUXjeoARqF4wmsICTBt3BVS988w8vG4Nh2UZtMV2/A==";
-    public static final String KEY_ENCODED = "rKtD0jUO3f83Q%2FQ7QJ7yxo2GMBF489d4y5NM3H48uUffmUXjeoARqF4wmsICTBt3BVS988w8vG4Nh2UZtMV2%2FA%3D%3D";
+    public static final String KEY_ENCODED = "1Wkp7yq9dkbxF4oNKeJQQJdUd55hQvujedMr43Rne5vvK7bkirS%2B1GRzd9rkerYmlitxxeoP8O86VsxM8WTz6A%3D%3D";
     public static final String BASE_URL = "https://apis.data.go.kr/B551011/KorService1/";
 
     public static final String SEARCH_KEYWORD = "searchKeyword1";
