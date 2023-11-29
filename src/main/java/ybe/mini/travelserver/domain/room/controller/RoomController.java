@@ -19,8 +19,8 @@ public class RoomController {
     @GetMapping("/{accommodationId}")
     public ResponseDto<List<RoomGetResponseFromAPI>> getRooms(
             @PathVariable Long accommodationId,
-            @RequestParam String checkIn,
-            @RequestParam String checkOut
+            @RequestParam(value = "check-in") String checkIn,
+            @RequestParam(value = "check-out") String checkOut
     ) {
         List<RoomGetResponseFromAPI> rooms = roomService.bringRoomsFromAPI(accommodationId, checkIn, checkOut);
         return new ResponseDto<>(HttpStatus.OK.value(), rooms);
