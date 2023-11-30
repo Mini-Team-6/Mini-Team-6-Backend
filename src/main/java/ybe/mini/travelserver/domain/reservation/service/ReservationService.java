@@ -2,7 +2,6 @@ package ybe.mini.travelserver.domain.reservation.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
@@ -81,7 +80,7 @@ public class ReservationService {
             String userEmail, ReservationCreateFromCartRequest reservationRequest
     ) {
 
-        reservationRequest.cardIds().forEach(this::deleteCart);
+        reservationRequest.cartIds().forEach(this::deleteCart);
 
         List<ReservationRoom> reservationRooms =
                 reservationRoomDtosToEntityList(reservationRequest.reservationRooms());

@@ -18,7 +18,6 @@ import ybe.mini.travelserver.global.security.PrincipalDetails;
 import java.util.List;
 
 import static ybe.mini.travelserver.global.security.Role.HAS_ROLE_USER;
-import static ybe.mini.travelserver.global.security.Role.ROLE_USER;
 
 @Slf4j
 @RequestMapping("/reservations")
