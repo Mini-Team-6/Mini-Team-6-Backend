@@ -36,7 +36,7 @@ Git-flow 사용
 ---
 ## API
 
-Notion 참고
+[Notion 참고](https://www.notion.so/API-fe27102ab86f45c8bc24da5fb56e1197?pvs=4)
 
 ---
 ## ERD
