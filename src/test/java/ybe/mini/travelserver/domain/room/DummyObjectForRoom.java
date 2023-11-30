@@ -35,6 +35,7 @@ public interface DummyObjectForRoom {
 
     default Accommodation dummyAccommodation() {
         return Accommodation.builder()
+                .id(1L)
                 .name("세인트존스 호텔")
                 .location(Location.builder()
                         .address("강원특별자치도 강릉시 창해로 307 ")
