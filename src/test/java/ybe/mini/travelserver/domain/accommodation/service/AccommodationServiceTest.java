@@ -1,13 +1,10 @@
 package ybe.mini.travelserver.domain.accommodation.service;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ybe.mini.travelserver.domain.accommodation.DummyAccommodation;
 import ybe.mini.travelserver.domain.accommodation.dto.AccommodationDetailGetResponse;
@@ -21,9 +18,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.eq;
 
 @ExtendWith(MockitoExtension.class)
 class AccommodationServiceTest extends DummyAccommodation {
@@ -42,7 +41,7 @@ class AccommodationServiceTest extends DummyAccommodation {
         List<AccommodationGetResponse> responseDto = expectedAccommodations.stream()
                 .map(AccommodationGetResponse::fromEntity)
                 .toList();
-        given(tourAPIService.bringAccommodations(eq(1), eq(10), eq("호텔"), eq("1")))
+        given(tourAPIService.bringAccommodations(anyInt(), anyInt(), anyString(), anyString()))
                 .willReturn(expectedAccommodations);
 
         // when
@@ -64,7 +63,7 @@ class AccommodationServiceTest extends DummyAccommodation {
         Accommodation expectedAccommodation = dummyAccommodation();
         AccommodationDetailGetResponse responseDto =
                 AccommodationDetailGetResponse.fromEntity(expectedAccommodation);
-        given(tourAPIService.bringAccommodation(eq("호텔"), eq("1")))
+        given(tourAPIService.bringAccommodation(anyString(), anyString()))
                 .willReturn(expectedAccommodation);
 
         // when

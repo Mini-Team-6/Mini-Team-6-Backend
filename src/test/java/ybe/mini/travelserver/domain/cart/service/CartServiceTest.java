@@ -51,7 +51,7 @@ class CartServiceTest implements DummyPrincipal, DummyCart {
 
     @Test
     @DisplayName("장바구니 생성")
-    void createCart_success(){
+    void createCart_success() {
         // given
         CartCreateRequest cartCreateRequest =
                 CartCreateRequest.builder()

@@ -13,7 +13,7 @@ public interface DummyReservation extends DummyMember {
                 .id(1L)
                 .member(dummyMember())
                 .paymentType(PaymentType.KAKAO_PAY)
-                .createdAt(LocalDateTime.of(2022,1,1,0,0))
+                .createdAt(LocalDateTime.of(2022, 1, 1, 0, 0))
                 .build();
     }
 }
