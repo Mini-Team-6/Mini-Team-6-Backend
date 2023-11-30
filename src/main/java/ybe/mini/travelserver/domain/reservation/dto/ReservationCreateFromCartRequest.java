@@ -16,7 +16,7 @@ public record ReservationCreateFromCartRequest(
         @NotNull
         PaymentType paymentType,
         @NotEmpty
-        List<Long> cardIds,
+        List<Long> cartIds,
         @Valid
         List<ReservationRoomCreateRequest> reservationRooms
 ) implements Serializable {

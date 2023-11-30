@@ -89,11 +89,14 @@ public class MemberService {
         Member existingMember = memberRepository.findByEmail(principalDetails.getEmail())
                 .orElseThrow(MemberNotFoundException::new);
 
+        String newPassword = mypageUpdateRequest.password();
+        String newName = mypageUpdateRequest.name();
+
         return MypageUpdateResponse.fromEntity(
                 existingMember.updateProfile(
                         principalDetails.getEmail(),
-                        passwordEncoder.encode(mypageUpdateRequest.password()),
-                        mypageUpdateRequest.name()
+                        newPassword == null ? principalDetails.getPassword() : passwordEncoder.encode(newPassword),
+                        newName == null ? principalDetails.getName() : mypageUpdateRequest.name()
                 )
         );
     }
