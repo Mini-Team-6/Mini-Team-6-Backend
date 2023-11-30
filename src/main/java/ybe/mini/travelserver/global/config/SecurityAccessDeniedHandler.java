@@ -2,18 +2,16 @@ package ybe.mini.travelserver.global.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Component
+@RequiredArgsConstructor
 public class SecurityAccessDeniedHandler implements AccessDeniedHandler {
-    HandlerExceptionResolver handlerExceptionResolver;
-
-    public SecurityAccessDeniedHandler(HandlerExceptionResolver handlerExceptionResolver) {
-        this.handlerExceptionResolver = handlerExceptionResolver;
-    }
+    private final HandlerExceptionResolver handlerExceptionResolver;
 
     @Override
     public void handle(

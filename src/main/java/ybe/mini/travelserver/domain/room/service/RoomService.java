@@ -9,10 +9,8 @@ import ybe.mini.travelserver.domain.room.dto.RoomGetResponseFromAPI;
 import ybe.mini.travelserver.domain.room.entity.Room;
 import ybe.mini.travelserver.domain.room.repository.RoomRepository;
 import ybe.mini.travelserver.global.api.TourAPIService;
-import ybe.mini.travelserver.global.util.Validation;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,11 +36,11 @@ public class RoomService {
 
     private Integer getRestStock(Room room, LocalDate checkIn, LocalDate checkOut) {
         Optional<Room> roomOpt = roomRepository.findByRoomTypeId(room.getRoomTypeId());
-        if(roomOpt.isEmpty()) return room.getStock();
+        if (roomOpt.isEmpty()) return room.getStock();
 
         List<ReservationRoom> reservationRooms =
                 reservationRoomRepository.findAllByRoomAndCheckInBetweenAndCheckOutBetween(
-                    roomOpt.get(), checkIn, checkOut, checkIn, checkOut
+                        roomOpt.get(), checkIn, checkOut, checkIn, checkOut
                 );
         return Math.max(0, room.getStock() - reservationRooms.size());
     }

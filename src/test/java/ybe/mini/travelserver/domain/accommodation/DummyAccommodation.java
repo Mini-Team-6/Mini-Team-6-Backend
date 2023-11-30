@@ -14,7 +14,7 @@ public class DummyAccommodation {
                         .latitude(37.7940780970)
                         .longitude(128.9186301059)
                         .build())
-                .image("http://tong.visitkorea.or.kr/cms/resource/54/2603354_image2_1.jpg")
+                .image("https://tong.visitkorea.or.kr/cms/resource/54/2603354_image2_1.jpg")
                 .description("푸른 해송숲과 청정 바다가 펼쳐진 강문해변에서의 자연 휴양과...")
                 .build();
     }

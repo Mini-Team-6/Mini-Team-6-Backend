@@ -72,7 +72,7 @@ class MemberControllerTest implements DummyMemberDTO, DummyPrincipal {
     @DisplayName("회원정보 수정 테스트")
     void testUpdateMember() {
         // given
-        given(memberService.updateMemberProfile(any(),any())).willReturn(dummyMypageUpdateResponse());
+        given(memberService.updateMemberProfile(any(), any())).willReturn(dummyMypageUpdateResponse());
 
         // when
         var actual = memberController.updateMember(

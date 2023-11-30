@@ -28,7 +28,7 @@ public interface DummyReservationDTO extends DummyReservationRoomDTO {
     default ReservationGetResponse dummyReservationGetRes() {
         return ReservationGetResponse.builder()
                 .id(1L)
-                .createdAt(LocalDateTime.of(2022,1,1,0,0))
+                .createdAt(LocalDateTime.of(2022, 1, 1, 0, 0))
                 .paymentType(KAKAO_PAY)
                 .reservationRooms(List.of(dummyReservationRoomGetRes()))
                 .build();

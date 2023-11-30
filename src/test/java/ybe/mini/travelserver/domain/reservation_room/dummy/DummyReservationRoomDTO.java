@@ -1,13 +1,11 @@
 package ybe.mini.travelserver.domain.reservation_room.dummy;
 
-import ybe.mini.travelserver.domain.reservation.dto.ReservationGetResponse;
 import ybe.mini.travelserver.domain.reservation_room.dto.ReservationRoomCreateRequest;
 import ybe.mini.travelserver.domain.reservation_room.dto.ReservationRoomGetResponse;
 import ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatus;
 import ybe.mini.travelserver.domain.room.DummyObjectForRoom;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public interface DummyReservationRoomDTO extends DummyObjectForRoom {
 
@@ -36,8 +34,8 @@ public interface DummyReservationRoomDTO extends DummyObjectForRoom {
     default ReservationRoomGetResponse dummyReservationRoomGetRes() {
         return ReservationRoomGetResponse.builder()
                 .id(1L)
-                .checkIn(LocalDate.of(2024,1,1))
-                .checkOut(LocalDate.of(2024,1,2))
+                .checkIn(LocalDate.of(2024, 1, 1))
+                .checkOut(LocalDate.of(2024, 1, 2))
                 .guestNumber(2)
                 .status(ReservationRoomStatus.RESERVED)
                 .room(dummyRoomGetResponse())

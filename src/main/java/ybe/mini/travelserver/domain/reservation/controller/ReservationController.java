@@ -29,7 +29,7 @@ public class ReservationController {
 
     @PreAuthorize(HAS_ROLE_USER)
     @PostMapping
-    public ResponseDto<ReservationCreateResponse> tryReservation (
+    public ResponseDto<ReservationCreateResponse> tryReservation(
             @RequestBody ReservationCreateRequest createRequest,
             @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
@@ -41,7 +41,7 @@ public class ReservationController {
 
     @PreAuthorize(HAS_ROLE_USER)
     @PostMapping("/from-cart")
-    public ResponseDto<ReservationCreateResponse> tryReservationFromCart (
+    public ResponseDto<ReservationCreateResponse> tryReservationFromCart(
             @RequestBody @Valid ReservationCreateFromCartRequest createRequest,
             @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
@@ -53,7 +53,7 @@ public class ReservationController {
 
     @PreAuthorize(HAS_ROLE_USER)
     @GetMapping
-    public ResponseDto<List<ReservationGetResponse>> getMyReservations (
+    public ResponseDto<List<ReservationGetResponse>> getMyReservations(
             @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
         return new ResponseDto<>(

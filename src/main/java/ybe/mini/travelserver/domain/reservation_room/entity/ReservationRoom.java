@@ -11,9 +11,7 @@ import ybe.mini.travelserver.domain.reservation.entity.Reservation;
 import ybe.mini.travelserver.domain.room.entity.Room;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-import static ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatus.PAYED;
 import static ybe.mini.travelserver.domain.reservation_room.entity.ReservationRoomStatus.RESERVED;
 
 @SuperBuilder

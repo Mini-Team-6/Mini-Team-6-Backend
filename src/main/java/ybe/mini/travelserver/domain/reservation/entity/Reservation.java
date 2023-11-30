@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static ybe.mini.travelserver.domain.reservation.entity.PaymentType.*;
-
 @SuperBuilder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -39,7 +37,7 @@ public class Reservation extends BaseTimeEntity {
             orphanRemoval = true
     )
     @Builder.Default
-    private List<ReservationRoom> reservationRooms = new ArrayList<>();
+    private final List<ReservationRoom> reservationRooms = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Comment("예약 상태")

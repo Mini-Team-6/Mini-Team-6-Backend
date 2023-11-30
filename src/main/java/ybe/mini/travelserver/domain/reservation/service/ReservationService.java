@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 import ybe.mini.travelserver.domain.accommodation.repository.AccommodationRepository;
+import ybe.mini.travelserver.domain.cart.entity.Cart;
+import ybe.mini.travelserver.domain.cart.exception.CartNotFoundException;
 import ybe.mini.travelserver.domain.cart.repository.CartRepository;
 import ybe.mini.travelserver.domain.member.entity.Member;
 import ybe.mini.travelserver.domain.member.exception.MemberNotFoundException;
@@ -64,7 +66,7 @@ public class ReservationService {
         int restStock = getRestStock(
                 resRoom.getRoom(), resRoom.getCheckIn(), resRoom.getCheckOut()
         );
-        if(restStock==0) throw new RoomStockIsEmptyException();
+        if (restStock == 0) throw new RoomStockIsEmptyException();
     }
 
     private Integer getRestStock(Room room, LocalDate checkIn, LocalDate checkOut) {
@@ -106,7 +108,7 @@ public class ReservationService {
 
     private List<ReservationRoom> reservationRoomDtosToEntityList(List<ReservationRoomCreateRequest> roomCreateRequests) {
         List<ReservationRoom> reservationRooms = new ArrayList<>();
-        for(ReservationRoomCreateRequest roomRequest : roomCreateRequests) {
+        for (ReservationRoomCreateRequest roomRequest : roomCreateRequests) {
             ReservationRoom reservationRoom = reservationRoomDtoToEntity(roomRequest);
             reservationRooms.add(reservationRoom);
         }
@@ -155,8 +157,8 @@ public class ReservationService {
     }
 
     private void deleteCart(Long cartId) {
-        cartRepository.findById(cartId).orElseThrow(RuntimeException::new);  //todo : CustomException, 민정님 구현 후 적용
-        cartRepository.deleteById(cartId);
+        Cart cart = cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
+        cartRepository.deleteById(cart.getId());
     }
 
 }

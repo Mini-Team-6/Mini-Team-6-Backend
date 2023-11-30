@@ -50,7 +50,6 @@ public class CartService {
         return new CartCreateResponse(createdCart.getId());
     }
 
-    // TODO
     @Transactional(readOnly = true)
     public List<CartGetResponse> getMyCarts(Long userId) {
         return cartRepository.findALLByMemberId(userId).stream()
@@ -61,10 +60,10 @@ public class CartService {
 
     @Transactional
     public CartDeleteResponse deleteCart(Long cartId) {
-        cartRepository.findById(cartId)
+        Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(CartNotFoundException::new);
-        cartRepository.deleteById(cartId);
-        return new CartDeleteResponse(cartId);
+        cartRepository.deleteById(cart.getId());
+        return new CartDeleteResponse(cart.getId());
     }
 
     private Member getMemberById(Long id) {
