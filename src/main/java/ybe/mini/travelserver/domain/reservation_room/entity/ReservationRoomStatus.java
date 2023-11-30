@@ -7,8 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ReservationRoomStatus {
     RESERVED("예약됨"),
-    PAYED("결제됨")
-    ;
+    PAYED("결제됨");
     private final String name;
 
 }

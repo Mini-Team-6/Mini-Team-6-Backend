@@ -13,24 +13,24 @@ import ybe.mini.travelserver.domain.room.entity.Room;
 import java.time.LocalDate;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record CartGetResponse (
-    @Positive
-    Long id,
+public record CartGetResponse(
+        @Positive
+        Long id,
 
-    @Positive
-    Integer guestNumber,
+        @Positive
+        Integer guestNumber,
 
-    @FutureOrPresent
-    LocalDate checkIn,
+        @FutureOrPresent
+        LocalDate checkIn,
 
-    @FutureOrPresent
-    LocalDate checkOut,
+        @FutureOrPresent
+        LocalDate checkOut,
 
-    @Valid
-    RoomGetResponse roomGetResponse,
+        @Valid
+        RoomGetResponse roomGetResponse,
 
-    @Valid
-    AccommodationGetResponse accommodationGetResponse
+        @Valid
+        AccommodationGetResponse accommodationGetResponse
 ) {
     public static CartGetResponse fromEntity(
             Cart cart,

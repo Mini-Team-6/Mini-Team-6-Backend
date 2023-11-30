@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ybe.mini.travelserver.domain.cart.controller.CartController;
 import ybe.mini.travelserver.global.exception.ProblemDetailCreator;
 
-import static ybe.mini.travelserver.domain.cart.exception.CartErrorMessage.*;
+import static ybe.mini.travelserver.domain.cart.exception.CartErrorMessage.CART_ALREADY_EXIST;
+import static ybe.mini.travelserver.domain.cart.exception.CartErrorMessage.CART_NOT_FOUND;
 
 @RestControllerAdvice(basePackageClasses = CartController.class)
 public class CartExceptionHandler extends ProblemDetailCreator<CartErrorMessage> {

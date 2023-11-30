@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.Positive;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record CartCreateResponse (
+public record CartCreateResponse(
         @Positive
         Long id
-){
+) {
 }

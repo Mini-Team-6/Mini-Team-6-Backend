@@ -2,8 +2,8 @@ package ybe.mini.travelserver.domain.reservation.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
-import ybe.mini.travelserver.domain.reservation.entity.Reservation;
 import ybe.mini.travelserver.domain.reservation.entity.PaymentType;
+import ybe.mini.travelserver.domain.reservation.entity.Reservation;
 import ybe.mini.travelserver.domain.reservation_room.dto.ReservationRoomGetResponse;
 
 import java.io.Serializable;
@@ -22,16 +22,16 @@ public record ReservationGetResponse(
 
 ) implements Serializable {
 
-        public static ReservationGetResponse fromEntity(Reservation reservation) {
-                return ReservationGetResponse.builder()
-                        .id(reservation.getId())
-                        .reservationRooms(
-                                Optional.ofNullable(reservation.getReservationRooms())
-                                        .orElseGet(Collections::emptyList).stream()
-                                        .map(ReservationRoomGetResponse::fromEntity).toList()
-                        )
-                        .createdAt(reservation.getCreatedAt())
-                        .paymentType(reservation.getPaymentType())
-                        .build();
-        }
+    public static ReservationGetResponse fromEntity(Reservation reservation) {
+        return ReservationGetResponse.builder()
+                .id(reservation.getId())
+                .reservationRooms(
+                        Optional.ofNullable(reservation.getReservationRooms())
+                                .orElseGet(Collections::emptyList).stream()
+                                .map(ReservationRoomGetResponse::fromEntity).toList()
+                )
+                .createdAt(reservation.getCreatedAt())
+                .paymentType(reservation.getPaymentType())
+                .build();
+    }
 }

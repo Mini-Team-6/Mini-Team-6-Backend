@@ -11,8 +11,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 @AllArgsConstructor
 public enum ReservationRoomErrorMessage implements ErrorMessage {
 
-    RESERVATION_ROOM_NOT_FOUND(BAD_REQUEST, "해당 ID의 예약 객실 정보가 없습니다.")
-    ;
+    RESERVATION_ROOM_NOT_FOUND(BAD_REQUEST, "해당 ID의 예약 객실 정보가 없습니다.");
     private final HttpStatus status;
     private final String message;
 }
