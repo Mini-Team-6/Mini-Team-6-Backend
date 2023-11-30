@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
 import ybe.mini.travelserver.domain.accommodation.repository.AccommodationRepository;
+import ybe.mini.travelserver.domain.cart.exception.CartNotFoundException;
 import ybe.mini.travelserver.domain.cart.repository.CartRepository;
 import ybe.mini.travelserver.domain.member.entity.Member;
 import ybe.mini.travelserver.domain.member.exception.MemberNotFoundException;
@@ -155,7 +156,7 @@ public class ReservationService {
     }
 
     private void deleteCart(Long cartId) {
-        cartRepository.findById(cartId).orElseThrow(RuntimeException::new);  //todo : CustomException, 민정님 구현 후 적용
+        cartRepository.findById(cartId).orElseThrow(CartNotFoundException::new);
         cartRepository.deleteById(cartId);
     }
 
