@@ -90,12 +90,13 @@ public class MemberService {
                 .orElseThrow(MemberNotFoundException::new);
 
         String newPassword = mypageUpdateRequest.password();
+        String newName = mypageUpdateRequest.name();
 
         return MypageUpdateResponse.fromEntity(
                 existingMember.updateProfile(
                         principalDetails.getEmail(),
                         newPassword == null ? principalDetails.getPassword() : passwordEncoder.encode(newPassword),
-                        mypageUpdateRequest.name()
+                        newName == null ? principalDetails.getName() : mypageUpdateRequest.name()
                 )
         );
     }
