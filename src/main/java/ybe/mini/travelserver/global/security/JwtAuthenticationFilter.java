@@ -36,7 +36,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        DecodedJWT decodedJWT = jwtService.decode(accessToken);
+        DecodedJWT decodedJWT;
+
+        try {
+            decodedJWT = jwtService.decode(accessToken);
+        } catch (JWTDecodeException ex) {
+            handlerExceptionResolver.resolveException(request, response, null, ex);
+            return;
+        }
 
         try {
             decodedJWT = jwtService.verify(decodedJWT);
@@ -47,7 +54,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SignatureGenerationException |
                 AlgorithmMismatchException |
                 InvalidClaimException |
-                JWTDecodeException |
                 SignatureVerificationException ex
         ) {
             handlerExceptionResolver.resolveException(request, response, null, ex);
