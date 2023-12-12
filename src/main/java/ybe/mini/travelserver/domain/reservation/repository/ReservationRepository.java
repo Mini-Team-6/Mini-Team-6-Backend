@@ -10,4 +10,5 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     Page<Reservation> findAllByMemberId(Long memberId, Pageable pageable);
+
 }

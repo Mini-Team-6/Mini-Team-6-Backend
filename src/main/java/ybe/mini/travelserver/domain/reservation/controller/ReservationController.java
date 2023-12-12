@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -61,6 +60,7 @@ public class ReservationController {
             @AuthenticationPrincipal PrincipalDetails principalDetails,
             @PageableDefault(size = 3, sort = "id", direction = DESC) Pageable pageable
     ) {
+
         return new ResponseDto<>(
                 HttpStatus.OK.value(),
                 reservationService.getMyReservations(principalDetails.getMemberId(), pageable)
