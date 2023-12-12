@@ -2,6 +2,7 @@ package ybe.mini.travelserver.domain.reservation.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ybe.mini.travelserver.domain.accommodation.entity.Accommodation;
@@ -94,8 +95,8 @@ public class ReservationService {
     }
 
     @Transactional(readOnly = true)
-    public List<ReservationGetResponse> getMyReservations(Long memberId) {
-        return reservationRepository.findAllByMemberId(memberId).stream()
+    public List<ReservationGetResponse> getMyReservations(Long memberId, Pageable pageable) {
+        return reservationRepository.findAllByMemberId(memberId, pageable).stream()
                 .map(ReservationGetResponse::fromEntity).toList();
     }
 

@@ -8,6 +8,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import ybe.mini.travelserver.domain.member.dummy.DummyPrincipal;
 import ybe.mini.travelserver.domain.reservation.dto.ReservationCreateRequest;
 import ybe.mini.travelserver.domain.reservation.dummy.DummyReservationDTO;
@@ -56,17 +58,18 @@ class ReservationControllerTest implements DummyReservationDTO, DummyPrincipal {
     @DisplayName("예약 조회 테스트")
     void getMyReservations_success() {
         //given
-        given(reservationService.getMyReservations(any()))
+        given(reservationService.getMyReservations(any(), any()))
                 .willReturn(List.of(dummyReservationGetRes()));
 
         //when
-        var actual = reservationController.getMyReservations(dummyPrincipalDetails());
+        Pageable pageable = PageRequest.of(0,6);
+        var actual = reservationController.getMyReservations(dummyPrincipalDetails(), pageable);
 
         //then
         var expected = new ResponseDto<>(OK.value(), List.of(dummyReservationGetRes()));
         Javers javers = JaversBuilder.javers().build();
         assertFalse(javers.compare(actual, expected).hasChanges());
-        then(reservationService).should().getMyReservations(any());
+        then(reservationService).should().getMyReservations(any(), any());
     }
 
 
