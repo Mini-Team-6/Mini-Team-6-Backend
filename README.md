@@ -6,7 +6,7 @@
 - YA 어때
 
 
-■ 기간, 참여인원
+■ 기간
 
 - 2023.11.17 ~ 2023.12.01
 
@@ -19,7 +19,7 @@
 | <img src="https://avatars.githubusercontent.com/u/116000898?v=4" width=150px alt="현"> | <img src="https://avatars.githubusercontent.com/u/76704436?v=4" width=150px alt="성수"> | <img src="https://avatars.githubusercontent.com/u/26517061?v=4" width=150px alt="재욱"> | <img src="https://avatars.githubusercontent.com/u/78525973?v=4" width=150px alt="민정"> |
 | :----------------------------------------------------------- | :----------------------------------------------------------- | :----------------------------------------------------------- | :----------------------------------------------------------- |
 | [현](https://github.com/yuhyun1)                             | [성수](https://github.com/tjdtn0219)                         | [재욱](https://github.com/laigasus)                          | [민정](https://github.com/ypd06021)                          |
-| 숙소 및 객실 조회<br />예외처리 및 validation Biz<br />테스트 코드(Junit,Mockito)<br />Flyway | 예약<br />예외처리 및 validation Biz<br />테스트 코드(Junit,Mockito)<br />도메인 설계<br />CI | 회원<br />TourAPI 가공 <br />Security<br />예외처리 밒 validation 공통<br />인프라 및 배포<br />테스트 코드(Junit,Mockito) | 장바구니<br />예외처리 및 validation Biz<br />테스트 코드(Junit,Mockito)<br />CI<br />Flyway |
+| 숙소 및 객실 조회<br />예외처리 및 validation Biz<br />테스트 코드(Junit,Mockito)<br />Flyway | 예약<br />예외처리 및 validation Biz<br />테스트 코드(Junit,Mockito)<br />도메인 설계<br />CI | 회원<br />TourAPI 가공 <br />Security<br />예외처리 및 validation 공통<br />인프라 관리(docker) 및 배포(Paas)<br />테스트 코드(Junit,Mockito) | 장바구니<br />예외처리 및 validation Biz<br />테스트 코드(Junit,Mockito)<br />CI<br />Flyway |
 
 ---
 
@@ -38,7 +38,7 @@ XP - PairProgramming(Intellij codewithme)
 - Docker
 - intellij
 - gradle
-- github action
+- github action(CI) 
 - PaaS(railway)
   - 자동으로 Dockerfile을 수행하도록 설정
   - 개발환경에서만 docker-compose 사용
