@@ -43,6 +43,7 @@ XP - PairProgramming(Intellij codewithme)
   - 자동으로 Dockerfile을 수행하도록 설정
   - 개발환경에서만 docker-compose 사용
 
+- Flyway
 - JPA
 - querydsl
 - jwt(refresh +access, Redis) 
