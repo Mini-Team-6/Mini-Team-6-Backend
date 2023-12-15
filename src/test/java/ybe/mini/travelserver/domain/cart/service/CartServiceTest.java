@@ -68,8 +68,9 @@ class CartServiceTest implements DummyPrincipal, DummyCart {
         given(tourAPIService.bringRoom(anyLong(), anyLong())).willReturn(dummyRoom(dummyAccommodation()));
         given(roomRepository.findByRoomTypeId(any())).willReturn(Optional.ofNullable(dummyRoom(dummyAccommodation())));
         given(accommodationRepository.findById(any())).willReturn(Optional.ofNullable(dummyAccommodation()));
-        given(memberRepository.findById(any())).willReturn(Optional.ofNullable(dummyMember()));
+
         given(cartRepository.save(any(Cart.class))).willReturn(dummyCart());
+        given(memberRepository.findByEmail(anyString())).willReturn(Optional.ofNullable(dummyMember()));
 
 
         // when
