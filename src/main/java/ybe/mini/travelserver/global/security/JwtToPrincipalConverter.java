@@ -7,10 +7,7 @@ import org.springframework.stereotype.Component;
 public class JwtToPrincipalConverter {
     public PrincipalDetails convert(DecodedJWT jwt) {
         return PrincipalDetails.builder()
-                .memberId(Long.parseLong(jwt.getSubject()))
                 .email(jwt.getClaim("email").asString())
-                .password(jwt.getClaim("password").asString())
-                .name(jwt.getClaim("name").asString())
                 .build();
     }
 }

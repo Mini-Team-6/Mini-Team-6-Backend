@@ -2,7 +2,7 @@
 GET http://localhost:8080/accommodations/page/1
 
 #### + 검색어
-GET http://localhost:8080/accommodations/page/1?keyword=호텔
+GET http://localhost:8080/accommodations/page/1?keyword=프레이저
 
 #### + 지역 별 검색
 GET http://localhost:8080/accommodations/page/1?area-code=ULSAN
@@ -12,3 +12,6 @@ GET http://localhost:8080/accommodations/page/1?keyword=호텔&area-code=ULSAN
 
 #### 숙소 상세 조회
 GET localhost:8080/accommodations?keyword=호텔&area-code=BUSAN
+
+#### 숙소 상세 조회(contentId)
+GET http://localhost:8080/tour-api/accommodation/3028593

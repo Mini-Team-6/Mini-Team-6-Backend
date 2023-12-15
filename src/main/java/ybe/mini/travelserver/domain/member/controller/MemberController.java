@@ -1,5 +1,6 @@
 package ybe.mini.travelserver.domain.member.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,9 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/signin")
-    public ResponseDto<SigninResponse> signin(@RequestBody @Valid SigninRequest signinRequest) {
+    public ResponseDto<SigninResponse> signin(
+            @RequestBody @Valid SigninRequest signinRequest
+    ) {
         SigninResponse signinResponse = memberService.loginMember(signinRequest);
 
         return new ResponseDto<>(HttpStatus.OK.value(), signinResponse);
@@ -69,5 +72,11 @@ public class MemberController {
         );
 
         return new ResponseDto<>(HttpStatus.OK.value(), mypageDeleteResponse);
+    }
+
+    @PreAuthorize(HAS_ROLE_USER)
+    @GetMapping("/logout")
+    public void logout(HttpServletRequest request) {
+        memberService.logoutMember(request);
     }
 }

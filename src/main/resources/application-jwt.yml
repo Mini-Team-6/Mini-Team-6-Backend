@@ -1,4 +1,17 @@
 security:
   jwt:
     secret-key: ${JWT_SECRET_KEY}
-    token-duration: ${JWT_EXPIRE_TIME} # Duration 단위
+    access-token-duration: ${ACCESS_TOKEN_EXPIRE_TIME} # Duration 단위
+    refresh-token-duration: ${REFRESH_TOKEN_EXPIRE_TIME} # Duration 단위
+    issuer: "ybe.mini.travelserver"
+
+#spring:
+#  data:
+#    redis:
+#      timeout: ${REDIS_TIMEOUT}
+#      lettuce:
+#        pool:
+#          max-active: ${REDIS_MAX_ACTIVE}
+#          max-idle: ${REDIS_MAX_IDLE}
+#          max-wait: ${REDIS_MAX_WAIT}
+#          min-idle: ${REDIS_MIN_IDLE}

@@ -2,24 +2,34 @@
 
 
 ■ 프로젝트명
+
 - YA 어때
 
 
-■ 기간, 참여인원
-- 2023.11.17 ~ 2023.12.01
-- 유현(팀장), 강민정, 옥재욱, 장성수
+■ 기간
 
-<br>
+- 2023.11.17 ~ 2023.12.01
 
 ■ 목적
+
 - 협업 및 팀워크 증진을 통하여 동일한 목표 달성 및 성취
+
+### Backend
+
+| <img src="https://avatars.githubusercontent.com/u/116000898?v=4" width=150px alt="현"> | <img src="https://avatars.githubusercontent.com/u/76704436?v=4" width=150px alt="성수"> | <img src="https://avatars.githubusercontent.com/u/26517061?v=4" width=150px alt="재욱"> | <img src="https://avatars.githubusercontent.com/u/78525973?v=4" width=150px alt="민정"> |
+| :----------------------------------------------------------- | :----------------------------------------------------------- | :----------------------------------------------------------- | :----------------------------------------------------------- |
+| [현](https://github.com/yuhyun1)                             | [성수](https://github.com/tjdtn0219)                         | [재욱](https://github.com/laigasus)                          | [민정](https://github.com/ypd06021)                          |
+| - 숙소 및 객실 조회<br /> - 예외처리 및 validation Biz<br /> - 테스트 코드(Junit,Mockito)<br /> - Flyway | - 예약<br /> - 예외처리 및 validation Biz<br /> - 테스트 코드(Junit,Mockito)<br /> - 도메인 설계| 회원<br /> - TourAPI 가공 <br /> - Security<br /> - 예외처리 밒 validation 공통<br /> - 인프라 및 배포<br /> - 테스트 코드(Junit,Mockito) | 장바구니<br /> - 예외처리 및 validation Biz<br /> - 테스트 코드(Junit,Mockito)<br /> - CI<br /> - Flyway |
+
 ---
+
 ## 진행 방식
 
 Agile - Scrum
 XP - PairProgramming(Intellij codewithme)
 
 ---
+
 ## 구현 환경
 
 - Java 17
@@ -28,13 +38,34 @@ XP - PairProgramming(Intellij codewithme)
 - Docker
 - intellij
 - gradle
+- github action(CI) 
+- PaaS(railway)
+  - 자동으로 Dockerfile을 수행하도록 설정
+  - 개발환경에서만 docker-compose 사용
+
+- Flyway
+- JPA
+- querydsl
+- jwt(refresh +access, Redis) 
+  - rfc 문서 참고하여 구현
 
 ---
+
 ## 브랜치 전략
 
 Git-flow 사용
-  
+
 ---
+
+## 사용
+
+1. Docker 로 DB를 활성화 할 수 있습니다 `docker-compose up`
+2. SpringBoot 를 실행합니다
+3. test/Http 내 작성해둔 http 테스트 파일이 있습니다
+4. 테스트 코드도 작성하여 확인하실 수 있습니다
+
+---
+
 ## 기능
 
 ### 회원
@@ -94,11 +125,13 @@ Git-flow 사용
 - 예약 취소
 
 ---
+
 ## API
 
 [Notion 참고](https://decorous-jupiter-fb4.notion.site/api-ae76fa9fd32e40c6b5408f1bcfecaad3)
 
 ---
+
 ## ERD
 
 ### DB Diagram
@@ -107,9 +140,11 @@ Git-flow 사용
 
 
 ---
+
 ## 흐름도
 
 ### 숙소
+
 ```mermaid
 sequenceDiagram
 actor User
@@ -159,6 +194,7 @@ deactivate AccommodationService
 ```
 
 ### 객실
+
 ```mermaid
 sequenceDiagram
 actor User
@@ -229,6 +265,7 @@ deactivate RoomService
 
 
 ### 장바구니
+
 ```mermaid
 sequenceDiagram
 actor User
@@ -383,6 +420,7 @@ deactivate CartService
 
 
 ### 예약
+
 ```mermaid
 sequenceDiagram
 actor User
@@ -588,6 +626,7 @@ deactivate ReservationService
 
 
 ### 회원
+
 ```mermaid
 sequenceDiagram
 actor User
