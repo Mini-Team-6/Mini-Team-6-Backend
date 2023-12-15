@@ -11,3 +11,10 @@ spring:
   web:
     resources:
       add-mappings: false # 404오류 에 대해 리소스에서 접근하지 않고 예외로 던지기
+
+  flyway:
+    enabled: false
+    baseline-on-migrate: false
+    encoding: UTF-8
+    outOfOrder: true
+    locations: classpath:db/migration
