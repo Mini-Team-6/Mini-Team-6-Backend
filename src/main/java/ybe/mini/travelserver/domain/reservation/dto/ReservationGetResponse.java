@@ -14,15 +14,17 @@ import java.util.Optional;
 
 @Builder
 public record ReservationGetResponse(
+
         Long id,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
         LocalDateTime createdAt,
         PaymentType paymentType,
-        List<ReservationRoomGetResponse> reservationRooms
+        List<ReservationRoomGetResponse> reservationRooms,
+        Integer totalPage
 
 ) implements Serializable {
 
-    public static ReservationGetResponse fromEntity(Reservation reservation) {
+    public static ReservationGetResponse fromEntity(Reservation reservation, Integer totalPage) {
         return ReservationGetResponse.builder()
                 .id(reservation.getId())
                 .reservationRooms(
@@ -32,6 +34,7 @@ public record ReservationGetResponse(
                 )
                 .createdAt(reservation.getCreatedAt())
                 .paymentType(reservation.getPaymentType())
+                .totalPage(totalPage)
                 .build();
     }
 }
