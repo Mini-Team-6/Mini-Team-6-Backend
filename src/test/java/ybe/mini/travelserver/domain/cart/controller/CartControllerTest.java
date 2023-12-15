@@ -19,8 +19,7 @@ import ybe.mini.travelserver.global.common.ResponseDto;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static ybe.mini.travelserver.domain.accommodation.entity.AreaCode.SEOUL;
@@ -44,7 +43,7 @@ class CartControllerTest implements DummyPrincipal, DummyCart {
                 CartGetResponse.fromEntity(dummyCart(), dummyRoom(dummyAccommodation()), dummyAccommodation());
         List<CartGetResponse> cartGetResponseList =
                 List.of(cartGetResponse, cartGetResponse1);
-        given(cartService.getMyCarts(anyLong())).willReturn(cartGetResponseList);
+        given(cartService.getMyCarts(anyString())).willReturn(cartGetResponseList);
 
         // when
         ResponseDto<List<CartGetResponse>> responseDto =
@@ -53,7 +52,7 @@ class CartControllerTest implements DummyPrincipal, DummyCart {
         // then
         assertEquals(HttpStatus.OK.value(), responseDto.status());
         assertEquals(responseDto.data(), cartGetResponseList);
-        then(cartService).should().getMyCarts(anyLong());
+        then(cartService).should().getMyCarts(anyString());
     }
 
     @Test
@@ -72,7 +71,7 @@ class CartControllerTest implements DummyPrincipal, DummyCart {
                         .build();
         CartCreateResponse cartCreateResponse = new CartCreateResponse(1L);
 
-        given(cartService.createCart(anyLong(), any()))
+        given(cartService.createCart(anyString(), any()))
                 .willReturn(cartCreateResponse);
 
         // when
@@ -82,7 +81,7 @@ class CartControllerTest implements DummyPrincipal, DummyCart {
         // then
         assertEquals(HttpStatus.CREATED.value(), responseDto.status());
         assertEquals(responseDto.data(), cartCreateResponse);
-        then(cartService).should().createCart(anyLong(), any());
+        then(cartService).should().createCart(anyString(), any());
 
     }
 
