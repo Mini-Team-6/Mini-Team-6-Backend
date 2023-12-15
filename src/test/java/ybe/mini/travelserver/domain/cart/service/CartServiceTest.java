@@ -23,8 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static ybe.mini.travelserver.domain.accommodation.entity.AreaCode.SEOUL;
@@ -69,13 +68,14 @@ class CartServiceTest implements DummyPrincipal, DummyCart {
         given(tourAPIService.bringRoom(anyLong(), anyLong())).willReturn(dummyRoom(dummyAccommodation()));
         given(roomRepository.findByRoomTypeId(any())).willReturn(Optional.ofNullable(dummyRoom(dummyAccommodation())));
         given(accommodationRepository.findById(any())).willReturn(Optional.ofNullable(dummyAccommodation()));
-        given(memberRepository.findById(any())).willReturn(Optional.ofNullable(dummyMember()));
+
         given(cartRepository.save(any(Cart.class))).willReturn(dummyCart());
+        given(memberRepository.findByEmail(anyString())).willReturn(Optional.ofNullable(dummyMember()));
 
 
         // when
         CartCreateResponse response =
-                cartService.createCart(dummyMember().getId(), cartCreateRequest);
+                cartService.createCart(dummyMember().getEmail(), cartCreateRequest);
 
         // then
         assertEquals(response, cartCreateResponse);
@@ -92,14 +92,14 @@ class CartServiceTest implements DummyPrincipal, DummyCart {
                         cart, cart.getRoom(), cart.getRoom().getAccommodation())
                 ).toList();
 
-        given(cartRepository.findALLByMemberId(anyLong())).willReturn(cartList);
+        given(cartRepository.findALLByMemberEmail(anyString())).willReturn(cartList);
 
         // when
-        List<CartGetResponse> response = cartService.getMyCarts(dummyCart().getId());
+        List<CartGetResponse> response = cartService.getMyCarts(dummyCart().getMember().getEmail());
 
         // then
         assertEquals(cartGetResponseList, response);
-        then(cartRepository).should().findALLByMemberId(dummyCart().getId());
+        then(cartRepository).should().findALLByMemberEmail(dummyCart().getMember().getEmail());
 
     }
 

@@ -15,11 +15,12 @@ import org.springframework.security.test.context.support.WithMockUser;
 import ybe.mini.travelserver.domain.member.dummy.DummyMemberDTO;
 import ybe.mini.travelserver.domain.member.dummy.DummyPrincipal;
 import ybe.mini.travelserver.domain.member.repository.MemberRepository;
-import ybe.mini.travelserver.global.security.JwtIssuer;
+import ybe.mini.travelserver.global.security.JwtService;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.any;
@@ -29,7 +30,7 @@ class MemberServiceTest implements DummyMemberDTO, DummyPrincipal {
     @Mock
     MemberRepository memberRepository;
     @Mock
-    JwtIssuer jwtIssuer;
+    JwtService jwtService;
     @Mock
     @SuppressWarnings("unused")
     PasswordEncoder passwordEncoder;
@@ -48,7 +49,7 @@ class MemberServiceTest implements DummyMemberDTO, DummyPrincipal {
         Authentication authentication = Mockito.mock(Authentication.class);
         given(authenticationManager.authenticate(any())).willReturn(authentication);
         given(authentication.getPrincipal()).willReturn(dummyPrincipalDetails());
-        given(jwtIssuer.issue(any())).willReturn(token);
+        given(jwtService.createAccessToken(anyString(), any())).willReturn(token);
 
         // given
         var actual = memberService.loginMember(dummySigninRequest());
@@ -57,7 +58,7 @@ class MemberServiceTest implements DummyMemberDTO, DummyPrincipal {
         var expected = dummySigninResponse();
         assertEquals(expected, actual);
         then(authenticationManager).should().authenticate(any());
-        then(jwtIssuer).should().issue(any());
+        then(jwtService).should().createAccessToken(anyString(), any());
     }
 
     @Test

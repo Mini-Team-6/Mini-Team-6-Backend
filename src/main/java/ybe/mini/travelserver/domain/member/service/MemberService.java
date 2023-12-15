@@ -1,5 +1,7 @@
 package ybe.mini.travelserver.domain.member.service;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,10 +17,11 @@ import ybe.mini.travelserver.domain.member.exception.CanNotControlOtherMembersDa
 import ybe.mini.travelserver.domain.member.exception.MemberAlreadyExistException;
 import ybe.mini.travelserver.domain.member.exception.MemberNotFoundException;
 import ybe.mini.travelserver.domain.member.repository.MemberRepository;
-import ybe.mini.travelserver.global.security.JwtIssuer;
+import ybe.mini.travelserver.global.security.JwtService;
 import ybe.mini.travelserver.global.security.PrincipalDetails;
 
 import java.util.Collections;
+import java.util.UUID;
 
 import static ybe.mini.travelserver.global.security.Role.ROLE_USER;
 
@@ -27,10 +30,9 @@ import static ybe.mini.travelserver.global.security.Role.ROLE_USER;
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
-    private final JwtIssuer jwtIssuer;
+    private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
-
 
     @Transactional(readOnly = true)
     public SigninResponse loginMember(SigninRequest signinRequest) {
@@ -44,14 +46,15 @@ public class MemberService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
 
-        final String token = jwtIssuer.issue(JwtIssuer.Request.builder()
-                .memberId(principal.getMemberId())
-                .email(principal.getEmail())
-                .name(principal.getName())
-                .password(principal.getPassword())
-                .build());
+        String uuid = UUID.randomUUID().toString();
 
-        return new SigninResponse(token);
+        String email = principal.getEmail();
+        final String accessToken = jwtService.createAccessToken(email, uuid);
+        final String refreshToken = jwtService.createRefreshToken(email, uuid);
+
+        jwtService.saveRefreshToken(uuid, refreshToken);
+
+        return new SigninResponse(accessToken);
     }
 
     @Transactional
@@ -118,4 +121,13 @@ public class MemberService {
 
         return MypageDeleteResponse.fromEntity(existingMember);
     }
+
+    public void logoutMember(HttpServletRequest request) {
+        String extractedToken = jwtService.extractTokenFromRequest(request);
+        DecodedJWT decodedJWT = jwtService.decode(extractedToken);
+
+        jwtService.deleteRefreshToken(decodedJWT.getId());
+    }
+
+
 }

@@ -13,5 +13,7 @@ import java.time.Duration;
 @ConfigurationProperties("security.jwt")
 public class JwtProperties {
     private String secretKey;
-    private Duration tokenDuration;
+    private String issuer;
+    private Duration accessTokenDuration;
+    private Duration refreshTokenDuration;
 }

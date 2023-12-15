@@ -30,7 +30,7 @@ public class CartController {
     public ResponseDto<List<CartGetResponse>> getAllCart(
             @AuthenticationPrincipal PrincipalDetails principalDetails) {
         List<CartGetResponse> cartGetResponse =
-                cartService.getMyCarts(principalDetails.getMemberId());
+                cartService.getMyCarts(principalDetails.getEmail());
         return new ResponseDto<>(HttpStatus.OK.value(), cartGetResponse);
     }
 
@@ -41,7 +41,7 @@ public class CartController {
             @AuthenticationPrincipal PrincipalDetails principalDetails,
             @RequestBody CartCreateRequest cartCreateRequest) {
         CartCreateResponse cartCreateResponse =
-                cartService.createCart(principalDetails.getMemberId(), cartCreateRequest);
+                cartService.createCart(principalDetails.getEmail(), cartCreateRequest);
         return new ResponseDto<>(HttpStatus.CREATED.value(), cartCreateResponse);
     }
 

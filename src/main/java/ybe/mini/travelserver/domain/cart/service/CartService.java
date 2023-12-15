@@ -38,8 +38,8 @@ public class CartService {
     private final AccommodationRepository accommodationRepository;
 
     @Transactional
-    public CartCreateResponse createCart(Long userId, CartCreateRequest cartCreateRequest) {
-        Member member = getMemberById(userId);
+    public CartCreateResponse createCart(String email, CartCreateRequest cartCreateRequest) {
+        Member member = getMemberEmail(email);
         Accommodation accommodation =
                 createAccommodationById(cartCreateRequest.keyword(), cartCreateRequest.areaCode());
         Room room = createRoomByRoomTypeId(accommodation, cartCreateRequest.roomTypeId());
@@ -51,8 +51,8 @@ public class CartService {
     }
 
     @Transactional(readOnly = true)
-    public List<CartGetResponse> getMyCarts(Long userId) {
-        return cartRepository.findALLByMemberId(userId).stream()
+    public List<CartGetResponse> getMyCarts(String email) {
+        return cartRepository.findALLByMemberEmail(email).stream()
                 .map((Cart cart) -> CartGetResponse.fromEntity(
                         cart, cart.getRoom(), cart.getRoom().getAccommodation())
                 ).toList();
@@ -66,8 +66,8 @@ public class CartService {
         return new CartDeleteResponse(cart.getId());
     }
 
-    private Member getMemberById(Long id) {
-        return memberRepository.findById(id)
+    private Member getMemberEmail(String email) {
+        return memberRepository.findByEmail(email)
                 .orElseThrow(MemberNotFoundException::new);
     }
 
